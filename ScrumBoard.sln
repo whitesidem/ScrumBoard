@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8C825213-9436-4CC9-B4EB-6BB1E1C1E765}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumBoardMvcApp", "ScrumBoardMvcApp\ScrumBoardMvcApp.csproj", "{49803171-6056-4706-A2C4-6A0BAA5C66A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumBoardService", "ScrumBoardService\ScrumBoardService.csproj", "{98B40D84-1B73-48BA-96CC-5E830004A149}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumBoardDomain", "ScrumBoardDomain\ScrumBoardDomain.csproj", "{6430242B-C61D-4349-A66A-6FEE9718771E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49803171-6056-4706-A2C4-6A0BAA5C66A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49803171-6056-4706-A2C4-6A0BAA5C66A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49803171-6056-4706-A2C4-6A0BAA5C66A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49803171-6056-4706-A2C4-6A0BAA5C66A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98B40D84-1B73-48BA-96CC-5E830004A149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98B40D84-1B73-48BA-96CC-5E830004A149}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98B40D84-1B73-48BA-96CC-5E830004A149}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98B40D84-1B73-48BA-96CC-5E830004A149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6430242B-C61D-4349-A66A-6FEE9718771E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6430242B-C61D-4349-A66A-6FEE9718771E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6430242B-C61D-4349-A66A-6FEE9718771E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6430242B-C61D-4349-A66A-6FEE9718771E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

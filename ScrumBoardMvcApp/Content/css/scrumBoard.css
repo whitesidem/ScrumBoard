@@ -1,0 +1,14 @@
+﻿.listItem
+{
+	border: 1px solid #000000;
+	padding: 10px;
+	float: left;
+	height: 500px;
+	margin: 0px;
+}
+
+ul 
+{
+	list-style-type: none;	
+}
+
