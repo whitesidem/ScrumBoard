@@ -1,16 +1,19 @@
-﻿SkilzJs.namespace('controller');
+﻿/// <reference path="External/Angular/angular.js" />
+/// <reference path="Shared/global.js" />
+/// <reference path="models.js" />
+/// <reference path="Dialogs/SimpleEnterStringDialogController.js" />
 
-SkilzJs.controller.OpenListDialogController = (function ($scope, $dialog) {
 
-    //    $scope.Potato = "King Edward";
+SkilzJs.namespace('controller');
+SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog) {
 
     $scope.opts = {
         backdrop: true,
         keyboard: true,
         backdropClick: true,
         templateUrl: '/Templates/ScrumBoard/CreateListItemDialog.htm',
-        controller: SkilzJs.controller.TitleDialogController, 
-        resolve: { dialogModel: function () { return { title:"Create New List", text: "Enter List title" }; } }
+        controller: SkilzJs.controller.shared.dialogs.SimpleEnterStringDialogController, 
+        resolve: { dialogModel: function () { return { title:"Create New List", text: "Enter title for new list" }; } }
     };
 
 
@@ -39,18 +42,3 @@ SkilzJs.controller.OpenListDialogController = (function ($scope, $dialog) {
     //    };
 });
 
-// the dialog is injected in the specified controller
-SkilzJs.controller.TitleDialogController = (function ($scope, dialog, dialogModel) {
-
-    console.dir($scope);
-
-    $scope.dialogModel = dialogModel;
-    $scope.close = function () {
-        dialog.close($scope.listTitle);
-    };
-    $scope.cancel = function () {
-        dialog.close();
-    };
-});
-
-SkilzJs.controller.TitleDialogController.$inject = ["$scope", "dialog", "dialogModel"];

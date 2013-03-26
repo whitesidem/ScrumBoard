@@ -1,4 +1,4 @@
-﻿/// <reference path="global.js" />
+﻿/// <reference path="Shared/global.js" />
 /// <reference path="External/underscore.js" />
 
 SkilzJs.namespace('model');

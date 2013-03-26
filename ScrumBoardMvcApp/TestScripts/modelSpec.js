@@ -1,5 +1,5 @@
 ﻿/// <reference path="jasmine-1.3.1/jasmine.js" />
-/// <reference path="../Scripts/global.js" />
+/// <reference path="Shared/global.js" />
 /// <reference path="../Scripts/models.js" />
 
 describe("model objects", function () {

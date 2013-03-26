@@ -1,9 +1,8 @@
 ﻿/// <reference path="jasmine-1.3.1/jasmine.js" />
 /// <reference path="../Scripts/External/Angular/angular.js" />
 /// <reference path="../Scripts/External/Angular/angular-mocks.js" />
-/// <reference path="../Scripts/global.js" />
+/// <reference path="../Scripts/Shared/global.js" />
 /// <reference path="../Scripts/listController.js" />
-
 
 // ReSharper disable InconsistentNaming
 describe("list controller", function () {

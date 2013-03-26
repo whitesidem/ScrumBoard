@@ -132,6 +132,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\Shared\Dialogs\SimpleEnterStringDialogController.js" />
     <Compile Include="signalr\ChatHub.cs" />
     <Compile Include="signalr\ScrumBoardHub.cs" />
   </ItemGroup>
@@ -146,7 +147,7 @@
     <Content Include="Content\bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\css\scrumBoard.css" />
-    <Content Include="Scripts\OpenListDialogController.js" />
+    <Content Include="Scripts\CreateListDialogController.js" />
     <Content Include="Scripts\External\Angular-Bootstrap\ui-bootstrap-tpls-0.2.0.js" />
     <Content Include="Scripts\External\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\External\Bootstrap\bootstrap.min.js" />
@@ -329,7 +330,7 @@
     <Content Include="Scripts\External\jstd-scenario-adapter.js" />
     <Content Include="Scripts\External\underscore.js" />
     <Content Include="Scripts\External\underscore.min.js" />
-    <Content Include="Scripts\global.js" />
+    <Content Include="Scripts\Shared\global.js" />
     <Content Include="Scripts\External\SignalR\jquery.signalR-1.0.1.js" />
     <Content Include="Scripts\External\SignalR\jquery.signalR-1.0.1.min.js" />
     <Content Include="Scripts\listController.js" />
