@@ -6,7 +6,7 @@
 
 SkilzJs.namespace('controller');
 
-SkilzJs.controller.ListController = (function ($scope, myBoard) {
+SkilzJs.controller.ListController = (function ($scope, myBoard, mySockets) {
 
     var cardTempCount = 1;
 
@@ -33,24 +33,23 @@ SkilzJs.controller.ListController = (function ($scope, myBoard) {
         myBoard.addList(list);
     };
 
-    var createDraftList = function () {
-        $scope.draftList = SkilzJs.model.list.FactoryCreate("");
-    };
+//    var createDraftList = function () {
+//        $scope.draftList = SkilzJs.model.list.FactoryCreate("");
+//    };
 
-    var createDraftCard = function () {
-        $scope.draftCard = SkilzJs.model.card.FactoryCreate("", true);
-    };
+//    var createDraftCard = function () {
+//        $scope.draftCard = SkilzJs.model.card.FactoryCreate("", true);
+//    };
 
-
-    $scope.addDraftListWithName = function (name) {
-        var list = SkilzJs.model.list.FactoryCreate(name);
+    $scope.addDraftListWithName = function (title, id) {
+        var list = SkilzJs.model.list.FactoryCreate(title);
+        list.id = id;
         myBoard.addList(list);
     };
 
     $scope.addDraftCard = function (list) {
         var card = SkilzJs.model.card.FactoryCreate("Card" + cardTempCount++, true);
         list.addCard(card);
-
     };
 
     //ON OK SAVE OF DRAFT CARD - Remove card and
@@ -59,21 +58,18 @@ SkilzJs.controller.ListController = (function ($scope, myBoard) {
         myBoard.addList(list);
     };
 
-    //ON OK SAVE OF DRAFT LIST - Remove list and
-    //Listen for addListEvent
-    var addListEvent = function (list) {
-        myBoard.addList(list);
-    };
-
-
 
     $scope.addListEvent = _addListEvent;
 
     populateBoard();
 
-    createDraftList();
-    createDraftCard();
+//    createDraftList();
+//    createDraftCard();
+
+    mySockets.setupSocket($scope);
 
 });
 
-SkilzJs.controller.ListController.$inject = ["$scope", "myBoard"];
+SkilzJs.controller.ListController.$inject = ["$scope", "myBoard", "mySockets"];
+
+

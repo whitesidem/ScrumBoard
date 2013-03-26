@@ -10,15 +10,22 @@ describe("list controller", function () {
     var _listController;
     var _scope;
     var _testBoard;
+//    var socketStub = {
+//        setupSocket: function () { }
+//    };
+    var socketStubSpy;
 
     beforeEach(inject(function ($rootScope, $controller) {
         _scope = $rootScope.$new();
         _testBoard = SkilzJs.model.board.FactoryCreate("TestBoard");
-        _listController = $controller(SkilzJs.controller.ListController, { $scope: _scope, myBoard: _testBoard });
+        socketStubSpy = jasmine.createSpyObj('socketStub', ['setupSocket']);
+
+        _listController = $controller(SkilzJs.controller.ListController, { $scope: _scope, myBoard: _testBoard, mySockets: socketStubSpy });
     }));
 
     it("can be constructed", function () {
         expect(_listController).not.toBeNull();
+        expect(socketStubSpy.setupSocket).toHaveBeenCalledWith(_scope);
     });
 
     it("can access board via scope", function () {

@@ -5,15 +5,15 @@
 
 
 SkilzJs.namespace('controller');
-SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog) {
+SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog, $http) {
 
     $scope.opts = {
         backdrop: true,
         keyboard: true,
         backdropClick: true,
         templateUrl: '/Templates/ScrumBoard/CreateListItemDialog.htm',
-        controller: SkilzJs.controller.shared.dialogs.SimpleEnterStringDialogController, 
-        resolve: { dialogModel: function () { return { title:"Create New List", text: "Enter title for new list" }; } }
+        controller: SkilzJs.controller.shared.dialogs.SimpleEnterStringDialogController,
+        resolve: { dialogModel: function () { return { title: "Create New List", text: "Enter title for new list" }; } }
     };
 
 
@@ -24,7 +24,8 @@ SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog) {
         var d = $dialog.dialog($scope.opts);
         d.open().then(function (listTitle) {
             if (listTitle) {
-                $scope.addDraftListWithName(listTitle);
+                $http.post("api/ScrumBoardRestApi/CreateList", { "title": listTitle });
+//                $scope.addDraftListWithName(listTitle);
             }
         });
     };

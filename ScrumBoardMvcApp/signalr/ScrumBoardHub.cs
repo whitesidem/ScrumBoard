@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using System.Diagnostics;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 
 namespace ScrumBoardMvcApp.signalr
@@ -8,10 +9,31 @@ namespace ScrumBoardMvcApp.signalr
     public class ScrumBoardHub : Hub
     {
 
-        public void SendAddedCardMessage(string title, string id)
+        public IHubConnectionContext CurrentClients
         {
-            Clients.All.broadcastAddedCardMessage(title,id);
+            get
+            {
+
+                //if (Clients != null)
+                //{
+                //    return Clients;
+                //}
+                var scrumBoardHub = GlobalHost.ConnectionManager.GetHubContext<ScrumBoardHub>();
+                Debug.Assert(scrumBoardHub != null, "scrumBoardHub should exist");
+                return scrumBoardHub.Clients;
+            }
         }
+
+        public void SendAddedListMessage(string title, int id)
+        {
+            CurrentClients.All.broadcastAddedListMessage(title,id);
+        }
+
+        public void Test()
+        {
+            Clients.All.broadcastAddedListMessage("abc", 10);
+        }
+
 
     }
 }

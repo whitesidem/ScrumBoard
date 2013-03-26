@@ -23,6 +23,7 @@ namespace ScrumBoardDomain.Repository
         static BoardRepository()
         {
             _boardData.Id = 1;
+            _boardData.ScrumLists = new List<ScrumList>();
         }
 
         public ScrumBoard RetrieveBoardById(int id)
@@ -32,7 +33,7 @@ namespace ScrumBoardDomain.Repository
 
         public int CreateScrumListForBoardIdAndGenerateId(int boardId, ScrumList list)
         {
-            var nextId = _boardData.ScrumLists.Max(l => l.Id) + 1;
+            var nextId = !_boardData.ScrumLists.Any() ? 1 : _boardData.ScrumLists.Max(l => l.Id) + 1;
             var newList = new ScrumList()
                 {
                     Id = nextId,
