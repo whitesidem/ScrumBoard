@@ -33,13 +33,13 @@ SkilzJs.controller.ListController = (function ($scope, myBoard, mySockets) {
         myBoard.addList(list);
     };
 
-//    var createDraftList = function () {
-//        $scope.draftList = SkilzJs.model.list.FactoryCreate("");
-//    };
+    //    var createDraftList = function () {
+    //        $scope.draftList = SkilzJs.model.list.FactoryCreate("");
+    //    };
 
-//    var createDraftCard = function () {
-//        $scope.draftCard = SkilzJs.model.card.FactoryCreate("", true);
-//    };
+    //    var createDraftCard = function () {
+    //        $scope.draftCard = SkilzJs.model.card.FactoryCreate("", true);
+    //    };
 
     $scope.addDraftListWithName = function (title, id) {
         var list = SkilzJs.model.list.FactoryCreate(title);
@@ -50,6 +50,10 @@ SkilzJs.controller.ListController = (function ($scope, myBoard, mySockets) {
     $scope.addDraftCard = function (list) {
         var card = SkilzJs.model.card.FactoryCreate("Card" + cardTempCount++, true);
         list.addCard(card);
+    };
+
+    $scope.setCurrentCard = function(card) {
+        $scope.currentCard = card;
     };
 
     //ON OK SAVE OF DRAFT CARD - Remove card and
@@ -63,8 +67,8 @@ SkilzJs.controller.ListController = (function ($scope, myBoard, mySockets) {
 
     populateBoard();
 
-//    createDraftList();
-//    createDraftCard();
+    //    createDraftList();
+    //    createDraftCard();
 
     mySockets.setupSocket($scope);
 

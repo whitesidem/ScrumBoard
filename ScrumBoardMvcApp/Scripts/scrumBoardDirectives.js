@@ -10,7 +10,7 @@ angular.module("ScrumBoardApp")
         // This HTML will replace the zippy directive.
         replace: true,
         transclude: true,
-        scope: { innerTitle: '@cat' },
+        scope: { innerTitle: '@cardTitle' },
         templateUrl: '/Templates/ScrumBoard/ScrumCard.htm',
 //        template: '<div class="scrumCard">' +
 //                '{{innerTitle}}' +

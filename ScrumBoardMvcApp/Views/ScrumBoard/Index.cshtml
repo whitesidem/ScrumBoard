@@ -45,7 +45,7 @@
                 <ul>
                     @*                    <li data-ng-repeat="card in list.cards">{{card.title}} </li>*@
                     <li data-ng-repeat="card in list.cards">
-                        <div class="scrumCardListItem" cat="{{card.title}}" >Unset Title</div>
+                        <div class="scrumCardListItem" card-title="{{card.title}}" data-ng-click="setCurrentCard(card)" >Unset Title</div>
                     </li>
                 </ul>
                 <div>

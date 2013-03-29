@@ -27,3 +27,4 @@ SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog, $htt
 
 });
 
+SkilzJs.controller.CreateListDialogController.$inject = ["$scope", $dialog, $http];
