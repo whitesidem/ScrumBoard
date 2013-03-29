@@ -27,9 +27,13 @@ namespace ScrumBoardMvcApp.Controllers
         }
 
         [HttpPost]
-        public void CreateCard(CreateCard card)
+       public void CreateCard(CreateCard card)
         {
-            string a = "asas";
+            var boardRepository = new BoardRepository();
+            var boardManager = new BoardManager(boardRepository);
+            var newCard = boardManager.CreateAndAddScrumCardForListId(card.ListId, card.Title);
+            var hub = new ScrumBoardHub();
+            hub.SendAddedCardMessage(card.ListId, newCard.Title, newCard.Id);
         }
 
         [HttpPost]
@@ -74,6 +78,7 @@ namespace ScrumBoardMvcApp.Controllers
     public class CreateCard
     {
         public String Title { get; set; }
+        public int ListId { get; set; }
     }
 
     public class CreateList

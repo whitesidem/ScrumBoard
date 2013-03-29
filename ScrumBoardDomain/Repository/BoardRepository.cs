@@ -74,7 +74,7 @@ namespace ScrumBoardDomain.Repository
             {
                 return -1;
             }
-            var nextId = dbList.ScrumCards.Max(l => l.Id) + 1;
+            var nextId = !dbList.ScrumCards.Any() ? 1 : dbList.ScrumCards.Max(c => c.Id) + 1;
             var dbCard = new ScrumCard()
             {
                 Id = nextId,

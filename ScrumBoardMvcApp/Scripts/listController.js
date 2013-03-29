@@ -47,12 +47,14 @@ SkilzJs.controller.ListController = (function ($scope, myBoard, mySockets) {
         myBoard.addList(list);
     };
 
-    $scope.addDraftCard = function (list) {
-        var card = SkilzJs.model.card.FactoryCreate("Card" + cardTempCount++, true);
+    $scope.addDraftCardWithName = function (listId, title, id) {
+        var list = myBoard.getListById(listId);
+        var card = SkilzJs.model.card.FactoryCreate(title, true);
+        card.id = id;
         list.addCard(card);
     };
 
-    $scope.setCurrentCard = function(card) {
+    $scope.setCurrentCard = function (card) {
         $scope.currentCard = card;
     };
 

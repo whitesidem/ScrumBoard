@@ -133,6 +133,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\CreateCardDialogController.js" />
     <Content Include="Scripts\scrumBoardDirectives.js" />
     <Content Include="Scripts\EndToEndTests\EndToEndTestRunner.html" />
     <Content Include="Scripts\EndToEndTests\EndToEndTestScenarios.js" />

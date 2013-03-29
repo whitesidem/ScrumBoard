@@ -13,6 +13,13 @@ SkilzJs.sockets.socketController.setupSocket = function ($scope) {
         });
     };
 
+    scrumBoard.client.broadcastAddedCardMessage = function (listId, title, id) {
+        $scope.$apply(function () {
+            $scope.addDraftCardWithName(listId, title, id);
+        });
+    };
+    
+
     //Start connection to socket
     $.connection.hub.start().done(function () {
         //                scrumBoard.server.test();

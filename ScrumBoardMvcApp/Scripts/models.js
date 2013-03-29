@@ -16,6 +16,9 @@ SkilzJs.model.board = {
     getListByTitle: function (title) {
         return  _(this.lists).find(function(l) { return l.title === title; });
     },
+    getListById: function (id) {
+        return  _(this.lists).find(function(l) { return l.id === id; });
+    }
 };
 
 SkilzJs.model.list = {

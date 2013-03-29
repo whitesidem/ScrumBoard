@@ -48,8 +48,9 @@
                         <div class="scrumCardListItem" card-title="{{card.title}}" data-ng-click="setCurrentCard(card)" >Unset Title</div>
                     </li>
                 </ul>
-                <div>
-                    <a data-ng-click="addDraftCard(list)">Add card...</a>
+                <div data-ng-controller="SkilzJs.controller.CreateCardDialogController" data-ng-click="openDialog(list.id)" >
+                    @*                    <a data-ng-click="addDraftCard(list)">Add card...</a>*@                
+                    Add a card...
                 </div>
             </li>
         </ul>
@@ -73,5 +74,7 @@
     <script src="/Scripts/Sockets/socketController.js" type="text/javascript"></script>
     <script src="/Scripts/listController.js" type="text/javascript"></script>
     <script src="/Scripts/CreateListDialogController.js" type="text/javascript"></script>
+    <script src="/Scripts/CreateCardDialogController.js" type="text/javascript"></script>
+
 </body>
 </html>
