@@ -4,11 +4,11 @@
 <div class="modal-body">
     <p>
         {{dialogModel.text}}
-        <input data-ng-model="listTitle" />
+        <input id="listTitle" name="listTitle"  data-ng-model="listTitle" />
     </p>
 
 </div>
 <div class="modal-footer">
-    <button data-ng-click="close()" class="btn btn-primary">OK</button>
+    <button id="okBtn" data-ng-click="close()" class="btn btn-primary">OK</button>
     <button data-ng-click="cancel()" class="btn ">Cancel</button>
 </div>

@@ -8,8 +8,9 @@ SkilzJs.sockets.socketController.setupSocket = function ($scope) {
 
     // Create a function that the hub can call to broadcast messages.
     scrumBoard.client.broadcastAddedListMessage = function (title, id) {
-        $scope.addDraftListWithName(title, id);
-        $scope.$apply();
+        $scope.$apply(function () {
+            $scope.addDraftListWithName(title, id);
+        });
     };
 
     //Start connection to socket

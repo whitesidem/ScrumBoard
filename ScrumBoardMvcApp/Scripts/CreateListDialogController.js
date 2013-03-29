@@ -3,7 +3,6 @@
 /// <reference path="models.js" />
 /// <reference path="Dialogs/SimpleEnterStringDialogController.js" />
 
-
 SkilzJs.namespace('controller');
 SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog, $http) {
 
@@ -18,28 +17,13 @@ SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog, $htt
 
 
     $scope.openDialog = function () {
-
-        console.dir($scope);
-
         var d = $dialog.dialog($scope.opts);
         d.open().then(function (listTitle) {
             if (listTitle) {
                 $http.post("api/ScrumBoardRestApi/CreateList", { "title": listTitle });
-//                $scope.addDraftListWithName(listTitle);
             }
         });
     };
 
-    //    $scope.openMessageBox = function () {
-    //        var title = 'This is a message box';
-    //        var msg = 'This is the content of the message box';
-    //        var btns = [{ result: 'cancel', label: 'Cancel' }, { result: 'ok', label: 'OK', cssClass: 'btn-primary'}];
-
-    //        $dialog.messageBox(title, msg, btns)
-    //      .open()
-    //      .then(function (result) {
-    //          alert('dialog closed with result: ' + result);
-    //      });
-    //    };
 });
 
