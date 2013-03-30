@@ -6,7 +6,7 @@
 
 SkilzJs.namespace('controller');
 
-SkilzJs.controller.ListController = (function ($scope, myBoard, mySockets) {
+SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets) {
 
     var cardTempCount = 1;
 
@@ -18,39 +18,47 @@ SkilzJs.controller.ListController = (function ($scope, myBoard, mySockets) {
 
 
     var populateBoard = function () {
-        var list = SkilzJs.model.list.FactoryCreate("MyList1");
-        list.addCard(SkilzJs.model.card.FactoryCreate("Webtrends"));
-        list.addCard(SkilzJs.model.card.FactoryCreate("Rebrand"));
-        list.addCard(SkilzJs.model.card.FactoryCreate("BAU"));
-        myBoard.addList(list);
-        list = SkilzJs.model.list.FactoryCreate("MyList2");
-        list.addCard(SkilzJs.model.card.FactoryCreate("Maxymiser"));
-        list.addCard(SkilzJs.model.card.FactoryCreate("ClickTale"));
-        myBoard.addList(list);
+        $http.get("api/ScrumBoardRestApi/GetBoardById?id=" + "1").success(function (data) {
+            if (_(data).isUndefined()) return;
+            if (_(data.ScrumLists).isUndefined()) return;
+            _(data.ScrumLists).each(function (e) {
+                var list = SkilzJs.model.list.FactoryCreate(e.Title, e.id);
+                _(e.ScrumCards).each(function (e) {
+                    var card = SkilzJs.model.card.FactoryCreate(e.Title, e.id);
+                    list.addCard(card);
+                });
+                myBoard.addList(list);
+               // $scope.$apply();
+            });
+
+        }); ;
+
+
+//                var list = SkilzJs.model.list.FactoryCreate("MyList1");
+//                list.addCard(SkilzJs.model.card.FactoryCreate("Webtrends"));
+//                list.addCard(SkilzJs.model.card.FactoryCreate("Rebrand"));
+//                list.addCard(SkilzJs.model.card.FactoryCreate("BAU"));
+//                myBoard.addList(list);
+//                list = SkilzJs.model.list.FactoryCreate("MyList2");
+//                list.addCard(SkilzJs.model.card.FactoryCreate("Maxymiser"));
+//                list.addCard(SkilzJs.model.card.FactoryCreate("ClickTale"));
+//                myBoard.addList(list);
+
     };
 
     var _addListEvent = function (list) {
         myBoard.addList(list);
     };
 
-    //    var createDraftList = function () {
-    //        $scope.draftList = SkilzJs.model.list.FactoryCreate("");
-    //    };
-
-    //    var createDraftCard = function () {
-    //        $scope.draftCard = SkilzJs.model.card.FactoryCreate("", true);
-    //    };
 
     $scope.addDraftListWithName = function (title, id) {
-        var list = SkilzJs.model.list.FactoryCreate(title);
-        list.id = id;
+        var list = SkilzJs.model.list.FactoryCreate(title, id);
         myBoard.addList(list);
     };
 
     $scope.addDraftCardWithName = function (listId, title, id) {
         var list = myBoard.getListById(listId);
-        var card = SkilzJs.model.card.FactoryCreate(title, true);
-        card.id = id;
+        var card = SkilzJs.model.card.FactoryCreate(title, id, true);
         list.addCard(card);
     };
 
@@ -58,24 +66,15 @@ SkilzJs.controller.ListController = (function ($scope, myBoard, mySockets) {
         $scope.currentCard = card;
     };
 
-    //ON OK SAVE OF DRAFT CARD - Remove card and
-    //Listen for addCardEvent
-    var addCardEvent = function (card, listId) {
-        myBoard.addList(list);
-    };
-
 
     $scope.addListEvent = _addListEvent;
 
     populateBoard();
 
-    //    createDraftList();
-    //    createDraftCard();
-
     mySockets.setupSocket($scope);
 
 });
 
-SkilzJs.controller.ListController.$inject = ["$scope", "myBoard", "mySockets"];
+SkilzJs.controller.ListController.$inject = ["$scope", "$http", "myBoard", "mySockets"];
 
 

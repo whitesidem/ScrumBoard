@@ -7,31 +7,54 @@ using System.Web.Http;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using ScrumBoardDomain.DomainService;
+using ScrumBoardDomain.Interfaces;
 using ScrumBoardDomain.Repository;
+using ScrumBoardMvcApp.Mappers;
+using ScrumBoardMvcApp.Models;
 using ScrumBoardMvcApp.signalr;
 
 namespace ScrumBoardMvcApp.Controllers
 {
     public class ScrumBoardRestApiController : ApiController
     {
+
+        private IBoardManager _boardManager;
+
+        public ScrumBoardRestApiController()
+        {
+            CreateBoardManager();
+        }
+
+        public ScrumBoardRestApiController(IBoardManager boardManager)
+        {
+            _boardManager = boardManager;
+        }
+
+
         // GET api/scrumboardrestapi
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/scrumboardrestapi/5
-        public string Get(int id)
+        public void CreateBoardManager()
         {
-            return "value";
+            var boardRepository = new BoardRepository();
+            _boardManager = new BoardManager(boardRepository);
+        }
+
+
+        [HttpGet]
+        public ScrumBoardViewModel GetBoardById(int id)
+        {
+            var board = _boardManager.RetrieveScrumBoardById(id);
+            return ScrumBoardMapper.DomainToViewModel(board);
         }
 
         [HttpPost]
        public void CreateCard(CreateCard card)
         {
-            var boardRepository = new BoardRepository();
-            var boardManager = new BoardManager(boardRepository);
-            var newCard = boardManager.CreateAndAddScrumCardForListId(card.ListId, card.Title);
+            var newCard = _boardManager.CreateAndAddScrumCardForListId(card.ListId, card.Title);
             var hub = new ScrumBoardHub();
             hub.SendAddedCardMessage(card.ListId, newCard.Title, newCard.Id);
         }
@@ -39,34 +62,14 @@ namespace ScrumBoardMvcApp.Controllers
         [HttpPost]
         public void CreateList(CreateList list)
         {
-            var boardRepository = new BoardRepository();
-            var boardManager = new BoardManager(boardRepository);
-            var newList = boardManager.CreateAndAddScrumListForBoardId(1, list.Title);
-
+            var newList = _boardManager.CreateAndAddScrumListForBoardId(1, list.Title);
             var hub = new ScrumBoardHub();
             hub.SendAddedListMessage(newList.Title, newList.Id);
-
-
-            //var scrumBoardHub = GlobalHost.ConnectionManager.GetHubContext<ScrumBoardHub>();
-            //if (scrumBoardHub == null)
-            //{
-            //    return;
-            //}
-            //     scrumBoardHub.SendAddedListMessage(newList.Title, newList.Id);
-
-
-//            var hd = new DefaultHubManager(GlobalHost.DependencyResolver);
-//            var hub = hd.ResolveHub("ScrumBoardHub") as ScrumBoardHub;
-////            hub.SendAddedListMessage(newList.Title, newList.Id);
-//            hub.Clients.All.broadcastAddedListMessage(newList.Title, newList.Id);
-
-//            scrumBoardHub.Clients.All.broadcastAddedListMessage(newList.Title, newList.Id);
         }
 
         // PUT api/scrumboardrestapi/5
         public void Put(int id, [FromBody]string value)
         {
-            string a = "asas";
         }
 
         // DELETE api/scrumboardrestapi/5
@@ -85,4 +88,7 @@ namespace ScrumBoardMvcApp.Controllers
     {
         public String Title { get; set; }
     }
+
+
+
 }

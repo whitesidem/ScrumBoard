@@ -23,7 +23,26 @@ namespace ScrumBoardDomain.Repository
         static BoardRepository()
         {
             _boardData.Id = 1;
-            _boardData.ScrumLists = new List<ScrumList>();
+            _boardData.ScrumLists = new List<ScrumList> {new ScrumList()};
+            _boardData.ScrumLists[0].Id = 1;
+            _boardData.ScrumLists[0].Title = "List1";
+            _boardData.ScrumLists[0].ScrumCards = new List<ScrumCard> {new ScrumCard()};
+            _boardData.ScrumLists[0].ScrumCards[0].Id = 10;
+            _boardData.ScrumLists[0].ScrumCards[0].Title = "TestCard1";
+            _boardData.ScrumLists[0].ScrumCards.Add(new ScrumCard());
+            _boardData.ScrumLists[0].ScrumCards[1].Id = 11;
+            _boardData.ScrumLists[0].ScrumCards[1].Title = "TestCard2";
+
+            _boardData.ScrumLists.Add(new ScrumList());
+            _boardData.ScrumLists[1].Id = 2;
+            _boardData.ScrumLists[1].Title = "List2";
+            _boardData.ScrumLists[1].ScrumCards = new List<ScrumCard> { new ScrumCard() };
+            _boardData.ScrumLists[1].ScrumCards[0].Id = 20;
+            _boardData.ScrumLists[1].ScrumCards[0].Title = "TestCard3";
+            _boardData.ScrumLists[1].ScrumCards.Add(new ScrumCard());
+            _boardData.ScrumLists[1].ScrumCards[1].Id = 11;
+            _boardData.ScrumLists[1].ScrumCards[1].Title = "TestCard4";
+        
         }
 
         public ScrumBoard RetrieveBoardById(int id)

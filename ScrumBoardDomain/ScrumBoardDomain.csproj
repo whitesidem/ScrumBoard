@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
@@ -48,14 +51,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="DomainService\BoardManager.cs" />
     <Compile Include="Entities\ScrumBoard.cs" />
     <Compile Include="Entities\ScrumCard.cs" />
     <Compile Include="Entities\ScrumList.cs" />
     <Compile Include="Interactors\ScrumBoardRequestReposonse.cs" />
+    <Compile Include="Interfaces\IBoardManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BoardRepository.cs" />
+    <Compile Include="Tests\Builders\ScrumBoardBuilder.cs" />
+    <Compile Include="Tests\Builders\ScrumCardBuilder.cs" />
+    <Compile Include="Tests\Builders\ScrumListBuilder.cs" />
     <Compile Include="Tests\TestServiceManager.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -22,9 +22,9 @@ SkilzJs.model.board = {
 };
 
 SkilzJs.model.list = {
-    FactoryCreate: function (title) {
+    FactoryCreate: function (title, id) {
         var list = Object.create(SkilzJs.model.list);
-        list.id = -1;
+        list.id = id;
         list.title = title;
         list.cards = [];
         return list;
@@ -38,9 +38,9 @@ SkilzJs.model.list = {
 };
 
 SkilzJs.model.card = {
-    FactoryCreate: function (title, isDraft) {
+    FactoryCreate: function (title, id, isDraft) {
         var card = Object.create(SkilzJs.model.card);
-        card.id = -1;
+        card.id = id;
         card.title = title;
         card.draft = isDraft || false;
         return card;

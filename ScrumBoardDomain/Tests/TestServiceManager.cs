@@ -7,6 +7,7 @@ using NUnit.Framework;
 using ScrumBoardDomain.DomainService;
 using ScrumBoardDomain.Entities;
 using ScrumBoardDomain.Repository;
+using ScrumBoardDomain.Tests.Builders;
 
 namespace ScrumBoardDomain.Tests
 {
@@ -67,10 +68,7 @@ namespace ScrumBoardDomain.Tests
         {
             _boardRepositoryStub = new Mock<IBoardRepository>();
             _boardManager = new BoardManager(_boardRepositoryStub.Object);
-            _scrumBoard = new ScrumBoard()
-                {
-                    Id = _boardId
-                };
+            _scrumBoard = ScrumBoardBuilder.Build(_boardId, "TestBoard");
         }
 
 

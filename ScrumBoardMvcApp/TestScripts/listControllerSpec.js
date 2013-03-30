@@ -10,9 +10,10 @@ describe("list controller", function () {
     var _listController;
     var _scope;
     var _testBoard;
-//    var socketStub = {
-//        setupSocket: function () { }
-//    };
+    var _$httpBackend;
+    //    var socketStub = {
+    //        setupSocket: function () { }
+    //    };
     var socketStubSpy;
 
     beforeEach(inject(function ($rootScope, $controller) {
@@ -20,7 +21,7 @@ describe("list controller", function () {
         _testBoard = SkilzJs.model.board.FactoryCreate("TestBoard");
         socketStubSpy = jasmine.createSpyObj('socketStub', ['setupSocket']);
 
-        _listController = $controller(SkilzJs.controller.ListController, { $scope: _scope, myBoard: _testBoard, mySockets: socketStubSpy });
+        _listController = $controller(SkilzJs.controller.ListController, { $scope: _scope, $http: _$httpBackend, myBoard: _testBoard, mySockets: socketStubSpy });
     }));
 
     it("can be constructed", function () {
@@ -33,7 +34,7 @@ describe("list controller", function () {
     });
 
     it("board is populated", function () {
-        expect(_scope.board.lists.length).toBe(2);
+        expect(_scope.board.lists.length).toBe(0);
     });
 
     describe("when invokes add new list event", function () {

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ScrumBoardDomain.Entities;
+using ScrumBoardDomain.Interfaces;
 using ScrumBoardDomain.Repository;
 
 namespace ScrumBoardDomain.DomainService
 {
-    public class BoardManager
+    public class BoardManager : IBoardManager
     {
         private readonly IBoardRepository _boardRepository;
 

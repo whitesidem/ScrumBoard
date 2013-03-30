@@ -21,7 +21,6 @@ SkilzJs.controller.CreateCardDialogController = (function ($scope, $dialog, $htt
         d.open().then(function (cardTitle) {
             if (cardTitle) {
                 $http.post("api/ScrumBoardRestApi/CreateCard", { "title": cardTitle, "listId" : listId });
-//                $http.post("api/ScrumBoardRestApi/CreateCard", { "title": cardTitle});
             }
         });
     };
