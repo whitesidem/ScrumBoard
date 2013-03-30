@@ -1,42 +1,50 @@
-﻿/// <reference path="External/Angular/angular.js" />
-/// <reference path="Shared/global.js" />
-/// <reference path="models.js" />
+﻿/// <reference path="/Scripts/External/jquery-ui-1.10.2.js" />
+/// <reference path="/Scripts/External/jquery-ui-1.10.2.js" />
+/// <reference path="/Scripts/External/Angular/angular.js" />
+/// <reference path="/Scripts/Shared/global.js" />
+/// <reference path="/Scripts/models.js" />
+
+
 
 angular.module("ScrumBoardApp")
 .directive('scrumCardListItem', function () {
     return {
-//        restrict: 'E',
         restrict: 'C',
-        // This HTML will replace the zippy directive.
         replace: true,
         transclude: true,
-        scope: { innerTitle: '@cardTitle' },
-        templateUrl: '/Templates/ScrumBoard/ScrumCard.htm',
-//        template: '<div class="scrumCard">' +
-//                '{{innerTitle}}' +
-//                '<p ng-transclude>' +
-//                '</p>' +
-//                '</div>'
-//        // The linking function will add behavior to the template
-/*        link: function (scope, element, attrs) {
-            // Title element
-            var title = angular.element(element.children()[0]),
-            // Opened / closed state
-            opened = true;
+        scope: { innerTitle: '@cardTitle', cardId: '@cardId' },
+        templateUrl: '/Templates/ScrumBoard/ScrumCard.htm'
+    };
+});
 
-            // Clicking on title should open/close the zippy
-            title.bind('click', toggle);
-
-            // Toggle the closed/opened state
-            function toggle() {
-                opened = !opened;
-                element.removeClass(opened ? 'closed' : 'opened');
-                element.addClass(opened ? 'opened' : 'closed');
-            }
-
-            // initialize the zippy
-            toggle();
+angular.module("ScrumBoardApp")
+.directive('draggable', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            element.draggable({
+                revert: true
+            });
         }
-        */
-    }
+    };
+});
+
+angular.module("ScrumBoardApp")
+.directive('droppable', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            element.droppable({
+                drop: function (event, ui) {
+                    alert(angular.element(ui.draggable).data('testMe'));
+                    alert(angular.element(ui.draggable).data('cardId'));
+                    
+                    var dropCard = angular.element(this);
+                    var dragArea = angular.element(ui.draggable).parent;
+                    console.dir(dropCard);
+                    //                    alert(dragIndex);
+                }
+            });
+        }
+    };
 });

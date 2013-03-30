@@ -18,31 +18,32 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
 
 
     var populateBoard = function () {
-        $http.get("api/ScrumBoardRestApi/GetBoardById?id=" + "1").success(function (data) {
+        var testBoardId = 1;
+        $http.get("api/ScrumBoardRestApi/GetBoardById?id=" + testBoardId).success(function (data) {
             if (_(data).isUndefined()) return;
             if (_(data.ScrumLists).isUndefined()) return;
             _(data.ScrumLists).each(function (e) {
-                var list = SkilzJs.model.list.FactoryCreate(e.Title, e.id);
+                var list = SkilzJs.model.list.FactoryCreate(e.Title, e.Id);
                 _(e.ScrumCards).each(function (e) {
-                    var card = SkilzJs.model.card.FactoryCreate(e.Title, e.id);
+                    var card = SkilzJs.model.card.FactoryCreate(e.Title, e.Id);
                     list.addCard(card);
                 });
                 myBoard.addList(list);
-               // $scope.$apply();
+                // $scope.$apply();
             });
 
         }); ;
 
 
-//                var list = SkilzJs.model.list.FactoryCreate("MyList1");
-//                list.addCard(SkilzJs.model.card.FactoryCreate("Webtrends"));
-//                list.addCard(SkilzJs.model.card.FactoryCreate("Rebrand"));
-//                list.addCard(SkilzJs.model.card.FactoryCreate("BAU"));
-//                myBoard.addList(list);
-//                list = SkilzJs.model.list.FactoryCreate("MyList2");
-//                list.addCard(SkilzJs.model.card.FactoryCreate("Maxymiser"));
-//                list.addCard(SkilzJs.model.card.FactoryCreate("ClickTale"));
-//                myBoard.addList(list);
+        //                var list = SkilzJs.model.list.FactoryCreate("MyList1");
+        //                list.addCard(SkilzJs.model.card.FactoryCreate("Webtrends"));
+        //                list.addCard(SkilzJs.model.card.FactoryCreate("Rebrand"));
+        //                list.addCard(SkilzJs.model.card.FactoryCreate("BAU"));
+        //                myBoard.addList(list);
+        //                list = SkilzJs.model.list.FactoryCreate("MyList2");
+        //                list.addCard(SkilzJs.model.card.FactoryCreate("Maxymiser"));
+        //                list.addCard(SkilzJs.model.card.FactoryCreate("ClickTale"));
+        //                myBoard.addList(list);
 
     };
 

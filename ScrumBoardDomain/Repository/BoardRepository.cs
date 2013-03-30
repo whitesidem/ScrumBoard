@@ -40,7 +40,7 @@ namespace ScrumBoardDomain.Repository
             _boardData.ScrumLists[1].ScrumCards[0].Id = 20;
             _boardData.ScrumLists[1].ScrumCards[0].Title = "TestCard3";
             _boardData.ScrumLists[1].ScrumCards.Add(new ScrumCard());
-            _boardData.ScrumLists[1].ScrumCards[1].Id = 11;
+            _boardData.ScrumLists[1].ScrumCards[1].Id = 21;
             _boardData.ScrumLists[1].ScrumCards[1].Title = "TestCard4";
         
         }

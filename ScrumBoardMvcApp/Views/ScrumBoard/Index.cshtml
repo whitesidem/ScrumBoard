@@ -39,23 +39,22 @@
         <hr />
 
         <ul>
-            <li data-ng-repeat="list in board.lists" class="listItem">
+            <li data-ng-repeat="list in board.lists" class="listItem" >
                 <h1>
                     {{list.title}}</h1>
                 <ul>
-                    @*                    <li data-ng-repeat="card in list.cards">{{card.title}} </li>*@
                     <li data-ng-repeat="card in list.cards">
-                        <div class="scrumCardListItem" card-title="{{card.title}}" data-ng-click="setCurrentCard(card)" >Unset Title</div>
+                        <div class="scrumCardListItem"  card-title="{{card.title}}" card-id="{{card.id}}"  data-ng-click="setCurrentCard(card)" >Card#{{card.id}}</div>
                     </li>
                 </ul>
-                <div data-ng-controller="SkilzJs.controller.CreateCardDialogController" data-ng-click="openDialog(list.id)" >
-                    @*                    <a data-ng-click="addDraftCard(list)">Add card...</a>*@                
+                <div data-ng-controller="SkilzJs.controller.CreateCardDialogController" data-ng-click="openDialog(list.id)" droppable>
                     Add a card...
                 </div>
             </li>
         </ul>
     </div>
     <script src="/Scripts/External/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="/Scripts/External/jquery-ui-1.10.2.js" type="text/javascript"></script>
     <script src="/Scripts/External/underscore.js" type="text/javascript"></script>
     <script src="/Scripts/External/Angular/angular.js" type="text/javascript"></script>
     <script src="/Scripts/External/Bootstrap/bootstrap.js" type="text/javascript"></script>
