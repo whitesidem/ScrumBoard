@@ -88,36 +88,81 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
         };
 
         var onDropComplete = function (eSrc, item, index) {
-//            alert('moved "' + item.name + ' from ' + eSrc.data('model') + '[' + index + ']' + ' to ' + eDroppable.data('model'));
-//            console.log('moved "' + item.name + ' from ' + eSrc.data('model') + '[' + index + ']' + ' to ' + eDroppable.data('model'));
+            //            alert('moved "' + item.name + ' from ' + eSrc.data('model') + '[' + index + ']' + ' to ' + eDroppable.data('model'));
+            //            console.log('moved "' + item.name + ' from ' + eSrc.data('model') + '[' + index + ']' + ' to ' + eDroppable.data('model'));
         };
 
-        var eSrc = eDraggable.closest('.listDroppable');
-        var sSrc = eSrc.data('model');
-        var sTarget = eDroppable.data('model');
+
+        var sourceCardId = eDraggable.data('cardid');
+        var targetSrc = eDroppable.closest('.listDroppable');
+        var targetCardId = targetSrc.data('cardid');
+
+ //       alert(sourceCardId);
+ //       alert(targetCardId);
+
+        $scope.$apply(function () {
+
+            var targetCard = myBoard.getCardById(targetCardId);
+            var sourceCard = myBoard.getCardById(sourceCardId);
+            var targetListId = targetCard.listId;
+            var sourceListId = sourceCard.listId;
+            var targetList = myBoard.getListById(targetListId);
+            var sourceList = myBoard.getListById(sourceListId);
+
+//            alert(sourceList.title);
+//            alert(targetList.title);
+
+
+            //            var sourceIndex = _(sourceList.cards).indexOf(sourceCard);
+            var targetIndex = _(targetList.cards).indexOf(targetCard);
+
+            sourceList.removeCard(sourceCard);
+            targetList.addCard(sourceCard, targetIndex);
+            //            sourceList.cards.splice(sourceIndex, 1);
+
+        });
+
+
+        //var sSrc = eSrc.data('model');
+        //        var sTarget = eDroppable.data('model');
+
+        //        var targetListIndex = eDroppable.data('listindex');
+
+        /*
+
+        var targetList = myBoard.ScrumLists[targetListIndex];
 
         if (sSrc != sTarget) {
-            $scope.$apply(function () {
-                var index = eDraggable.data('index');
-                //                var aSrc = $scope.$eval(sSrc);
-                var aSrc = sSrc;
-                //                var aTarget = $scope.$eval(sTarget);
-                var aTarget = sTarget;
-                //                var item = aSrc[index];
-                var item = aSrc.cards[index];
+        $scope.$apply(function () {
+        var 
 
-                var error = isDropForbidden(aTarget, item);
-                if (error) {
-                    onDropRejected(error);
-                } else {
-                    //aTarget.push(item);
-                    aTarget.cards.push(item);
-                    //                    aSrc.splice(index, 1);
-                    aSrc.cards.splice(index, 1);
-                    onDropComplete(eSrc, item, index);
-                }
-            });
+
+        //var index = eDraggable.data('index');
+        var sourceCardIndex = eDraggable.data('cardindex');
+        var sourceCard = 
+
+        //                var aSrc = $scope.$eval(sSrc);
+        var aSrc = sSrc;
+        //                var aTarget = $scope.$eval(sTarget);
+        var aTarget = sTarget;
+        //                var item = aSrc[index];
+        var item = aSrc.cards[index];
+
+        var error = isDropForbidden(aTarget, item);
+        if (error) {
+        onDropRejected(error);
+        } else {
+        //aTarget.push(item);
+        aTarget.cards.push(item);
+        //                    aSrc.splice(index, 1);
+        aSrc.cards.splice(index, 1);
+        onDropComplete(eSrc, item, index);
         }
+                
+
+        });
+        }
+        */
 
     };
 
