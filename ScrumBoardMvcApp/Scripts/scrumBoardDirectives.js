@@ -12,7 +12,7 @@ angular.module("ScrumBoardApp")
         restrict: 'C',
         replace: true,
         transclude: true,
-        scope: { innerTitle: '@cardTitle', cardId: '@cardId' },
+        scope: { innerTitle: '@cardTitle', cardId: '@cardId', model: '@model', index:"@index" },
         templateUrl: '/Templates/ScrumBoard/ScrumCard.htm'
     };
 });
@@ -29,20 +29,39 @@ angular.module("ScrumBoardApp")
     };
 });
 
+//angular.module("ScrumBoardApp")
+//.directive('droppable', function () {
+//    return {
+//        restrict: 'A',
+//        link: function (scope, element, attrs) {
+//            element.droppable({
+//                drop: function (event, ui) {
+//                    alert(angular.element(ui.draggable).data('testMe'));
+//                    alert(angular.element(ui.draggable).data('cardId'));
+//                    
+//                    var dropCard = angular.element(this);
+//                    var dragArea = angular.element(ui.draggable).parent;
+//                    console.dir(dropCard);
+//                    //                    alert(dragIndex);
+//                }
+//            });
+//        }
+//    };
+//});
+
+
 angular.module("ScrumBoardApp")
-.directive('droppable', function () {
+.directive('uiDropListener', function () {
     return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
-            element.droppable({
+        link: function (scope, eDroppable, attrs) {
+            eDroppable.droppable({
                 drop: function (event, ui) {
-                    alert(angular.element(ui.draggable).data('testMe'));
-                    alert(angular.element(ui.draggable).data('cardId'));
-                    
-                    var dropCard = angular.element(this);
-                    var dragArea = angular.element(ui.draggable).parent;
-                    console.dir(dropCard);
-                    //                    alert(dragIndex);
+                    var fnDropListener = scope.$eval(attrs.uiDropListener);
+                    if (fnDropListener && angular.isFunction(fnDropListener)) {
+                        var eDraggable = angular.element(ui.draggable);
+                        fnDropListener(eDraggable, eDroppable, event, ui);
+                    }
                 }
             });
         }
