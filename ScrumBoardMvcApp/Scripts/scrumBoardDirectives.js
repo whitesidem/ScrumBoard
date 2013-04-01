@@ -12,8 +12,9 @@ angular.module("ScrumBoardApp")
         restrict: 'C',
         replace: true,
         transclude: true,
-        scope: { innerTitle: '@cardTitle'},
-        templateUrl: '/Templates/ScrumBoard/ScrumCard.htm'
+        scope: false,
+//        scope: { innerTitle: '@cardTitle'},
+        templateUrl: '/Templates/ScrumBoard/ScrumCard.htm'     
     };
 });
 
@@ -57,7 +58,8 @@ angular.module("ScrumBoardApp")
         link: function (scope, eDroppable, attrs) {
             eDroppable.droppable({
                 drop: function (event, ui) {
-                    var fnDropListener = scope.$parent.$eval(attrs.uiDropListener);
+//                    var fnDropListener = scope.$parent.$eval(attrs.uiDropListener);
+                    var fnDropListener = scope.$eval(attrs.uiDropListener);
                     if (fnDropListener && angular.isFunction(fnDropListener)) {
                         var eDraggable = angular.element(ui.draggable);
                         fnDropListener(eDraggable, eDroppable, event, ui);

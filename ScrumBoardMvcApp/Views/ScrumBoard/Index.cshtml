@@ -40,20 +40,17 @@
             <li data-ng-repeat="list in board.lists" class="listItem">
                 <h1>
                     {{list.title}}</h1>
-                @*                    <div class="listDroppable" ui-drop-listener='dropListener' data-model='{{list}}' data-listindex="{{$index}" >*@
                 <ul>
                     <li data-ng-repeat="card in list.cards">
-                        <div class="listDroppable" draggable data-cardid="{{card.id}}">
-                            <div class="scrumCardListItem" card-title="{{card.title}}" data-cardid="{{card.id}}"  data-ng-click="setCurrentCard(card)">
+                            <div class="scrumCardListItem" >
                                 Card #{{card.id}}
                             </div>
-                        </div>
                     </li>
                 </ul>
-                @*            </div>*@
-                <div data-ng-controller="SkilzJs.controller.CreateCardDialogController" data-ng-click="openDialog(list.id)"
-                    droppable>
-                    Add a card...
+                <div ui-drop-listener='dropListener' data-cardid="-1" data-listid="{{list.id}}">
+                    <div data-ng-controller="SkilzJs.controller.CreateCardDialogController" class="addCard"  data-ng-click="openDialog(list.id)">
+                        Add a card...
+                    </div>
                 </div>
             </li>
         </ul>

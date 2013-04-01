@@ -29,7 +29,6 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
                     list.addCard(card);
                 });
                 myBoard.addList(list);
-                // $scope.$apply();
             });
 
         }); ;
@@ -94,31 +93,34 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
 
 
         var sourceCardId = eDraggable.data('cardid');
-        var targetSrc = eDroppable.closest('.listDroppable');
-        var targetCardId = targetSrc.data('cardid');
+        var targetCardId = eDroppable.data('cardid');
 
- //       alert(sourceCardId);
- //       alert(targetCardId);
+        //       alert(sourceCardId);
+        //       alert(targetCardId);
 
         $scope.$apply(function () {
 
-            var targetCard = myBoard.getCardById(targetCardId);
             var sourceCard = myBoard.getCardById(sourceCardId);
-            var targetListId = targetCard.listId;
             var sourceListId = sourceCard.listId;
-            var targetList = myBoard.getListById(targetListId);
             var sourceList = myBoard.getListById(sourceListId);
 
-//            alert(sourceList.title);
-//            alert(targetList.title);
-
-
-            //            var sourceIndex = _(sourceList.cards).indexOf(sourceCard);
-            var targetIndex = _(targetList.cards).indexOf(targetCard);
-
             sourceList.removeCard(sourceCard);
-            targetList.addCard(sourceCard, targetIndex);
-            //            sourceList.cards.splice(sourceIndex, 1);
+
+            var targetListId = -1;
+            var targetList = null;
+            if (targetCardId != -1) {
+                var targetCard = myBoard.getCardById(targetCardId);
+                targetListId = targetCard.listId;
+                targetList = myBoard.getListById(targetListId);
+                var targetIndex = _(targetList.cards).indexOf(targetCard);
+                targetList.addCard(sourceCard, targetIndex);
+            } else {
+                targetListId = eDroppable.data('listid');
+                targetList = myBoard.getListById(targetListId);
+                targetList.addCard(sourceCard);
+            }
+            //            alert(sourceList.title);
+            //            alert(targetList.title);
 
         });
 
