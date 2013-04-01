@@ -107,6 +107,13 @@ namespace ScrumBoardDomain.DomainService
             return orderedCards;
         }
 
+        public void MoveCard(int sourceCardId, int targetListId, int targetCardId)
+        {
+            var sourceCard = _boardRepository.RetrieveScrumCardById(sourceCardId);
+            var targetCard = _boardRepository.RetrieveScrumCardById(targetCardId);
+            _boardRepository.UpdateCardParentPosition(sourceCardId, sourceCard.ParentSequenceId);
+            _boardRepository.UpdateCardParentPosition(targetCardId, sourceCardId);
+        }
 
 
         private static int CalcScrumListPosition(IList<ScrumList> list, ScrumList listItem)

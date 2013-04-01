@@ -14,6 +14,7 @@ namespace ScrumBoardDomain.Interfaces
         ScrumBoard RetrieveScrumBoardById(int boardID);
         List<ScrumList> RetrieveOrderedScrumListsByBoardId(int boardId);
         List<ScrumCard> RetrieveOrderedScrumCardsByListId(int listId);
+        void MoveCard(int sourceCardId, int targetListId, int targetCardId);
     }
 
 }

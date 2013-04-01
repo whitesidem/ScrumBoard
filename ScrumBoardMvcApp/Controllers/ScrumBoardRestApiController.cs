@@ -67,10 +67,13 @@ namespace ScrumBoardMvcApp.Controllers
             hub.SendAddedListMessage(newList.Title, newList.Id);
         }
 
-        // PUT api/scrumboardrestapi/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        public void MoveCard(int sourceCardId, int targetListId, int targetCardId)
         {
+            _boardManager.MoveCard(sourceCardId, targetListId, targetCardId);
         }
+        
+
 
         // DELETE api/scrumboardrestapi/5
         public void Delete(int id)

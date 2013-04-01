@@ -73,7 +73,7 @@ namespace ScrumBoardDomain.Tests
 
 
         [Test]
-        public void CreateAndAddScrumListForBoardId_NormalUsage_CreatesBoard()
+        public void CreateAndAddScrumListForBoardId_NormalUsage_CreatesList()
         {
             //Act
             var result = _boardManager.CreateAndAddScrumListForBoardId(_boardId,"test list");
@@ -83,6 +83,113 @@ namespace ScrumBoardDomain.Tests
             Assert.That(result.Title, Is.EqualTo("test list"));
 
         }
+
+
+        [Test]
+        public void MoveCard_NormalUsage_InvokesRepositoryRetrieveScrumCardByIdForSourceCard_WithCorrectCardId()
+        {
+            //Arrange
+            int sourceCardId = 10;
+            int targetListId = 20;
+            int targetCardId = 30;
+            int sourceParentSequenceId = 5;
+            var sourceCard = ScrumCardBuilder.Build(10, "Test Card1", sourceParentSequenceId);
+            _boardRepositoryStub.Setup(r => r.RetrieveScrumCardById(sourceCardId)).Returns(sourceCard);
+
+            //Act
+            _boardManager.MoveCard(sourceCardId, targetListId, targetCardId);
+
+            //Assert
+            _boardRepositoryStub.Verify( r => r.RetrieveScrumCardById(sourceCardId));
+
+        }
+
+        [Test]
+        public void MoveCard_NormalUsage_InvokesRepositoryRetrieveScrumCardByIdForTargetCard_WithCorrectCardId()
+        {
+            //Arrange
+            int sourceCardId = 10;
+            int targetListId = 20;
+            int targetCardId = 30;
+            int sourceParentSequenceId = 5;
+            var sourceCard = ScrumCardBuilder.Build(10, "Test Card1", sourceParentSequenceId);
+            _boardRepositoryStub.Setup(r => r.RetrieveScrumCardById(sourceCardId)).Returns(sourceCard);
+
+            //Act
+            _boardManager.MoveCard(sourceCardId, targetListId, targetCardId);
+
+            //Assert
+            _boardRepositoryStub.Verify(r => r.RetrieveScrumCardById(targetCardId));
+
+        }
+
+
+        [Test]
+        public void MoveCard_NormalUsage_InvokesUpdateCardPositionOrphanedCard_WithCorrectParentPosition()
+        {
+            //Arrange
+            int sourceCardId = 10;
+            int targetListId = 20;
+            int targetCardId = 30;
+            int sourceParentSequenceId = 5;
+            var sourceCard = ScrumCardBuilder.Build(10, "Test Card1", sourceParentSequenceId);
+
+            _boardRepositoryStub.Setup(r => r.RetrieveScrumCardById(sourceCardId)).Returns(sourceCard);
+
+            //Act
+            _boardManager.MoveCard(sourceCardId, targetListId, targetCardId);
+
+            //Assert
+            _boardRepositoryStub.Verify(r => r.UpdateCardParentPosition(sourceCardId, sourceParentSequenceId));
+
+        }
+
+
+        [Test]
+        public void MoveCard_NormalUsage_InvokesUpdateCardPositionForTarget_WithCorrectParentPosition()
+        {
+            //Arrange
+            int sourceCardId = 10;
+            int targetListId = 20;
+            int targetCardId = 30;
+            int sourceParentSequenceId = 5;
+            var sourceCard = ScrumCardBuilder.Build(10, "Test Card1", sourceParentSequenceId);
+
+            _boardRepositoryStub.Setup(r => r.RetrieveScrumCardById(sourceCardId)).Returns(sourceCard);
+
+            //Act
+            _boardManager.MoveCard(sourceCardId, targetListId, targetCardId);
+
+            //Assert
+            _boardRepositoryStub.Verify(r => r.UpdateCardParentPosition(targetCardId, sourceCardId));
+
+        }
+
+        [Test]
+        public void MoveCard_NormalUsage_InvokesUpdateCardPositionForTarget_WithCorrectCardIdAndListId()
+        {
+            //Arrange
+            int sourceCardId = 10;
+            int sourceListId = 100;
+            int targetListId = 20;
+            int targetCardId = 30;
+            int sourceParentSequenceId = 5;
+            int targetParentSequenceId = 15;
+            var sourceCard = ScrumCardBuilder.Build(10, "Test Card1", sourceListId, sourceParentSequenceId);
+            var targetCard = ScrumCardBuilder.Build(20, "Test Card2", targetListId, targetParentSequenceId);
+
+            _boardRepositoryStub.Setup(r => r.RetrieveScrumCardById(sourceCardId)).Returns(sourceCard);
+            _boardRepositoryStub.Setup(r => r.RetrieveScrumCardById(targetCardId)).Returns(targetCard);
+
+            //Act
+            _boardManager.MoveCard(sourceCardId, targetListId, targetCardId);
+
+            //Assert
+            _boardRepositoryStub.Verify(r => r.UpdateCardParentPositionAndListId(sourceCardId, targetParentSequenceId, targetListId));
+
+        }
+
+
 
         [Test]
         public void CreateAndAddScrumListForBoardId_InvokesRepositoryAndSetsNextId()
@@ -101,5 +208,54 @@ namespace ScrumBoardDomain.Tests
 
 
     }
+
+    [TestFixture]
+    public class TestServiceManager_Card
+    {
+        private BoardManager _boardManager;
+        private static Mock<IBoardRepository> _boardRepositoryStub;
+        private ScrumBoard _scrumBoard;
+        private int _boardId;
+
+        [SetUp]
+        public void Setup()
+        {
+            _boardRepositoryStub = new Mock<IBoardRepository>();
+            _boardManager = new BoardManager(_boardRepositoryStub.Object);
+            _scrumBoard = ScrumBoardBuilder.Build(_boardId, "TestBoard");
+        }
+
+
+        [Test]
+        public void CreateAndAddScrumCardForListId_NormalUsage_CreatesCard()
+        {
+            //Act
+            var stubListId = 10;
+            var result = _boardManager.CreateAndAddScrumCardForListId(stubListId, "test card");
+
+            //Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Title, Is.EqualTo("test card"));
+
+        }
+
+        [Test]
+        public void CreateAndAddScrumListForBoardId_InvokesRepositoryAndSetsNextId()
+        {
+            //Arrange
+            int idStub = 88;
+            _boardRepositoryStub.Setup((m => m.CreateScrumListForBoardIdAndGenerateId(_boardId, It.IsAny<ScrumList>()))).Returns(idStub).Verifiable();
+
+            //Act
+            var result = _boardManager.CreateAndAddScrumListForBoardId(_boardId, "test list");
+
+            //Assert
+            _boardRepositoryStub.Verify();
+            Assert.That(result.Id, Is.EqualTo(idStub));
+        }
+
+
+    }
+
 
 }

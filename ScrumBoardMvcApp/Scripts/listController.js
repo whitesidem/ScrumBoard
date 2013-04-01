@@ -101,11 +101,23 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
         $scope.$apply(function () {
 
             var sourceCard = myBoard.getCardById(sourceCardId);
+
+            var targetListId = -1;
+            if (targetCardId != -1) {
+                var targetCard = myBoard.getCardById(targetCardId);
+                targetListId = targetCard.listId;
+            } else {
+                targetListId = eDroppable.data('listid');
+            }
+
             var sourceListId = sourceCard.listId;
             var sourceList = myBoard.getListById(sourceListId);
-
             sourceList.removeCard(sourceCard);
 
+            $http.put("api/ScrumBoardRestApi/MoveCard?sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
+
+
+/*
             var targetListId = -1;
             var targetList = null;
             if (targetCardId != -1) {
@@ -119,6 +131,8 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
                 targetList = myBoard.getListById(targetListId);
                 targetList.addCard(sourceCard);
             }
+*/
+
             //            alert(sourceList.title);
             //            alert(targetList.title);
 

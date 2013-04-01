@@ -9,11 +9,14 @@ namespace ScrumBoardDomain.Repository
     public interface IBoardRepository
     {
         ScrumBoard RetrieveBoardById(int id);
+        ScrumCard RetrieveScrumCardById(int id);
         int CreateScrumListForBoardIdAndGenerateId(int boardId, ScrumList list);
         List<ScrumCard> ListScrumCardsListByListId(int id);
         int CreateScrumCardForListIdAndGenerateId(int listId, ScrumCard card);
         List<ScrumList> ListScrumListByBoardId(int id);
         int CreateScrumBoard(ScrumBoard board);
+        void UpdateCardParentPosition(int sourceCardId, int parentSequenceId);
+        void UpdateCardParentPositionAndListId(int sourceCardId, int targetParentSequenceId, int targetListId);
     }
 
     public class BoardRepository : IBoardRepository
@@ -48,6 +51,15 @@ namespace ScrumBoardDomain.Repository
         public ScrumBoard RetrieveBoardById(int id)
         {
             return _boardData;
+        }
+
+        public ScrumCard RetrieveScrumCardById(int id)
+        {
+            var result = from list in _boardData.ScrumLists
+                         from card in list.ScrumCards
+                         where card.Id == id
+                         select card;
+            return result.FirstOrDefault();
         }
 
         public int CreateScrumListForBoardIdAndGenerateId(int boardId, ScrumList list)
@@ -126,6 +138,16 @@ namespace ScrumBoardDomain.Repository
             int boardId = 1;
             _boardData.Id = boardId;
             return boardId;
+        }
+
+        public void UpdateCardParentPosition(int sourceCardId, int parentSequenceId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateCardParentPositionAndListId(int sourceCardId, int targetParentSequenceId, int targetListId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
