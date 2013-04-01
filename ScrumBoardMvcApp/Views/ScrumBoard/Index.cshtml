@@ -42,9 +42,9 @@
                     {{list.title}}</h1>
                 <ul>
                     <li data-ng-repeat="card in list.cards">
-                            <div class="scrumCardListItem" >
-                                Card #{{card.id}}
-                            </div>
+                        <scrumcarditem>
+                        Card #{{card.id}}
+                        </scrumcarditem>
                     </li>
                 </ul>
                 <div ui-drop-listener='dropListener' data-cardid="-1" data-listid="{{list.id}}">

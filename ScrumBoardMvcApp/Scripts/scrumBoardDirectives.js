@@ -7,9 +7,10 @@
 
 
 angular.module("ScrumBoardApp")
-.directive('scrumCardListItem', function () {
+//.directive('scrumCardListItem', function () {
+.directive('scrumcarditem', function () {
     return {
-        restrict: 'C',
+        restrict: 'E',
         replace: true,
         transclude: true,
         scope: false,
