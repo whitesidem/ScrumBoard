@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using ScrumBoardDomain.DomainService;
 using ScrumBoardDomain.Entities;
@@ -84,14 +80,31 @@ namespace ScrumBoardDomain.Tests
 
         }
 
+        [Test]
+        public void CreateAndAddScrumListForBoardId_InvokesRepositoryAndSetsNextId()
+        {
+            //Arrange
+            int idStub = 88;
+            _boardRepositoryStub.Setup((m => m.CreateScrumListForBoardIdAndGenerateId(It.Is<ScrumList>(l => l.BoardId == _boardId)))).Returns(idStub).Verifiable();
 
+            //Act
+            var result = _boardManager.CreateAndAddScrumListForBoardId(_boardId, "test list");
+
+            //Assert
+            _boardRepositoryStub.Verify();
+            Assert.That(result.Id, Is.EqualTo(idStub));
+        }
+
+
+        /*
         [Test]
         public void MoveCard_NormalUsage_InvokesRepositoryRetrieveScrumCardByIdForSourceCard_WithCorrectCardId()
         {
             //Arrange
+            int sourceListId = 100;
+            int targetListId = 200;
             int sourceCardId = 10;
-            int targetListId = 20;
-            int targetCardId = 30;
+            int targetCardId = 20;
             int sourceParentSequenceId = 5;
             var sourceCard = ScrumCardBuilder.Build(10, "Test Card1", sourceParentSequenceId);
             _boardRepositoryStub.Setup(r => r.RetrieveScrumCardById(sourceCardId)).Returns(sourceCard);
@@ -188,24 +201,7 @@ namespace ScrumBoardDomain.Tests
             _boardRepositoryStub.Verify(r => r.UpdateCardParentPositionAndListId(sourceCardId, targetParentSequenceId, targetListId));
 
         }
-
-
-
-        [Test]
-        public void CreateAndAddScrumListForBoardId_InvokesRepositoryAndSetsNextId()
-        {
-            //Arrange
-            int idStub = 88;
-            _boardRepositoryStub.Setup((m => m.CreateScrumListForBoardIdAndGenerateId(_boardId, It.IsAny<ScrumList>()))).Returns(idStub).Verifiable();
-
-            //Act
-            var result = _boardManager.CreateAndAddScrumListForBoardId(_boardId,"test list");
-
-            //Assert
-            _boardRepositoryStub.Verify();
-            Assert.That(result.Id, Is.EqualTo(idStub));
-        }
-
+*/
 
     }
 
@@ -240,14 +236,15 @@ namespace ScrumBoardDomain.Tests
         }
 
         [Test]
-        public void CreateAndAddScrumListForBoardId_InvokesRepositoryAndSetsNextId()
+        public void CreateAndAddScrumCardForListId_InvokesRepositoryAndSetsNextId()
         {
             //Arrange
             int idStub = 88;
-            _boardRepositoryStub.Setup((m => m.CreateScrumListForBoardIdAndGenerateId(_boardId, It.IsAny<ScrumList>()))).Returns(idStub).Verifiable();
+            int listId = 99;
+            _boardRepositoryStub.Setup((m => m.CreateScrumCardForListIdAndGenerateId(It.Is<ScrumCard>(l => l.ListId == listId)))).Returns(idStub).Verifiable();
 
             //Act
-            var result = _boardManager.CreateAndAddScrumListForBoardId(_boardId, "test list");
+            var result = _boardManager.CreateAndAddScrumCardForListId(listId, "test list");
 
             //Assert
             _boardRepositoryStub.Verify();

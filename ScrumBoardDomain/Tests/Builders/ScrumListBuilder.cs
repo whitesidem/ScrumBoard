@@ -9,20 +9,15 @@ namespace ScrumBoardDomain.Tests.Builders
     public static class ScrumListBuilder
     {
 
-        public static ScrumList Build(int id, string title)
+        public static ScrumList Build(int boardId, int id, string title)
         {
             var scrumList = new ScrumList()
                 {
+                    BoardId = boardId,
                     Id = id,
                     Title = title
                 };
             return scrumList;
-        }
-
-        public static ScrumList WithCard(this ScrumList list, ScrumCard card)
-        {
-            list.ScrumCards.Add(card);
-            return list;
         }
 
     }

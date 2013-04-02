@@ -10,13 +10,14 @@ namespace ScrumBoardDomain.Entities
 
         public ScrumList()
         {
-            ScrumCards = new List<ScrumCard>();
+//            ScrumCards = new List<ScrumCard>();
         }
 
-        public string Title { get; set; }
-        public List<ScrumCard> ScrumCards { get; set; }
+        public int BoardId { get; set; }
         public int Id { get; set; }
+        public string Title { get; set; }
+//        public List<ScrumCard> ScrumCards { get; set; }
         public int ParentSequenceId { get; set; }
-
+        public int Position { get; set; }
     }
 }

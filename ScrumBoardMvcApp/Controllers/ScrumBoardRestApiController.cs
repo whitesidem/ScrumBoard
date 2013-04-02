@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,6 +8,7 @@ using System.Web.Http;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using ScrumBoardDomain.DomainService;
+using ScrumBoardDomain.Entities;
 using ScrumBoardDomain.Interfaces;
 using ScrumBoardDomain.Repository;
 using ScrumBoardMvcApp.Mappers;
@@ -44,6 +46,26 @@ namespace ScrumBoardMvcApp.Controllers
         }
 
 
+        
+        [HttpGet]
+        public dynamic GetAllBoardDataById(int id)
+        {
+            dynamic boardData = new ExpandoObject();
+            var board = _boardManager.RetrieveScrumBoardById(id);
+            boardData.board = board;
+            var lists = _boardManager.RetrieveOrderedScrumListsByBoardId(board.Id);
+            boardData.lists = lists;
+            var cardListArray = new List<ScrumCard>();
+            foreach (var scrumList in lists)
+            {
+                var cardList = _boardManager.RetrieveOrderedScrumCardsByListId(scrumList.Id);
+                cardListArray.AddRange(cardList);
+            }
+            boardData.cardLists = cardListArray;
+            return boardData;
+//            return ScrumBoardMapper.DomainToViewModel(board);
+        }
+
         [HttpGet]
         public ScrumBoardViewModel GetBoardById(int id)
         {
@@ -71,6 +93,8 @@ namespace ScrumBoardMvcApp.Controllers
         public void MoveCard(int sourceCardId, int targetListId, int targetCardId)
         {
             _boardManager.MoveCard(sourceCardId, targetListId, targetCardId);
+            var hub = new ScrumBoardHub();
+            hub.MoveCard(sourceCardId, targetListId, targetCardId);
         }
         
 

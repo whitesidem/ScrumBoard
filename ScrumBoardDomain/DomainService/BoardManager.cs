@@ -17,7 +17,7 @@ namespace ScrumBoardDomain.DomainService
 
         public ScrumBoard CreateScrumBoard(string title)
         {
-            ScrumBoard board = new ScrumBoard();
+            var board = new ScrumBoard();
             board.Title = title;
             int id = _boardRepository.CreateScrumBoard(board);
             board.Id = id;
@@ -26,27 +26,27 @@ namespace ScrumBoardDomain.DomainService
 
         public ScrumList CreateAndAddScrumListForBoardId(int boardID, string title)
         {
-            ScrumList list = new ScrumList()
+            var list = new ScrumList()
                 {
+                    BoardId = boardID,  
                     Title = title
                 };
-            int id = _boardRepository.CreateScrumListForBoardIdAndGenerateId(boardID, list);
+            int id = _boardRepository.CreateScrumListForBoardIdAndGenerateId(list);
             list.Id = id;
             return list;
         }
 
         public ScrumCard CreateAndAddScrumCardForListId(int listId, string title)
         {
-            ScrumCard card = new ScrumCard()
+            var card = new ScrumCard()
             {
+                ListId = listId,
                 Title = title
             };
-            int id = _boardRepository.CreateScrumCardForListIdAndGenerateId(listId, card);
+            int id = _boardRepository.CreateScrumCardForListIdAndGenerateId(card);
             card.Id = id;
             return card;
         }
-
-
 
         public ScrumBoard RetrieveScrumBoardById(int boardID)
         {
@@ -55,64 +55,21 @@ namespace ScrumBoardDomain.DomainService
 
         public List<ScrumList> RetrieveOrderedScrumListsByBoardId(int boardId)
         {
-            var unorderedLists = _boardRepository.ListScrumListByBoardId(boardId);
-            var orderedLists = unorderedLists.Select(l => l).ToList();                  //Default ordering
-            foreach (var unorderedList in unorderedLists)
-            {
-                if (unorderedList.ParentSequenceId != 0)                                //Requires reordering
-                {
-                    var locateParent = orderedLists.FirstOrDefault(l => l.Id == unorderedList.ParentSequenceId);
-                    if (locateParent != null)
-                    {
-                        var parentPos = CalcScrumListPosition(orderedLists, locateParent);
-                        if (parentPos != -1)
-                        {
-                            var currentPos = CalcScrumListPosition(orderedLists, unorderedList);
-                            if(currentPos != parentPos+1)
-                            {
-                                orderedLists.Remove(unorderedList);
-                                orderedLists.Insert(parentPos+1, unorderedList);
-                            }                   
-                        }
-                    }
-                }
-            }
-            return orderedLists;
+            return _boardRepository.ListScrumListByBoardId(boardId);
         }
 
         public List<ScrumCard> RetrieveOrderedScrumCardsByListId(int listId)
         {
-            var unorderedCards = _boardRepository.ListScrumCardsListByListId(listId);
-            var orderedCards = unorderedCards.Select(c => c).ToList();                  //Default ordering
-            foreach (var unorderedCard in unorderedCards)
-            {
-                if (unorderedCard.ParentSequenceId != 0)                                //Requires reordering
-                {
-                    var locateParent = orderedCards.FirstOrDefault(l => l.Id == unorderedCard.ParentSequenceId);
-                    if (locateParent != null)
-                    {
-                        var parentPos = CalcScrumCardPosition(orderedCards, locateParent);
-                        if (parentPos != -1)
-                        {
-                            var currentPos = CalcScrumCardPosition(orderedCards, unorderedCard);
-                            if (currentPos != parentPos + 1)
-                            {
-                                orderedCards.Remove(unorderedCard);
-                                orderedCards.Insert(parentPos + 1, unorderedCard);
-                            }
-                        }
-                    }
-                }
-            }
-            return orderedCards;
+            return _boardRepository.ListScrumCardsListByListId(listId);
         }
 
         public void MoveCard(int sourceCardId, int targetListId, int targetCardId)
         {
-            var sourceCard = _boardRepository.RetrieveScrumCardById(sourceCardId);
-            var targetCard = _boardRepository.RetrieveScrumCardById(targetCardId);
-            _boardRepository.UpdateCardParentPosition(sourceCardId, sourceCard.ParentSequenceId);
-            _boardRepository.UpdateCardParentPosition(targetCardId, sourceCardId);
+//            var sourceCard = _boardRepository.RetrieveScrumCardById(sourceCardId);
+//            var targetCard = _boardRepository.RetrieveScrumCardById(targetCardId);
+//            _boardRepository.UpdateCardParentPosition(sourceCardId, sourceCard.ParentSequenceId);
+//            _boardRepository.UpdateCardParentPosition(targetCardId, sourceCardId);
+            _boardRepository.UpdateCardPosition(sourceCardId, targetCardId, targetListId);
         }
 
 
@@ -139,8 +96,6 @@ namespace ScrumBoardDomain.DomainService
             }
             return -1;
         }
-
-
 
     }
 }

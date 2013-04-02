@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Microsoft.AspNet.SignalR;
+using ScrumBoardDomain.Repository;
 using ScrumBoardMvcApp.Mappers;
 
 namespace ScrumBoardMvcApp
@@ -21,11 +22,15 @@ namespace ScrumBoardMvcApp
 
             AreaRegistration.RegisterAllAreas();
 
+
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BootstrapMapper.ConfigureAutoMapper();
 
+            var a = 3;
+
+            BoardRepository.ResetDefaultPopulateBoardRepository();
         }
     }
 }

@@ -18,6 +18,12 @@ SkilzJs.sockets.socketController.setupSocket = function ($scope) {
             $scope.addDraftCardWithName(listId, title, id);
         });
     };
+
+    scrumBoard.client.moveCard = function (sourceCardId, targetListId, targetCardId) {
+        $scope.$apply(function () {
+            $scope.moveCard(sourceCardId, targetListId, targetCardId);
+        });
+    };
     
 
     //Start connection to socket

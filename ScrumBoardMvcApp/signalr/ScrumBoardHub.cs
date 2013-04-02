@@ -29,6 +29,11 @@ namespace ScrumBoardMvcApp.signalr
             CurrentClients.All.broadcastAddedListMessage(title,id);
         }
 
+        public void MoveCard(int sourceCardId, int targetListId, int targetCardId)
+        {
+            CurrentClients.All.moveCard(sourceCardId, targetListId, targetCardId);
+        }
+
         public void SendAddedCardMessage(int listId, string title, int id)
         {
             CurrentClients.All.broadcastAddedCardMessage(listId, title,id);
