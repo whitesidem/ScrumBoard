@@ -9,7 +9,9 @@ namespace ScrumBoardDomain.ApplicationService
 {
     public class ScrumBoardApplicationService : IScrumBoardApplicationService
     {
+// ReSharper disable NotAccessedField.Local
         private readonly IScrumBoardDomainService _scrumBoardDomainService;
+// ReSharper restore NotAccessedField.Local
         private readonly IBoardRepository _boardRepository;
 
         static ScrumBoardApplicationService() 
