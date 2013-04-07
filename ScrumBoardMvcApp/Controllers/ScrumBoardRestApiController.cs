@@ -26,15 +26,6 @@ namespace ScrumBoardMvcApp.Controllers
             _scrumBoardService = ScrumBoardDomainFactory.CreateServiceApplication();
         }
 
-        // GET api/scrumboardrestapi
-        public IEnumerable<string> Get()
-        {
-            return new[] { "value1", "value2" };
-        }
-
-
-
-        
         [HttpGet]
         public dynamic GetAllBoardDataById(int id)
         {
