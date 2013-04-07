@@ -37,6 +37,8 @@ namespace ScrumBoardDomainIoC
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            BoardRepository.ResetDefaultPopulateBoardRepository();
+            
             container
             .Register(Component
               .For<IBoardRepository>()

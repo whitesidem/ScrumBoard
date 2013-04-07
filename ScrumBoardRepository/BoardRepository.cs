@@ -12,45 +12,47 @@ namespace ScrumBoardRepository
         private static readonly List<DbScrumList> _scrumListCollection = new List<DbScrumList>();
         private static readonly List<DbScrumCard> _scrumCardCollection = new List<DbScrumCard>();
 
-        public void ResetDefaultPopulateBoardRepository()
+        public static void ResetDefaultPopulateBoardRepository()
         {
             _boardDataCollection.Clear();
             _scrumListCollection.Clear();
             _scrumCardCollection.Clear();
 
+            var repository = new BoardRepository();
+
             var board = new ScrumBoard();
             board.Title = "Test Board 1";
-            var boardId = CreateScrumBoard(board);
+            var boardId = repository.CreateScrumBoard(board);
 
             var list1 = new ScrumList();
             list1.BoardId = boardId;
             list1.Title = "List1";
-            list1.Id =CreateScrumListForBoardIdAndGenerateId(list1);
+            list1.Id = repository.CreateScrumListForBoardIdAndGenerateId(list1);
 
             var card1 = new ScrumCard();
             card1.Title = "TestCard1";
             card1.ListId = list1.Id;
-            card1.Id = CreateScrumCardForListIdAndGenerateId(card1);
+            card1.Id = repository.CreateScrumCardForListIdAndGenerateId(card1);
 
             var card2 = new ScrumCard();
             card2.Title = "TestCard2";
             card2.ListId = list1.Id;
-            card2.Id = CreateScrumCardForListIdAndGenerateId(card2);
+            card2.Id = repository.CreateScrumCardForListIdAndGenerateId(card2);
 
             var list2 = new ScrumList();
             list2.BoardId = boardId;
             list2.Title = "List2";
-            list2.Id = CreateScrumListForBoardIdAndGenerateId(list2);
+            list2.Id = repository.CreateScrumListForBoardIdAndGenerateId(list2);
 
             var card3 = new ScrumCard();
             card3.Title = "TestCard3";
             card3.ListId = list2.Id;
-            card3.Id = CreateScrumCardForListIdAndGenerateId(card3);
+            card3.Id = repository.CreateScrumCardForListIdAndGenerateId(card3);
 
             var card4 = new ScrumCard();
             card4.Title = "TestCard4";
             card4.ListId = list2.Id;
-            card4.Id = CreateScrumCardForListIdAndGenerateId(card4);
+            card4.Id = repository.CreateScrumCardForListIdAndGenerateId(card4);
 
         }
 

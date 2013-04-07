@@ -24,7 +24,6 @@ namespace ScrumBoardDomain.ApplicationService
         {
             _scrumBoardDomainService = scrumBoardDomainService;
             _boardRepository = boardRepository;
-            _boardRepository.ResetDefaultPopulateBoardRepository();
         }
 
         public ScrumBoardResponseDTO CreateScrumBoard(string title)

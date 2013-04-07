@@ -14,6 +14,5 @@ namespace ScrumBoardDomain.Interfaces
         int CreateScrumBoard(ScrumBoard board);
 //        void UpdateCardParentPosition(int sourceCardId, int listId, int position);
         void UpdateCardPosition(int sourceCardId, int targetCardId, int targetListId);
-        void ResetDefaultPopulateBoardRepository();
     }
 }
