@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ScrumBoardDomain.Entities
+namespace ApplicationService_Interactors.RequestResponseDTo
 {
-    public class ScrumCard
+    public class ScrumCardResponseDTO
     {
         public int ListId { get; set; }
         public int Id { get; set; }

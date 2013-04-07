@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using ScrumBoardDomain.Entities;
+﻿using ApplicationService_Interactors.RequestResponseDTo;
 using ScrumBoardMvcApp.Models;
 
 namespace ScrumBoardMvcApp.Mappers
@@ -10,10 +6,16 @@ namespace ScrumBoardMvcApp.Mappers
     public class ScrumBoardMapper
     {
 
-        public static ScrumBoardViewModel DomainToViewModel(ScrumBoard scrumBoard)
+        public static ScrumBoardViewModel ToScrumBoardViewModel(ScrumBoardResponseDTO scrumBoard)
         {
-            return AutoMapper.Mapper.Map<ScrumBoard, ScrumBoardViewModel>(scrumBoard);
+            return AutoMapper.Mapper.Map<ScrumBoardResponseDTO, ScrumBoardViewModel>(scrumBoard);
         }
+
+        public static ScrumBoardViewModel ToScrumBoardViewModel(FullScrumBoardResponseDTO scrumBoard)
+        {
+            return AutoMapper.Mapper.Map<FullScrumBoardResponseDTO, ScrumBoardViewModel>(scrumBoard);
+        }
+
 
     }
 }

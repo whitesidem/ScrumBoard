@@ -10,9 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8C8252
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumBoardMvcApp", "ScrumBoardMvcApp\ScrumBoardMvcApp.csproj", "{49803171-6056-4706-A2C4-6A0BAA5C66A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumBoardService", "ScrumBoardService\ScrumBoardService.csproj", "{98B40D84-1B73-48BA-96CC-5E830004A149}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumBoardDomain", "ScrumBoardDomain\ScrumBoardDomain.csproj", "{6430242B-C61D-4349-A66A-6FEE9718771E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationService_Interactors", "ApplicationService_Interactors\ApplicationService_Interactors.csproj", "{0DC41FB3-831D-46F5-B7D1-4EA4F8358F10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumBoardDomainIoC", "ScrumBoardDomainIoC\ScrumBoardDomainIoC.csproj", "{E27E31AE-8BBF-401D-A4AB-A18BA6B30D15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumBoardRepository", "ScrumBoardRepository\ScrumBoardRepository.csproj", "{AC899A95-66D1-49BC-9748-09FED40A01B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,14 +28,22 @@ Global
 		{49803171-6056-4706-A2C4-6A0BAA5C66A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49803171-6056-4706-A2C4-6A0BAA5C66A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49803171-6056-4706-A2C4-6A0BAA5C66A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{98B40D84-1B73-48BA-96CC-5E830004A149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{98B40D84-1B73-48BA-96CC-5E830004A149}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{98B40D84-1B73-48BA-96CC-5E830004A149}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98B40D84-1B73-48BA-96CC-5E830004A149}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6430242B-C61D-4349-A66A-6FEE9718771E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6430242B-C61D-4349-A66A-6FEE9718771E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6430242B-C61D-4349-A66A-6FEE9718771E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6430242B-C61D-4349-A66A-6FEE9718771E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DC41FB3-831D-46F5-B7D1-4EA4F8358F10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DC41FB3-831D-46F5-B7D1-4EA4F8358F10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DC41FB3-831D-46F5-B7D1-4EA4F8358F10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DC41FB3-831D-46F5-B7D1-4EA4F8358F10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E27E31AE-8BBF-401D-A4AB-A18BA6B30D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E27E31AE-8BBF-401D-A4AB-A18BA6B30D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E27E31AE-8BBF-401D-A4AB-A18BA6B30D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E27E31AE-8BBF-401D-A4AB-A18BA6B30D15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC899A95-66D1-49BC-9748-09FED40A01B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC899A95-66D1-49BC-9748-09FED40A01B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC899A95-66D1-49BC-9748-09FED40A01B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC899A95-66D1-49BC-9748-09FED40A01B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

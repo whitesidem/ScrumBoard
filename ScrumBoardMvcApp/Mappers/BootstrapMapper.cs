@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ScrumBoardDomain.Entities;
+﻿using ApplicationService_Interactors.RequestResponseDTo;
 using ScrumBoardMvcApp.Models;
 
 namespace ScrumBoardMvcApp.Mappers
@@ -11,9 +7,9 @@ namespace ScrumBoardMvcApp.Mappers
     {
         public static void ConfigureAutoMapper()
         {
-            AutoMapper.Mapper.CreateMap<ScrumBoard, ScrumBoardViewModel>();
-            AutoMapper.Mapper.CreateMap<ScrumList, ScrumListViewModel>();
-            AutoMapper.Mapper.CreateMap<ScrumCard, ScrumCardViewModel>();
+            AutoMapper.Mapper.CreateMap<ScrumBoardResponseDTO, ScrumBoardViewModel>();
+            AutoMapper.Mapper.CreateMap<ScrumListResponseDTO, ScrumListViewModel>();
+            AutoMapper.Mapper.CreateMap<ScrumCardResponseDTO, ScrumCardViewModel>();
         }
 
     }

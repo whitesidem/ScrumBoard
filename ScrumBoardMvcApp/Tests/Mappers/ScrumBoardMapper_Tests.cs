@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using NUnit.Framework;
-using ScrumBoardDomain.Entities;
-using ScrumBoardDomain.Tests.Builders;
+﻿using NUnit.Framework;
 using ScrumBoardMvcApp.Mappers;
 
 namespace ScrumBoardMvcApp.Tests.Mappers

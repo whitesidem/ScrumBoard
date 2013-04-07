@@ -1,75 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using ScrumBoardDomain.Entities;
+using ScrumBoardDomain.Interfaces;
 
-namespace ScrumBoardDomain.Repository
+namespace ScrumBoardRepository
 {
-    public interface IBoardRepository
-    {
-        ScrumBoard RetrieveBoardById(int id);
-        ScrumCard RetrieveScrumCardById(int id);
-        int CreateScrumListForBoardIdAndGenerateId(ScrumList list);
-        List<ScrumCard> ListScrumCardsListByListId(int id);
-        int CreateScrumCardForListIdAndGenerateId(ScrumCard card);
-        List<ScrumList> ListScrumListByBoardId(int id);
-        int CreateScrumBoard(ScrumBoard board);
-//        void UpdateCardParentPosition(int sourceCardId, int listId, int position);
-        void UpdateCardPosition(int sourceCardId, int targetCardId, int targetListId);
-    }
-
     public class BoardRepository : IBoardRepository
     {
         private static readonly List<DbScrumBoard> _boardDataCollection = new List<DbScrumBoard>();
         private static readonly List<DbScrumList> _scrumListCollection = new List<DbScrumList>();
         private static readonly List<DbScrumCard> _scrumCardCollection = new List<DbScrumCard>();
 
-
-        public static void ResetDefaultPopulateBoardRepository(IBoardRepository repository = null)
+        public void ResetDefaultPopulateBoardRepository()
         {
             _boardDataCollection.Clear();
             _scrumListCollection.Clear();
             _scrumCardCollection.Clear();
 
-            if (repository == null)
-            {
-                repository = new BoardRepository();         
-            }
-       
             var board = new ScrumBoard();
             board.Title = "Test Board 1";
-            var boardId = repository.CreateScrumBoard(board);
+            var boardId = CreateScrumBoard(board);
 
             var list1 = new ScrumList();
             list1.BoardId = boardId;
             list1.Title = "List1";
-            list1.Id =repository.CreateScrumListForBoardIdAndGenerateId(list1);
+            list1.Id =CreateScrumListForBoardIdAndGenerateId(list1);
 
             var card1 = new ScrumCard();
             card1.Title = "TestCard1";
             card1.ListId = list1.Id;
-            card1.Id = repository.CreateScrumCardForListIdAndGenerateId(card1);
+            card1.Id = CreateScrumCardForListIdAndGenerateId(card1);
 
             var card2 = new ScrumCard();
             card2.Title = "TestCard2";
             card2.ListId = list1.Id;
-            card2.Id = repository.CreateScrumCardForListIdAndGenerateId(card2);
+            card2.Id = CreateScrumCardForListIdAndGenerateId(card2);
 
             var list2 = new ScrumList();
             list2.BoardId = boardId;
             list2.Title = "List2";
-            list2.Id = repository.CreateScrumListForBoardIdAndGenerateId(list2);
+            list2.Id = CreateScrumListForBoardIdAndGenerateId(list2);
 
             var card3 = new ScrumCard();
             card3.Title = "TestCard3";
             card3.ListId = list2.Id;
-            card3.Id = repository.CreateScrumCardForListIdAndGenerateId(card3);
+            card3.Id = CreateScrumCardForListIdAndGenerateId(card3);
 
             var card4 = new ScrumCard();
             card4.Title = "TestCard4";
             card4.ListId = list2.Id;
-            card4.Id = repository.CreateScrumCardForListIdAndGenerateId(card4);
+            card4.Id = CreateScrumCardForListIdAndGenerateId(card4);
 
         }
 
@@ -81,8 +62,6 @@ namespace ScrumBoardDomain.Repository
             _boardDataCollection.Add(dbBoard);
             return nextId;
         }
-
- 
 
         public ScrumBoard RetrieveBoardById(int id)
         {
@@ -122,15 +101,14 @@ namespace ScrumBoardDomain.Repository
             };
         }
 
-
         public List<ScrumCard> ListScrumCardsListByListId(int id)
         {
             return _scrumCardCollection.Where(c => c.ListId == id).OrderBy(c => c.Position).Select(dbCard => new ScrumCard
                 {
                     Id = dbCard.Id,
                     ListId = dbCard.ListId,
-                    Title = dbCard.Title, 
-                    ParentSequenceId = dbCard.ParentSequenceId,
+                    Title = dbCard.Title,
+                    //ParentSequenceId = dbCard.ParentSequenceId,
                     Position = dbCard.Position
                 }).ToList();
         }
@@ -139,17 +117,15 @@ namespace ScrumBoardDomain.Repository
         {
             var result = _scrumCardCollection.FirstOrDefault(c => c.Id == id);
             if (result == null) return null;
-            return new ScrumCard()
+            return new ScrumCard
             {
                 Id = result.Id,
                 ListId = result.ListId,
                 Title = result.Title,
-                ParentSequenceId = result.ParentSequenceId,
+                //ParentSequenceId = result.ParentSequenceId,
                 Position = result.Position
             };
         }
-
-
 
         public int CreateScrumListForBoardIdAndGenerateId(ScrumList list)
         {
@@ -158,7 +134,7 @@ namespace ScrumBoardDomain.Repository
                 var nextId = _scrumListCollection.Any() ? _scrumListCollection.Max(l => l.Id) + 1 : 1;
                 var allListsForBoard = _scrumListCollection.Where(l => l.BoardId == list.BoardId).ToList();
                 var nextPos = allListsForBoard.Any() ? allListsForBoard.Max(l => l.Position) + 1 : 1;
-                var dbList = new DbScrumList()
+                var dbList = new DbScrumList
                 {
                     BoardId = list.BoardId,
                     Id = nextId,
@@ -178,28 +154,18 @@ namespace ScrumBoardDomain.Repository
                 var nextId = _scrumCardCollection.Any() ? _scrumCardCollection.Max(l => l.Id) + 1 : 1;
                 var allCardsForList = _scrumCardCollection.Where(c => c.ListId == card.ListId).ToList();
                 var nextPos = allCardsForList.Any() ? allCardsForList.Max(l => l.Position) + 1 : 1;
-                var dbCard = new DbScrumCard()
+                var dbCard = new DbScrumCard
                     {
                         ListId = card.ListId,
                         Id = nextId,
                         Title = card.Title,
-                        ParentSequenceId = card.ParentSequenceId,
+                        //ParentSequenceId = card.ParentSequenceId,
                         Position = nextPos
                     };
                 _scrumCardCollection.Add(dbCard);
                 return nextId;
             }
         }
-
-        //public void UpdateCardParentPosition(int sourceCardId, int parentSequenceId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void UpdateCardParentPositionAndListId(int sourceCardId, int targetParentSequenceId, int targetListId)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public void UpdateCardPosition(int sourceCardId, int targetCardId, int targetListId)
         {
@@ -240,7 +206,6 @@ namespace ScrumBoardDomain.Repository
                 dbSourceCard.ListId = targetListId;
             }
         }
-
 
         private class DbScrumBoard
         {

@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
-using ScrumBoardDomain.DomainService;
-using ScrumBoardDomain.Entities;
-using ScrumBoardDomain.Interfaces;
-using ScrumBoardDomain.Repository;
+using ApplicationService_Interactors.Interfaces;
+using ApplicationService_Interactors.RequestResponseDTo;
+using ScrumBoardDomainIoC;
 using ScrumBoardMvcApp.Mappers;
 using ScrumBoardMvcApp.Models;
 using ScrumBoardMvcApp.signalr;
@@ -20,30 +14,24 @@ namespace ScrumBoardMvcApp.Controllers
     public class ScrumBoardRestApiController : ApiController
     {
 
-        private IBoardManager _boardManager;
+        private IScrumBoardApplicationService _scrumBoardService;
 
         public ScrumBoardRestApiController()
         {
             CreateBoardManager();
         }
 
-        public ScrumBoardRestApiController(IBoardManager boardManager)
+        public void CreateBoardManager()
         {
-            _boardManager = boardManager;
+            _scrumBoardService = ScrumBoardDomainFactory.CreateServiceApplication();
         }
-
 
         // GET api/scrumboardrestapi
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new[] { "value1", "value2" };
         }
 
-        public void CreateBoardManager()
-        {
-            var boardRepository = new BoardRepository();
-            _boardManager = new BoardManager(boardRepository);
-        }
 
 
         
@@ -51,14 +39,14 @@ namespace ScrumBoardMvcApp.Controllers
         public dynamic GetAllBoardDataById(int id)
         {
             dynamic boardData = new ExpandoObject();
-            var board = _boardManager.RetrieveScrumBoardById(id);
+            var board = _scrumBoardService.RetrieveScrumBoardById(id);
             boardData.board = board;
-            var lists = _boardManager.RetrieveOrderedScrumListsByBoardId(board.Id);
+            var lists = _scrumBoardService.RetrieveOrderedScrumListsByBoardId(board.Id);
             boardData.lists = lists;
-            var cardListArray = new List<ScrumCard>();
+            var cardListArray = new List<ScrumCardResponseDTO>();
             foreach (var scrumList in lists)
             {
-                var cardList = _boardManager.RetrieveOrderedScrumCardsByListId(scrumList.Id);
+                var cardList = _scrumBoardService.RetrieveOrderedScrumCardsByListId(scrumList.Id);
                 cardListArray.AddRange(cardList);
             }
             boardData.cardLists = cardListArray;
@@ -69,14 +57,14 @@ namespace ScrumBoardMvcApp.Controllers
         [HttpGet]
         public ScrumBoardViewModel GetBoardById(int id)
         {
-            var board = _boardManager.RetrieveScrumBoardById(id);
-            return ScrumBoardMapper.DomainToViewModel(board);
+            var board = _scrumBoardService.RetrieveScrumBoardById(id);
+            return ScrumBoardMapper.ToScrumBoardViewModel(board);
         }
 
         [HttpPost]
        public void CreateCard(CreateCard card)
         {
-            var newCard = _boardManager.CreateAndAddScrumCardForListId(card.ListId, card.Title);
+            var newCard = _scrumBoardService.CreateAndAddScrumCardForListId(card.ListId, card.Title);
             var hub = new ScrumBoardHub();
             hub.SendAddedCardMessage(card.ListId, newCard.Title, newCard.Id);
         }
@@ -84,7 +72,7 @@ namespace ScrumBoardMvcApp.Controllers
         [HttpPost]
         public void CreateList(CreateList list)
         {
-            var newList = _boardManager.CreateAndAddScrumListForBoardId(1, list.Title);
+            var newList = _scrumBoardService.CreateAndAddScrumListForBoardId(1, list.Title);
             var hub = new ScrumBoardHub();
             hub.SendAddedListMessage(newList.Title, newList.Id);
         }
@@ -92,7 +80,7 @@ namespace ScrumBoardMvcApp.Controllers
         [HttpPut]
         public void MoveCard(int sourceCardId, int targetListId, int targetCardId)
         {
-            _boardManager.MoveCard(sourceCardId, targetListId, targetCardId);
+            _scrumBoardService.MoveCard(sourceCardId, targetListId, targetCardId);
             var hub = new ScrumBoardHub();
             hub.MoveCard(sourceCardId, targetListId, targetCardId);
         }

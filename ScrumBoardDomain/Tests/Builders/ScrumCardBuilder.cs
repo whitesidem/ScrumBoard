@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ScrumBoardDomain.Entities;
+﻿using ScrumBoardDomain.Entities;
 
 namespace ScrumBoardDomain.Tests.Builders
 {
@@ -15,8 +11,8 @@ namespace ScrumBoardDomain.Tests.Builders
             {
                 Id = id,
                 ListId = listId,
-                Title = title,
-                ParentSequenceId = parentSequenceId
+                Title = title
+//                ,ParentSequenceId = parentSequenceId
             };
             return scrumCard;
         }

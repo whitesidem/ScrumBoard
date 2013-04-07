@@ -1,24 +1,25 @@
 ﻿using Moq;
 using NUnit.Framework;
-using ScrumBoardDomain.DomainService;
+using ScrumBoardDomain.ApplicationService;
 using ScrumBoardDomain.Entities;
-using ScrumBoardDomain.Repository;
-using ScrumBoardDomain.Tests.Builders;
+using ScrumBoardDomain.Interfaces;
 
 namespace ScrumBoardDomain.Tests
 {
     // ReSharper disable InconsistentNaming
     [TestFixture]
-    public class TestServiceManager_Board
+    public class TestScrumBoardServiceApplication_Board
     {
-        private BoardManager _boardManager;
+        private ScrumBoardApplicationService _scrumBoardApplicationService;
+        private Mock<IScrumBoardDomainService> _scrumBoardDomainServiceStub;
         private Mock<IBoardRepository> _boardRepositoryStub;
 
         [SetUp]
         public void Setup()
         {
             _boardRepositoryStub = new Mock<IBoardRepository>();
-            _boardManager = new BoardManager(_boardRepositoryStub.Object);
+            _scrumBoardDomainServiceStub = new Mock<IScrumBoardDomainService>();
+            _scrumBoardApplicationService =  new ScrumBoardApplicationService(_scrumBoardDomainServiceStub.Object,_boardRepositoryStub.Object);
         }
 
 
@@ -26,7 +27,7 @@ namespace ScrumBoardDomain.Tests
         public void CreateScrumBoard_NormalUsage_CreatesBoard()
         {
             //Act
-            var result = _boardManager.CreateScrumBoard("test title");
+            var result = _scrumBoardApplicationService.CreateScrumBoard("test title");
 
             //Assert
             Assert.That(result, Is.Not.Null);
@@ -37,11 +38,11 @@ namespace ScrumBoardDomain.Tests
         public void CreateScrumBoard_NormalUsage_InvokesRepositoryAndSetsNextId()
         {
             //Arrange
-            int idStub = 99;
+            const int idStub = 99;
             _boardRepositoryStub.Setup(m => m.CreateScrumBoard(It.IsAny<ScrumBoard>())).Returns(idStub).Verifiable();
 
             //Act
-            var result = _boardManager.CreateScrumBoard("test title");
+            var result = _scrumBoardApplicationService.CreateScrumBoard("test title");
 
             //Assert
             _boardRepositoryStub.Verify();
@@ -52,19 +53,19 @@ namespace ScrumBoardDomain.Tests
     }
 
     [TestFixture]
-    public class TestServiceManager_List
+    public class TestScrumBoardApplicationService_List
     {
-        private BoardManager _boardManager;
-        private static Mock<IBoardRepository> _boardRepositoryStub;
-        private ScrumBoard _scrumBoard;
-        private int _boardId;
+        private ScrumBoardApplicationService _scrumBoardApplicationService;
+        private Mock<IScrumBoardDomainService> _scrumBoardDomainServiceStub;
+        private Mock<IBoardRepository> _boardRepositoryStub;
+        private const int _boardId = 22;
 
         [SetUp]
         public void Setup()
         {
             _boardRepositoryStub = new Mock<IBoardRepository>();
-            _boardManager = new BoardManager(_boardRepositoryStub.Object);
-            _scrumBoard = ScrumBoardBuilder.Build(_boardId, "TestBoard");
+            _scrumBoardDomainServiceStub = new Mock<IScrumBoardDomainService>();
+            _scrumBoardApplicationService = new ScrumBoardApplicationService(_scrumBoardDomainServiceStub.Object, _boardRepositoryStub.Object);
         }
 
 
@@ -72,7 +73,7 @@ namespace ScrumBoardDomain.Tests
         public void CreateAndAddScrumListForBoardId_NormalUsage_CreatesList()
         {
             //Act
-            var result = _boardManager.CreateAndAddScrumListForBoardId(_boardId,"test list");
+            var result = _scrumBoardApplicationService.CreateAndAddScrumListForBoardId(_boardId,"test list");
 
             //Assert
             Assert.That(result, Is.Not.Null);
@@ -84,11 +85,11 @@ namespace ScrumBoardDomain.Tests
         public void CreateAndAddScrumListForBoardId_InvokesRepositoryAndSetsNextId()
         {
             //Arrange
-            int idStub = 88;
+            const int idStub = 88;
             _boardRepositoryStub.Setup((m => m.CreateScrumListForBoardIdAndGenerateId(It.Is<ScrumList>(l => l.BoardId == _boardId)))).Returns(idStub).Verifiable();
 
             //Act
-            var result = _boardManager.CreateAndAddScrumListForBoardId(_boardId, "test list");
+            var result = _scrumBoardApplicationService.CreateAndAddScrumListForBoardId(_boardId, "test list");
 
             //Assert
             _boardRepositoryStub.Verify();
@@ -206,19 +207,18 @@ namespace ScrumBoardDomain.Tests
     }
 
     [TestFixture]
-    public class TestServiceManager_Card
+    public class TestScrumBoardApplicationService_Card
     {
-        private BoardManager _boardManager;
-        private static Mock<IBoardRepository> _boardRepositoryStub;
-        private ScrumBoard _scrumBoard;
-        private int _boardId;
+        private ScrumBoardApplicationService _scrumBoardApplicationService;
+        private Mock<IScrumBoardDomainService> _scrumBoardDomainServiceStub;
+        private Mock<IBoardRepository> _boardRepositoryStub;
 
         [SetUp]
         public void Setup()
         {
             _boardRepositoryStub = new Mock<IBoardRepository>();
-            _boardManager = new BoardManager(_boardRepositoryStub.Object);
-            _scrumBoard = ScrumBoardBuilder.Build(_boardId, "TestBoard");
+            _scrumBoardDomainServiceStub = new Mock<IScrumBoardDomainService>();
+            _scrumBoardApplicationService = new ScrumBoardApplicationService(_scrumBoardDomainServiceStub.Object, _boardRepositoryStub.Object);
         }
 
 
@@ -226,8 +226,8 @@ namespace ScrumBoardDomain.Tests
         public void CreateAndAddScrumCardForListId_NormalUsage_CreatesCard()
         {
             //Act
-            var stubListId = 10;
-            var result = _boardManager.CreateAndAddScrumCardForListId(stubListId, "test card");
+            const int stubListId = 10;
+            var result = _scrumBoardApplicationService.CreateAndAddScrumCardForListId(stubListId, "test card");
 
             //Assert
             Assert.That(result, Is.Not.Null);
@@ -239,12 +239,12 @@ namespace ScrumBoardDomain.Tests
         public void CreateAndAddScrumCardForListId_InvokesRepositoryAndSetsNextId()
         {
             //Arrange
-            int idStub = 88;
-            int listId = 99;
+            const int idStub = 88;
+            const int listId = 99;
             _boardRepositoryStub.Setup((m => m.CreateScrumCardForListIdAndGenerateId(It.Is<ScrumCard>(l => l.ListId == listId)))).Returns(idStub).Verifiable();
 
             //Act
-            var result = _boardManager.CreateAndAddScrumCardForListId(listId, "test list");
+            var result = _scrumBoardApplicationService.CreateAndAddScrumCardForListId(listId, "test list");
 
             //Assert
             _boardRepositoryStub.Verify();
