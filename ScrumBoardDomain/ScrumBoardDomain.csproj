@@ -78,9 +78,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repository\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ApplicationService_Interactors\ApplicationService_Interactors.csproj">
       <Project>{0DC41FB3-831D-46F5-B7D1-4EA4F8358F10}</Project>

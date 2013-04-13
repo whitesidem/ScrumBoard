@@ -1,1 +1,2 @@
 ﻿* Make the whole domain a WCF service. That way we can reuse it even for ruby apps!!!
+* use ng-cloak to remove the nasty {{ }} on startup
