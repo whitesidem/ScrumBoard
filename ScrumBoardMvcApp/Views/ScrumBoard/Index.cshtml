@@ -52,12 +52,12 @@
             </div>
             <div  id="outerScrumBoard" class="span1">
                 <div id="innerScrumBoard" >
-                    <ul>
+                    <ul class="unstyled">
                         <li data-ng-repeat="list in board.lists" class="listItem">
-                            <h1>
+                            <span class="wrapword listTitle">
                                 {{list.title}}
-                            </h1>
-                            <ul>
+                            </span>
+                            <ul class="unstyled">
                                 <li data-ng-repeat="card in list.cards">
                                     <scrumcarditem>
                                         Card #{{card.id}}
