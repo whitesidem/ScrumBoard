@@ -24,8 +24,20 @@ angular.module("ScrumBoardApp")
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
+            var $cont = $('#outerScrumBoard');
+
             element.draggable({
-                revert: true
+                revert: true,
+                helper: 'clone',
+                zindex: 99999990,
+                appendTo: '#outerScrumBoard',
+                //                containment: [10, $('#outerScrumBoard').offset().top, $('#outerScrumBoard').offset().right, $('#outerScrumBoard').offset().bottom], 
+                containment: $cont[0],
+                scroll: true,
+                scrollSensitivity: 10,
+                scrollSpeed: 50, 
+                cursor: "crosshair",
+                delay: 300
             });
         }
     };
