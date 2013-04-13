@@ -17,6 +17,15 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
     $scope.isDebugCollapsed = true;
 
 
+//    $scope.cloneForDrag = function (e) {
+//        var card = e.currentTarget;
+//        console.log(card);
+//        var cloneCard = $.clone(card);
+//        $(cloneCard).addClass('dragClone');
+//        return cloneCard;
+//    };
+
+
     var populateBoard = function () {
         var testBoardId = 1;
         $http.get("api/ScrumBoardRestApi/GetAllBoardDataById?id=" + testBoardId).success(function (data) {
@@ -40,14 +49,14 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
     };
 
 
-    $scope.addDraftListWithName = function (title, id) {
+    $scope.addListWithName = function (title, id) {
         var list = SkilzJs.model.list.FactoryCreate(title, id);
         myBoard.addList(list);
     };
 
-    $scope.addDraftCardWithName = function (listId, title, id) {
+    $scope.addCardWithName = function (listId, title, id) {
         var list = myBoard.getListById(listId);
-        var card = SkilzJs.model.card.FactoryCreate(title, id, true);
+        var card = SkilzJs.model.card.FactoryCreate(title, id);
         list.addCard(card);
     };
 
@@ -124,6 +133,7 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
             //            var sourceListId = sourceCard.listId;
             //            var sourceList = myBoard.getListById(sourceListId);
             //            sourceList.removeCard(sourceCard);
+//            $('dragClone').remove();
 
             $http.put("api/ScrumBoardRestApi/MoveCard?sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
         });
