@@ -178,6 +178,7 @@ namespace ScrumBoardRepository
             if (targetList == null) return;
             lock (BoardIdLock(targetList.BoardId))
             {
+
                 if (addNewCardPosition == false)
                 {
                     var targetListcards = _scrumCardCollection.Where(c => (c.ListId == targetListId && c.Id != sourceCardId));

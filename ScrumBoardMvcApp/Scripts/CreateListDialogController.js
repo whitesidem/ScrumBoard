@@ -6,6 +6,7 @@
 SkilzJs.namespace('controller');
 SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog, $http) {
 
+    $scope.dialogDone = false;
     $scope.opts = {
         backdrop: true,
         keyboard: true,
@@ -19,6 +20,7 @@ SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog, $htt
     $scope.openDialog = function () {
         var d = $dialog.dialog($scope.opts);
         d.open().then(function (listTitle) {
+            $scope.dialogDone = true;
             if (listTitle) {
                 $http.post("api/ScrumBoardRestApi/CreateList", { "title": listTitle });
             }

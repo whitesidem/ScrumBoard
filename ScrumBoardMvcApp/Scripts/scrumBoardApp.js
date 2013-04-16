@@ -5,8 +5,9 @@
 
 angular.module("ScrumBoardApp", ['ui.bootstrap']);
 
-angular.module("ScrumBoardApp").ready(
+angular.module("ScrumBoardApp").run(
     function () {
+        console.log("ScrumBoardApp run");
         //        $('#scrumBoard').mCustomScrollbar({
         //            autoHideScrollbar: false,
         //            horizontalScroll: false,
@@ -29,15 +30,14 @@ angular.module("ScrumBoardApp").ready(
         //            }
         //        });
 
-//        $('.listItem').mCustomScrollbar();
+        //        $('.listItem').mCustomScrollbar();
 
-//        $('.listItem').slimScroll({
-//            position: 'left',
-//            height: 'auto',
-//            railVisible: true,
-//            alwaysVisible: true
-//        });
+        //        $('.listItem').slimScroll({
+        //            position: 'left',
+        //            height: 'auto',
+        //            railVisible: true,
+        //            alwaysVisible: true
+        //        });
 
     } ()
 );
-

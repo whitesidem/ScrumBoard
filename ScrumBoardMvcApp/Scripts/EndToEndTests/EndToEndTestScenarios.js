@@ -11,34 +11,34 @@ describe("End-to-End Tests", function () {
     // (see the "Specific port" setting).
     var url = "http://localhost:54120/ScrumBoard";
 
+    beforeEach(function () {
+        console.log("beforeEach");
+    });
+
+    afterEach(function () {
+        console.log("afterEach");
+    });
+
     it("can browse to site", function () {
         browser().navigateTo(url);
     });
 
-
     it("can add a new list", function () {
         browser().navigateTo(url);
         element('#addNewListBtn').click();
-//        while ($("#listTitle").length == 0) {
-//        };
-
-        //        expect(window.binding("listTitle")).toBe("");
+        expect(element("div.modal-header:visible", "visible dialog").count()).toBe(1);
+        //window.sleep(2);
+        //expect(window.binding("dialogDone")).toBe("false");
+        //input("listTitle").enter("Test Board 1");
+        //element("#listTitle").val("Test Board1");
+        //element('#okBtn').click();
 
         //TODO: rename this to a unique name eg suchamodel.listTitle
         //        input("listTitle").enter("Test Board1");
-        element("#listTitle").val("Test Board1");
-        element('#okBtn').click();
-
 
         //        input("searchTerm").enter("dom perignon");
         //        element("#searchButton").click();
         //        expect(window.binding("products.Total")).toBeGreaterThan(0);
         //        expect(window.binding("product.Name")).toContain("Dom Perignon");
     });
-
-    //    it("can browse directly to /wines/112875", function () {
-    //        var path = "/wines/112875";
-    //        browser().navigateTo(url + "#" + path);
-    //        expect(window.binding("product.Varietal.Name")).toContain("Tempranillo");
-    //    });
 });

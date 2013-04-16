@@ -24,19 +24,58 @@ angular.module("ScrumBoardApp")
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
+
+            var dragScroller = function (e) {
+                console.log(e.pageY);
+                var $this = $(this);
+                var $inner = $('.listItem', $this);
+                console.log($inner.height());
+                var h = $inner.height() + 13;
+                var offset = $this.offset();
+                var position = (e.pageY - offset.top) / $this.height();
+                //console.log(position);
+                if (position < 0.15) {
+                    $this.stop().animate({ scrollTop: 0 }, 1000);
+                }
+                else if (position < 0.33) {
+                    $this.stop().animate({ scrollTop: 0 }, 15000);
+                }
+                else if (position > 0.75) {
+                    $this.stop().animate({ scrollTop: h }, 1000);
+                }
+                else if (position > 0.66) {
+                    $this.stop().animate({ scrollTop: h }, 15000);
+                } else {
+                    $this.stop();
+                }
+            };
+
             element.draggable({
                 revert: false,
                 helper: 'clone',
                 //helper: scope.cloneForDrag,
                 zindex: 99999990,
                 appendTo: '#outerScrumBoard',
+                //                                appendTo: '.listItemScroll:first',
                 //                containment: [10, $('#outerScrumBoard').offset().top, $('#outerScrumBoard').offset().right, $('#outerScrumBoard').offset().bottom], 
                 containment: '#outerScrumBoard',
+                //                containment: '.listItemScroll',
                 scroll: true,
                 scrollSensitivity: 10,
-                scrollSpeed: 50, 
+                scrollSpeed: 50,
                 cursor: "crosshair",
-                delay: 300
+                delay: 300,
+                start: function () {
+                    var $this = $(this);
+                    var $scrollarea = $this.closest('.listItemScroll');
+                    $scrollarea.bind('mousemove',dragScroller);
+                },
+                stop: function () {
+                    console.log('stop');
+                    var $this = $(this);
+                    var $scrollarea = $this.closest('.listItemScroll');
+                    $scrollarea.unbind('mousemove', dragScroller);
+                }
             });
         }
     };

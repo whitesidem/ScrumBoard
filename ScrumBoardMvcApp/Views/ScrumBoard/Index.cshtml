@@ -31,6 +31,9 @@
                     $scope.isCreateListCollapsed = {{isCreateListCollapsed}}    
                     $scope.isDebugCollapsed = {{isDebugCollapsed}}    
                 </pre>
+                
+                <input type="button" id="scrollButt"/>
+
             </div>
         </div>
         <button class="btn" ng-click="isCreateListModalCollapsed = !isCreateListModalCollapsed">
@@ -38,6 +41,7 @@
         <div collapse="isCreateListModalCollapsed">
             <div class="well well-large ">
                 <div data-ng-controller="SkilzJs.controller.CreateListDialogController">
+                    <p>{{dialogDone}}</p>
                     <div class="row-fluid">
                         <button id="addNewListBtn" class="btn btn-primary" data-ng-click="openDialog()">
                             Add New List</button>

@@ -21,7 +21,8 @@
 
 .listItem
 {
-
+	height: auto;
+	display: block;
 	/*padding: 8px;
 	margin: 10px;
 */	/*border: 1px solid #000000;
@@ -112,8 +113,8 @@
 	/*width: 1000px;*/
 	width: 96%;
 	display: inline-block;
-    /*overflow-x:auto;
-*/	overflow-y:auto;
+    overflow-x:auto;
+	overflow-y:auto;
     white-space: nowrap;
 	/*background-color: pink;*/
 	position: relative;					/*   Makes it possible to drag card into outer scrollable contained region   */

@@ -17,13 +17,13 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
     $scope.isDebugCollapsed = true;
 
 
-//    $scope.cloneForDrag = function (e) {
-//        var card = e.currentTarget;
-//        console.log(card);
-//        var cloneCard = $.clone(card);
-//        $(cloneCard).addClass('dragClone');
-//        return cloneCard;
-//    };
+    //    $scope.cloneForDrag = function (e) {
+    //        var card = e.currentTarget;
+    //        console.log(card);
+    //        var cloneCard = $.clone(card);
+    //        $(cloneCard).addClass('dragClone');
+    //        return cloneCard;
+    //    };
 
 
     var populateBoard = function () {
@@ -133,7 +133,7 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
             //            var sourceListId = sourceCard.listId;
             //            var sourceList = myBoard.getListById(sourceListId);
             //            sourceList.removeCard(sourceCard);
-//            $('dragClone').remove();
+            //            $('dragClone').remove();
 
             $http.put("api/ScrumBoardRestApi/MoveCard?sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
         });
@@ -189,5 +189,38 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
 });
 
 SkilzJs.controller.ListController.$inject = ["$scope", "$http", "myBoard", "mySockets"];
+
+
+$(document).ready(function () {
+
+    $('#scrollButt').click(function () {
+
+
+        $('.listItemScroll').first().mousemove(function (e) {
+            var $this = $(this);
+            var $inner = $('.listItem', $this);
+            console.log($inner.height());
+            var h = $inner.height() + 13;
+            var offset = $this.offset();
+            var position = (e.pageY - offset.top) / $this.height();
+            //console.log(position);
+            if (position < 0.15) {
+                $this.stop().animate({ scrollTop: 0 }, 1000);
+            }
+            else if (position < 0.33) {
+                $this.stop().animate({ scrollTop: 0 }, 15000);
+            }
+            else if (position > 0.75) {
+                $this.stop().animate({ scrollTop: h }, 1000);
+            } 
+            else if (position > 0.66) {
+                $this.stop().animate({ scrollTop: h }, 15000);
+            } else {
+                $this.stop();
+            }
+        });
+    });
+
+});
 
 
