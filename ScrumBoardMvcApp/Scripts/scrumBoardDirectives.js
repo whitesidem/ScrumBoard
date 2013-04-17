@@ -38,13 +38,13 @@ angular.module("ScrumBoardApp")
                     $this.stop().animate({ scrollTop: 0 }, 1000);
                 }
                 else if (position < 0.33) {
-                    $this.stop().animate({ scrollTop: 0 }, 15000);
+                    $this.stop().animate({ scrollTop: 0 }, 5000);
                 }
                 else if (position > 0.75) {
                     $this.stop().animate({ scrollTop: h }, 1000);
                 }
                 else if (position > 0.66) {
-                    $this.stop().animate({ scrollTop: h }, 15000);
+                    $this.stop().animate({ scrollTop: h }, 5000);
                 } else {
                     $this.stop();
                 }
@@ -66,15 +66,17 @@ angular.module("ScrumBoardApp")
                 cursor: "crosshair",
                 delay: 300,
                 start: function () {
+                    console.log('start');
                     var $this = $(this);
                     var $scrollarea = $this.closest('.listItemScroll');
-                    $scrollarea.bind('mousemove',dragScroller);
+                    $scrollarea.bind('mousemove', dragScroller);
                 },
                 stop: function () {
                     console.log('stop');
                     var $this = $(this);
                     var $scrollarea = $this.closest('.listItemScroll');
                     $scrollarea.unbind('mousemove', dragScroller);
+                    $scrollarea.stop();
                 }
             });
         }
