@@ -35,17 +35,22 @@ angular.module("ScrumBoardApp")
                 var position = (e.pageY - offset.top) / $this.height();
                 //console.log(position);
                 if (position < 0.15) {
+                    console.log('fast top');
                     $this.stop().animate({ scrollTop: 0 }, 1000);
                 }
                 else if (position < 0.33) {
+                    console.log('slow top');
                     $this.stop().animate({ scrollTop: 0 }, 5000);
                 }
                 else if (position > 0.75) {
+                    console.log('slow bottom');
                     $this.stop().animate({ scrollTop: h }, 1000);
                 }
                 else if (position > 0.66) {
+                    console.log('fast bottom');
                     $this.stop().animate({ scrollTop: h }, 5000);
                 } else {
+                    console.log('OUTSIDE');
                     $this.stop();
                 }
             };
@@ -66,17 +71,32 @@ angular.module("ScrumBoardApp")
                 cursor: "crosshair",
                 delay: 300,
                 start: function () {
-                    console.log('start');
-                    var $this = $(this);
-                    var $scrollarea = $this.closest('.listItemScroll');
-                    $scrollarea.bind('mousemove', dragScroller);
+                    console.log('start' + $('.listItemScroll').length);
+                    //                    $('.listItemScroll').first().bind('mouseover', function () {
+                    //                        console.log('mouseOver');
+                    //                    });
+                    //                    $('.listItemScroll').first().bind('mouseout', function () {
+                    //                        console.log('mouseOut');
+                    //                    });
+                    $('.listItemScroll').stop();
+                    $('.listItemScroll').bind('mousemove', dragScroller);
+
+
+                    //                   var $this = $(this);
+                    //                    var $scrollarea = $this.closest('.listItemScroll');
+                    //$scrollarea.bind('mousemove', dragScroller);
                 },
                 stop: function () {
                     console.log('stop');
-                    var $this = $(this);
-                    var $scrollarea = $this.closest('.listItemScroll');
-                    $scrollarea.unbind('mousemove', dragScroller);
-                    $scrollarea.stop();
+                    //                    var $this = $(this);
+                    //                    var $scrollarea = $this.closest('.listItemScroll');
+                    //                    $scrollarea.unbind('mousemove', dragScroller);
+                    //                    $scrollarea.stop();
+
+                    $('.listItemScroll').unbind('mousemove', dragScroller);
+                    $('.listItemScroll').stop();
+                    //                    $('.listItemScroll').first().unbind('mouseover');
+                    //                    $('.listItemScroll').first().unbind('mouseout');
                 }
             });
         }
