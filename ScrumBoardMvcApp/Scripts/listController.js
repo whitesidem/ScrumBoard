@@ -33,6 +33,7 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
         }
 
         if (e.target !== currDragtarget) {
+            $('.listItemScroll').stop();
             currDragtarget = e.target;
             $currTarget = $(currDragtarget);
         }
