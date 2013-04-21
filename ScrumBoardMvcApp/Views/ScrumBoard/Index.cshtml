@@ -22,7 +22,7 @@
 </head>
 <body>
     <div data-ng-app="ScrumBoardApp" data-ng-controller="SkilzJs.controller.ListController"
-        class="container-fluid">
+        class="container-fluid" data-ng-mousemove="boardMouseMove($event)">
         <button class="btn" data-ng-click="isDebugCollapsed = !isDebugCollapsed">
             SHOW DEBUG</button>
         <div collapse="isDebugCollapsed">
@@ -38,7 +38,7 @@
         </div>
         <button class="btn" ng-click="isCreateListModalCollapsed = !isCreateListModalCollapsed">
             Show Toolbar</button>
-        <div collapse="isCreateListModalCollapsed">
+        <div id="listCreateDiv" collapse="isCreateListModalCollapsed">
             <div class="well well-large ">
                 <div data-ng-controller="SkilzJs.controller.CreateListDialogController">
                     <p>{{dialogDone}}</p>
@@ -56,23 +56,25 @@
             </div>
             <div id="outerScrumBoard" class="span1" style="position: relative;">
                 <ul class="unstyled">
-                    <li data-ng-repeat="list in board.lists" class="listItemScroll">
-                        <span class="listItem" >
-                            <span class="wrapword listTitle">{{list.title}} </span>
-                            <ul class="unstyled">
-                                <li data-ng-repeat="card in list.cards">
-                                    <scrumcarditem>
-                                    Card #{{card.id}}
-                                </scrumcarditem>
-                                </li>
-                            </ul>
-                            <div data-ui-drop-listener='dropListener' data-cardid="-1" data-listid="{{list.id}}">
-                                <div data-ng-controller="SkilzJs.controller.CreateCardDialogController" class="addCard"
-                                    data-ng-click="openDialog(list.id)">
-                                    Add a card...
+                    <li data-ng-repeat="list in board.lists" class="listIterator">
+                        <div class="listItemScroll" >
+                            <div class="listItem" >
+                                <span class="wrapword listTitle">{{list.title}} </span>
+                                <ul class="unstyled">
+                                    <li data-ng-repeat="card in list.cards">
+                                        <scrumcarditem>
+                                            Card #{{card.id}}
+                                        </scrumcarditem>
+                                    </li>
+                                </ul>
+                                <div data-ui-drop-listener='dropListener' data-cardid="-1" data-listid="{{list.id}}">
+                                    <div data-ng-controller="SkilzJs.controller.CreateCardDialogController" class="addCard"
+                                         data-ng-click="openDialog(list.id)">
+                                        Add a card...
+                                    </div>
                                 </div>
                             </div>
-                       </span>
+                        </div>
                     </li>
                 </ul>
             </div>

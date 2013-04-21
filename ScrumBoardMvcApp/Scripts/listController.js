@@ -9,12 +9,120 @@ SkilzJs.namespace('controller');
 SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets) {
 
     var cardTempCount = 1;
+    var currDragtarget = null;
+    var $currTarget;
 
+    $scope.isCurrentlyDragging = false;
     $scope.board = myBoard;
 
     $scope.isCreateListCollapsed = false;
     $scope.isCreateListModalCollapsed = false;
     $scope.isDebugCollapsed = true;
+
+
+    $scope.setDragging = function (isDragging) {
+        $('.listItemScroll').stop();
+        console.log('SET DRAGGING' + isDragging);
+        $scope.isCurrentlyDragging = isDragging;
+    };
+
+    $scope.boardMouseMove = function (e) {
+        if ($scope.isCurrentlyDragging === false) {
+            console.log('BOARDMOUSE');
+            return;
+        }
+
+        if (e.target !== currDragtarget) {
+            currDragtarget = e.target;
+            $currTarget = $(currDragtarget);
+        }
+
+        if (($currTarget.hasClass("scrumCard") === false) && ($currTarget.hasClass("listItem") === false)) {
+            console.log('DRAG BOARDMOUSE');
+            return;
+        }
+
+        console.log('DRAG list or card');
+
+        var $this = $currTarget.closest('.listItemScroll');
+
+        //        $('.listItemScroll', $currTarget);
+        var $inner = $('.listItem', $this);
+        //                console.log($inner.height());
+        var h = $inner.height() + 13;
+        var offset = $this.offset();
+        var position = (e.pageY - offset.top) / $this.height();
+        //console.log(position);
+        if (position < 0.15) {
+            console.log('fast top');
+            $this.stop().animate({ scrollTop: 0 }, 1000);
+        }
+        else if (position < 0.33) {
+            console.log('slow top');
+            $this.stop().animate({ scrollTop: 0 }, 5000);
+        }
+        else if (position > 0.75) {
+            console.log('slow bottom');
+            $this.stop().animate({ scrollTop: h }, 1000);
+        }
+        else if (position > 0.66) {
+            console.log('fast bottom');
+            $this.stop().animate({ scrollTop: h }, 5000);
+        } else {
+            //                 console.log('OUTSIDE');
+            $this.stop();
+        }
+
+    };
+
+    /*
+    $scope.listMouseMove = function (e) {
+    //        console.log($scope.isCurrentlyDragging);
+    if ($scope.isCurrentlyDragging === false) {
+    //            console.log('NOPE');
+    //            console.log('NOT DRAGGING ');
+    return;
+    }
+    //        console.log('outer ');
+
+    //        console.log(e.pageY);
+    //        var $this = $(this);
+    var $this = $(e.currentTarget);
+    var $inner = $('.listItem', $this);
+    //                console.log($inner.height());
+    var h = $inner.height() + 13;
+    var offset = $this.offset();
+    var position = (e.pageY - offset.top) / $this.height();
+    //console.log(position);
+    if (position < 0.15) {
+    console.log('fast top');
+    $this.stop().animate({ scrollTop: 0 }, 1000);
+    }
+    else if (position < 0.33) {
+    console.log('slow top');
+    $this.stop().animate({ scrollTop: 0 }, 5000);
+    }
+    else if (position > 0.75) {
+    console.log('slow bottom');
+    $this.stop().animate({ scrollTop: h }, 1000);
+    }
+    else if (position > 0.66) {
+    console.log('fast bottom');
+    $this.stop().animate({ scrollTop: h }, 5000);
+    } else {
+    //                 console.log('OUTSIDE');
+    $this.stop();
+    }
+
+
+    //        console.log(e.pageY);
+    //        console.log($scope.cat);
+
+    //        return false;
+    };
+    */
+
+
 
 
     //    $scope.cloneForDrag = function (e) {
@@ -88,6 +196,8 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
 
 
     $scope.addListEvent = _addListEvent;
+
+
 
     $scope.dropListener = function (eDraggable, eDroppable) {
 
@@ -191,9 +301,52 @@ SkilzJs.controller.ListController = (function ($scope, $http, myBoard, mySockets
 SkilzJs.controller.ListController.$inject = ["$scope", "$http", "myBoard", "mySockets"];
 
 
-//$(document).ready(function () {
+$(document).ready(function () {
+/*
+    var dragScroller = function (e) {
+//                        console.log(e.pageY);
+        var $this = $(this);
+        var $inner = $('.listItem', $this);
+        //                console.log($inner.height());
+        var h = $inner.height() + 13;
+        var offset = $this.offset();
+        var position = (e.pageY - offset.top) / $this.height();
+        //console.log(position);
+        if (position < 0.15) {
+            //                   console.log('fast top');
+            $this.stop().animate({ scrollTop: 0 }, 1000);
+        }
+        else if (position < 0.33) {
+            //                    console.log('slow top');
+            $this.stop().animate({ scrollTop: 0 }, 5000);
+        }
+        else if (position > 0.75) {
+            //                  console.log('slow bottom');
+            $this.stop().animate({ scrollTop: h }, 1000);
+        }
+        else if (position > 0.66) {
+            //                 console.log('fast bottom');
+            $this.stop().animate({ scrollTop: h }, 5000);
+        } else {
+            //                 console.log('OUTSIDE');
+            $this.stop();
+        }
+    };
+    */
 
-//    $('#scrollButt').click(function () {
+    $('#scrollButt').click(function () {
+
+        $('#listCreateDiv').bind('mousemove', function () {
+            console.log('mouseMove');
+//            $(this).bind('mousemove', dragScroller);
+        });
+//        $('#listCreateDiv').bind('mouseleave', function () {
+//            console.log('mouseLeave');
+////            $(this).unbind('mousemove', dragScroller);
+//        });
+
+
+
 
 
 //        $('.listItemScroll').first().mousemove(function (e) {
@@ -219,8 +372,8 @@ SkilzJs.controller.ListController.$inject = ["$scope", "$http", "myBoard", "mySo
 //                $this.stop();
 //            }
 //        });
-//    });
+    });
 
-//});
+});
 
 
