@@ -15,6 +15,11 @@
         var currDragtarget = null;
         var $currTarget;
 
+
+        $scope.addCard = function () {
+            $('.addCard').click();
+        };
+
         $scope.isCurrentlyDragging = false;
         $scope.board = myBoard;
 

@@ -32,15 +32,95 @@ describe("End-to-End Tests", function () {
         input("listTitle").enter("Backlog");
         element("#okBtn").click();
 
-//        element('.addCard').click();
-//        input("listTitle").enter("In dev");
-//        element("#okBtn").click();
 
 
         element('#addNewListBtn').click();
         input("listTitle").enter("In dev");
         element("#okBtn").click();
 
+        element('.addCard:eq(0)').click();
+        input("listTitle").enter("New Lister");
+        element("#okBtn").click();
+
+        element('.addCard:eq(0)').click();
+        input("listTitle").enter("Web Trends");
+        element("#okBtn").click();
+
+        element('.addCard:eq(0)').click();
+        input("listTitle").enter("Web Trends2");
+        element("#okBtn").click();
+
+        element('.addCard:eq(0)').click();
+        input("listTitle").enter("Web Trends3");
+        element("#okBtn").click();
+
+        element('.addCard:eq(0)').click();
+        input("listTitle").enter("Web Trends4");
+        element("#okBtn").click();
+
+        element('.addCard:eq(0)').click();
+        input("listTitle").enter("New Site");
+        element("#okBtn").click();
+
+        element('.addCard:eq(0)').click();
+        input("listTitle").enter("New Site2");
+        element("#okBtn").click();
+
+        element('.addCard:eq(0)').click();
+        input("listTitle").enter("New Site3");
+        element("#okBtn").click();
+
+
+        element('.addCard:eq(0)').click();
+        input("listTitle").enter("New Site4");
+        element("#okBtn").click();
+        
+        element('.addCard:eq(0)').click();
+        input("listTitle").enter("Disconnected Promotion");
+        element("#okBtn").click();
+        
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("Prod Page Refactor");
+        element("#okBtn").click();
+
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("Performance");
+        element("#okBtn").click();
+
+
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("Web Trends5");
+        element("#okBtn").click();
+
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("Web Trends6");
+        element("#okBtn").click();
+
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("Web Trends7");
+        element("#okBtn").click();
+
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("Web Trends8");
+        element("#okBtn").click();
+
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("New Site7");
+        element("#okBtn").click();
+
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("New Site5");
+        element("#okBtn").click();
+
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("New Site6");
+        element("#okBtn").click();
+
+
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("New Site7");
+        element("#okBtn").click();
+        
         element('#addNewListBtn').click();
         input("listTitle").enter("Dev Done");
         element("#okBtn").click();
