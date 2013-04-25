@@ -26,6 +26,13 @@ namespace ScrumBoardMvcApp.Controllers
             _scrumBoardService = ScrumBoardDomainFactory.CreateServiceApplication();
         }
 
+
+        [HttpPost]
+        public void ResetBoardDataById(int id)
+        {
+            _scrumBoardService.ClearBoardById(id);
+        }
+
         [HttpGet]
         public dynamic GetAllBoardDataById(int id)
         {

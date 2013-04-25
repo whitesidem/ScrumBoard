@@ -9,6 +9,7 @@ SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog, $htt
     $scope.dialogDone = false;
     $scope.opts = {
         backdrop: true,
+        modalFade: false,
         keyboard: true,
         backdropClick: true,
         templateUrl: '/Templates/ScrumBoard/CreateListItemDialog.htm',

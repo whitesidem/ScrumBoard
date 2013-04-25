@@ -78,6 +78,11 @@ namespace ScrumBoardDomain.ApplicationService
             _boardRepository.UpdateCardPosition(sourceCardId, targetCardId, targetListId);
         }
 
+        public void ClearBoardById(int id)
+        {
+            _boardRepository.ClearBoardById(id);
+        }
+
         /*
                 private static int CalcScrumListPosition(IList<ScrumList> list, ScrumList listItem)
                 {

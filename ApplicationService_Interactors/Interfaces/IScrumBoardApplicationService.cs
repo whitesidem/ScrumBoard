@@ -12,6 +12,7 @@ namespace ApplicationService_Interactors.Interfaces
         List<ScrumListResponseDTO> RetrieveOrderedScrumListsByBoardId(int boardId);
         List<ScrumCardResponseDTO> RetrieveOrderedScrumCardsByListId(int listId);
         void MoveCard(int sourceCardId, int targetListId, int targetCardId);
+        void ClearBoardById(int id);
     }
 }
 

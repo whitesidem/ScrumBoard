@@ -30,3 +30,10 @@ var SkilzJs = (function () {
         namespace: namespace
     };
 } ());
+
+$.urlParams = function (name) {
+    var results = new RegExp('[\\?&amp;]' + name + '=([^amp;#]*)').exec(window.location.href);
+    if (results === null) return "";
+    return results[1] || 0;
+
+};

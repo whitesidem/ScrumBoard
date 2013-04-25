@@ -1,0 +1,21 @@
+﻿<div class="modal-header">
+    <button id="closeBtn" type="button" class="close" data-ng-click="cancel()">&times;</button>
+    <h3>Create a new item</h3>
+</div>
+
+<div class="modal-body">
+    <fieldset>
+        <legend>Details</legend>
+        <label>First Name</label>
+        <input type="text" class="span3" data-ng-model="firstName" />
+        <label>Last Name</label>
+        <input type="text" class="span3" data-ng-model="lastName" />
+        <label>Email</label>
+        <input type="text" class="span3" data-ng-model="email" />
+    </fieldset>
+</div>
+
+<div class="modal-footer">
+    <a id="okBtn" href="#" class="btn btn-primary btn-small" data-ng-click="ok()">OK</a>
+    <a id="cancelBtn" href="#" class="btn btn-small" data-ng-click="cancel()">Cancel</a>
+</div>

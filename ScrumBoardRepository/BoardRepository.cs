@@ -12,6 +12,23 @@ namespace ScrumBoardRepository
         private static readonly List<DbScrumList> _scrumListCollection = new List<DbScrumList>();
         private static readonly List<DbScrumCard> _scrumCardCollection = new List<DbScrumCard>();
 
+        public void ClearBoardById(int id)
+        {
+            lock (BoardIdLock(id))
+            {
+                _boardDataCollection.Clear();
+                _scrumListCollection.Clear();
+                _scrumCardCollection.Clear();
+
+                var repository = new BoardRepository();
+
+                var board = new ScrumBoard();
+                board.Title = "Test Board 1";
+                repository.CreateScrumBoard(board);
+            }
+        }
+
+
         public static void ResetDefaultPopulateBoardRepository()
         {
             _boardDataCollection.Clear();
@@ -209,6 +226,7 @@ namespace ScrumBoardRepository
                 dbSourceCard.ListId = targetListId;
             }
         }
+
 
         private class DbScrumBoard
         {
