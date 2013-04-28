@@ -13,7 +13,7 @@ namespace ScrumBoardDomain.Interfaces
         List<ScrumList> ListScrumListByBoardId(int id);
         int CreateScrumBoard(ScrumBoard board);
 //        void UpdateCardParentPosition(int sourceCardId, int listId, int position);
-        void UpdateCardPosition(int sourceCardId, int targetCardId, int targetListId);
+        void UpdateCardPosition(int boardid, int sourceCardId, int targetCardId, int targetListId);
         void ClearBoardById(int id);
     }
 }

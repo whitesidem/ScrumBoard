@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Globalization;
 using ApplicationService_Interactors.Interfaces;
 using ApplicationService_Interactors.RequestResponseDTo;
 using ScrumBoardDomain.Entities;
@@ -41,7 +43,12 @@ namespace ScrumBoardDomain.ApplicationService
                     BoardId = boardID,
                     Title = title
                 };
-            int id = _boardRepository.CreateScrumListForBoardIdAndGenerateId(list);
+            int id;
+            lock (BoardIdLock(list.BoardId))
+            {
+
+                id = _boardRepository.CreateScrumListForBoardIdAndGenerateId(list);
+            }
             list.Id = id;
             return ScrumListMapper.ToScrumListResponseDTO(list);
         }
@@ -53,7 +60,11 @@ namespace ScrumBoardDomain.ApplicationService
                     ListId = listId,
                     Title = title
                 };
-            int id = _boardRepository.CreateScrumCardForListIdAndGenerateId(card);
+            int id;
+            lock (ListIdLock(card.ListId))
+            {
+                id = _boardRepository.CreateScrumCardForListIdAndGenerateId(card);
+            }
             card.Id = id;
             return ScrumCardMapper.ToScrumCardResponseDTO(card);
         }
@@ -73,14 +84,20 @@ namespace ScrumBoardDomain.ApplicationService
             return ScrumCardMapper.ToScrumCardResponseDTO(_boardRepository.ListScrumCardsListByListId(listId));
         }
 
-        public void MoveCard(int sourceCardId, int targetListId, int targetCardId)
+        public void MoveCard(int boardId, int sourceCardId, int targetListId, int targetCardId)
         {
-            _boardRepository.UpdateCardPosition(sourceCardId, targetCardId, targetListId);
+            lock (BoardIdLock(boardId))
+            {
+                _boardRepository.UpdateCardPosition(boardId, sourceCardId, targetCardId, targetListId);
+            }
         }
 
         public void ClearBoardById(int id)
         {
-            _boardRepository.ClearBoardById(id);
+            lock (BoardIdLock(id))
+            {
+                _boardRepository.ClearBoardById(id);
+            }
         }
 
         /*
@@ -109,5 +126,23 @@ namespace ScrumBoardDomain.ApplicationService
                 }
             }
         */
+
+        private static object BoardIdLock(int boardId)
+        {
+            //            return boardId.ToString(CultureInfo.InvariantCulture);
+            return _miniLocks.GetOrAdd(boardId.ToString(CultureInfo.InvariantCulture), k => new object());
+        }
+
+        private static object ListIdLock(int listId)
+        {
+            //            return listId.ToString(CultureInfo.InvariantCulture);
+            return _miniLocks.GetOrAdd(listId.ToString(CultureInfo.InvariantCulture), k => new object());
+        }
+
+        private static readonly ConcurrentDictionary<string, object> _miniLocks = new ConcurrentDictionary<string, object>();
+
+
+
+
     }
 }

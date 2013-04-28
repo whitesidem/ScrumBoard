@@ -4,7 +4,9 @@
 
 angular.module("ScrumBoardApp")
 .factory("myBoard", function () {
-    return SkilzJs.model.board.FactoryCreate("TestBoard");
+    var board = SkilzJs.model.board.FactoryCreate("TestBoard");
+    board.id = 1;
+    return board;
 })
 .factory("mySockets", function () {
     return SkilzJs.sockets.socketController;

@@ -76,9 +76,9 @@ namespace ScrumBoardMvcApp.Controllers
         }
 
         [HttpPut]
-        public void MoveCard(int sourceCardId, int targetListId, int targetCardId)
+        public void MoveCard(int boardId, int sourceCardId, int targetListId, int targetCardId)
         {
-            _scrumBoardService.MoveCard(sourceCardId, targetListId, targetCardId);
+            _scrumBoardService.MoveCard(boardId, sourceCardId, targetListId, targetCardId);
             var hub = new ScrumBoardHub();
             hub.MoveCard(sourceCardId, targetListId, targetCardId);
         }

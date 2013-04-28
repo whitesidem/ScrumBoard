@@ -30,13 +30,14 @@
 
         $scope.setDragging = function (isDragging) {
             $('.listItemScroll').stop();
-            //        console.log('SET DRAGGING' + isDragging);
+            console.log('SET DRAGGING' + isDragging);
             $scope.isCurrentlyDragging = isDragging;
         };
 
         $scope.boardMouseMove = function (e) {
+
             if ($scope.isCurrentlyDragging === false) {
-                //            console.log('BOARDMOUSE');
+//                console.log('BOARDMOUSE');
                 return;
             }
 
@@ -47,11 +48,11 @@
             }
 
             if (($currTarget.hasClass("scrumCard") === false) && ($currTarget.hasClass("listItem") === false)) {
-                //            console.log('DRAG BOARDMOUSE');
+//                console.log('DRAG BOARDMOUSE');
                 return;
             }
 
-            console.log('DRAG list or card');
+//            console.log('DRAG list or card');
 
             var $this = $currTarget.closest('.listItemScroll');
             if ($this.length === 0) return;
@@ -213,7 +214,7 @@
                 //            sourceList.removeCard(sourceCard);
                 //            $('dragClone').remove();
 
-                $http.put("api/ScrumBoardRestApi/MoveCard?sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
+                $http.put("api/ScrumBoardRestApi/MoveCard?boardId=" + myBoard.id + "&sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
             });
 
 

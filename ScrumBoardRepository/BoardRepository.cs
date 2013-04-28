@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using ScrumBoardDomain.Entities;
@@ -14,18 +15,15 @@ namespace ScrumBoardRepository
 
         public void ClearBoardById(int id)
         {
-            lock (BoardIdLock(id))
-            {
-                _boardDataCollection.Clear();
-                _scrumListCollection.Clear();
-                _scrumCardCollection.Clear();
+            _boardDataCollection.Clear();
+            _scrumListCollection.Clear();
+            _scrumCardCollection.Clear();
 
-                var repository = new BoardRepository();
+            var repository = new BoardRepository();
 
-                var board = new ScrumBoard();
-                board.Title = "Test Board 1";
-                repository.CreateScrumBoard(board);
-            }
+            var board = new ScrumBoard();
+            board.Title = "Test Board 1";
+            repository.CreateScrumBoard(board);
         }
 
 
@@ -115,7 +113,7 @@ namespace ScrumBoardRepository
                 Id = result.Id,
                 BoardId = result.BoardId,
                 Title = result.Title,
-                ParentSequenceId = result.ParentSequenceId,
+//                ParentSequenceId = result.ParentSequenceId,
                 Position = result.Position
             };
         }
@@ -148,83 +146,74 @@ namespace ScrumBoardRepository
 
         public int CreateScrumListForBoardIdAndGenerateId(ScrumList list)
         {
-            lock (BoardIdLock(list.BoardId))           
+            var nextId = _scrumListCollection.Any() ? _scrumListCollection.Max(l => l.Id) + 1 : 1;
+            var allListsForBoard = _scrumListCollection.Where(l => l.BoardId == list.BoardId).ToList();
+            var nextPos = allListsForBoard.Any() ? allListsForBoard.Max(l => l.Position) + 1 : 1;
+            var dbList = new DbScrumList
             {
-                var nextId = _scrumListCollection.Any() ? _scrumListCollection.Max(l => l.Id) + 1 : 1;
-                var allListsForBoard = _scrumListCollection.Where(l => l.BoardId == list.BoardId).ToList();
-                var nextPos = allListsForBoard.Any() ? allListsForBoard.Max(l => l.Position) + 1 : 1;
-                var dbList = new DbScrumList
-                {
-                    BoardId = list.BoardId,
-                    Id = nextId,
-                    Title = list.Title,
-                    ParentSequenceId = list.ParentSequenceId,
-                    Position = nextPos
-                };
-                _scrumListCollection.Add(dbList);
-                return nextId;
-            }
+                BoardId = list.BoardId,
+                Id = nextId,
+                Title = list.Title,
+//                    ParentSequenceId = list.ParentSequenceId,
+                Position = nextPos
+            };
+            _scrumListCollection.Add(dbList);
+            return nextId;
         }
 
         public int CreateScrumCardForListIdAndGenerateId(ScrumCard card)
         {
-            lock (ListIdLock(card.ListId))
-            {
-                var nextId = _scrumCardCollection.Any() ? _scrumCardCollection.Max(l => l.Id) + 1 : 1;
-                var allCardsForList = _scrumCardCollection.Where(c => c.ListId == card.ListId).ToList();
-                var nextPos = allCardsForList.Any() ? allCardsForList.Max(l => l.Position) + 1 : 1;
-                var dbCard = new DbScrumCard
-                    {
-                        ListId = card.ListId,
-                        Id = nextId,
-                        Title = card.Title,
-                        //ParentSequenceId = card.ParentSequenceId,
-                        Position = nextPos
-                    };
-                _scrumCardCollection.Add(dbCard);
-                return nextId;
-            }
+            var nextId = _scrumCardCollection.Any() ? _scrumCardCollection.Max(l => l.Id) + 1 : 1;
+            var allCardsForList = _scrumCardCollection.Where(c => c.ListId == card.ListId).ToList();
+            var nextPos = allCardsForList.Any() ? allCardsForList.Max(l => l.Position) + 1 : 1;
+            var dbCard = new DbScrumCard
+                {
+                    ListId = card.ListId,
+                    Id = nextId,
+                    Title = card.Title,
+                    //ParentSequenceId = card.ParentSequenceId,
+                    Position = nextPos
+                };
+            _scrumCardCollection.Add(dbCard);
+            return nextId;
         }
 
-        public void UpdateCardPosition(int sourceCardId, int targetCardId, int targetListId)
+        public void UpdateCardPosition(int boardid, int sourceCardId, int targetCardId, int targetListId)
         {
             bool addNewCardPosition = targetCardId == -1;
             var dbSourceCard = _scrumCardCollection.FirstOrDefault(c => c.Id == sourceCardId);
             if (dbSourceCard == null) return;
             var targetList = RetrieveScrumListById(targetListId);
             if (targetList == null) return;
-            lock (BoardIdLock(targetList.BoardId))
+
+            if (addNewCardPosition == false)
             {
-
-                if (addNewCardPosition == false)
+                var targetListcards = _scrumCardCollection.Where(c => (c.ListId == targetListId && c.Id != sourceCardId));
+                foreach (var dbScrumCard in targetListcards)
                 {
-                    var targetListcards = _scrumCardCollection.Where(c => (c.ListId == targetListId && c.Id != sourceCardId));
-                    foreach (var dbScrumCard in targetListcards)
-                    {
-                        dbScrumCard.Position++;
-                    }
+                    dbScrumCard.Position++;
                 }
-
-                var sourceListcards = _scrumCardCollection.Where(c => (c.ListId == dbSourceCard.ListId && c.Id != sourceCardId));
-                foreach (var dbScrumCard in sourceListcards)
-                {
-                    dbScrumCard.Position--;
-                }
-
-                int newPosition; 
-                if (addNewCardPosition==false)
-                {
-                    var targetCard = _scrumCardCollection.FirstOrDefault(c => c.Id == targetCardId);
-                    newPosition = targetCard.Position;
-                }
-                else
-                {
-                    var allCardsForList = _scrumCardCollection.Where(c => c.ListId == targetListId).ToList();
-                    newPosition = allCardsForList.Any() ? allCardsForList.Max(l => l.Position) + 1 : 1;
-                }
-                dbSourceCard.Position = newPosition;
-                dbSourceCard.ListId = targetListId;
             }
+
+            var sourceListcards = _scrumCardCollection.Where(c => (c.ListId == dbSourceCard.ListId && c.Id != sourceCardId));
+            foreach (var dbScrumCard in sourceListcards)
+            {
+                dbScrumCard.Position--;
+            }
+
+            int newPosition; 
+            if (addNewCardPosition==false)
+            {
+                var targetCard = _scrumCardCollection.FirstOrDefault(c => c.Id == targetCardId);
+                newPosition = targetCard.Position;
+            }
+            else
+            {
+                var allCardsForList = _scrumCardCollection.Where(c => c.ListId == targetListId).ToList();
+                newPosition = allCardsForList.Any() ? allCardsForList.Max(l => l.Position) + 1 : 1;
+            }
+            dbSourceCard.Position = newPosition;
+            dbSourceCard.ListId = targetListId;
         }
 
 
@@ -252,14 +241,6 @@ namespace ScrumBoardRepository
             public int Position { get; set; }
         }
 
-        private static string BoardIdLock(int boardId)
-        {
-            return boardId.ToString(CultureInfo.InvariantCulture);
-        }
-        private static string ListIdLock(int listId)
-        {
-            return listId.ToString(CultureInfo.InvariantCulture);
-        }
-
+    
     }
 }
