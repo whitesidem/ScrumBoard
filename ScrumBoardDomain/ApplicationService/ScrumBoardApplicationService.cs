@@ -46,7 +46,6 @@ namespace ScrumBoardDomain.ApplicationService
             int id;
             lock (BoardIdLock(list.BoardId))
             {
-
                 id = _boardRepository.CreateScrumListForBoardIdAndGenerateId(list);
             }
             list.Id = id;

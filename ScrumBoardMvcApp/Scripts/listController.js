@@ -37,7 +37,7 @@
         $scope.boardMouseMove = function (e) {
 
             if ($scope.isCurrentlyDragging === false) {
-//                console.log('BOARDMOUSE');
+                //                console.log('BOARDMOUSE');
                 return;
             }
 
@@ -48,11 +48,11 @@
             }
 
             if (($currTarget.hasClass("scrumCard") === false) && ($currTarget.hasClass("listItem") === false)) {
-//                console.log('DRAG BOARDMOUSE');
+                //                console.log('DRAG BOARDMOUSE');
                 return;
             }
 
-//            console.log('DRAG list or card');
+            //            console.log('DRAG list or card');
 
             var $this = $currTarget.closest('.listItemScroll');
             if ($this.length === 0) return;
@@ -170,29 +170,35 @@
 
         $scope.dropListener = function (eDraggable, eDroppable) {
 
+
+            /*
             var isDropForbidden = function (aTarget, item) {
-                //            if (aTarget.some(function (i) {
-                //                return i.name == item.name;
-                //            })) {
-                //                return { reason: 'target already contains "' + item.name + '"' };
-                //            } else {
-                //                return false;
-                //            }
-                return false;
+            //            if (aTarget.some(function (i) {
+            //                return i.name == item.name;
+            //            })) {
+            //                return { reason: 'target already contains "' + item.name + '"' };
+            //            } else {
+            //                return false;
+            //            }
+            return false;
             };
 
             var onDropRejected = function (error) {
-                alert('Operation not permitted: ' + error.reason);
+            alert('Operation not permitted: ' + error.reason);
             };
 
             var onDropComplete = function (eSrc, item, index) {
-                //            alert('moved "' + item.name + ' from ' + eSrc.data('model') + '[' + index + ']' + ' to ' + eDroppable.data('model'));
-                //            console.log('moved "' + item.name + ' from ' + eSrc.data('model') + '[' + index + ']' + ' to ' + eDroppable.data('model'));
+            //            alert('moved "' + item.name + ' from ' + eSrc.data('model') + '[' + index + ']' + ' to ' + eDroppable.data('model'));
+            //            console.log('moved "' + item.name + ' from ' + eSrc.data('model') + '[' + index + ']' + ' to ' + eDroppable.data('model'));
             };
-
+            */
 
             var sourceCardId = eDraggable.data('cardid');
             var targetCardId = eDroppable.data('cardid');
+
+
+            console.log("source card id = " + sourceCardId);
+            console.log("target card id = " + targetCardId);
 
             //       alert(sourceCardId);
             //       alert(targetCardId);
@@ -205,6 +211,9 @@
                 if (targetCardId != -1) {
                     var targetCard = myBoard.getCardById(targetCardId);
                     targetListId = targetCard.listId;
+
+                    console.log('dropped on add to card');
+
                 } else {
                     targetListId = eDroppable.data('listid');
                 }

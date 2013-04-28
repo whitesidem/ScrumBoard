@@ -38,7 +38,7 @@ angular.module("ScrumBoardApp")
                 scrollSensitivity: 10,
                 scrollSpeed: 50,
                 cursor: "crosshair",
-                cursorAt: { left: -2, top: -2 },
+                cursorAt: { left: -2, top: 5 },
                 delay: 300,
                 start: function () {
 //                    console.log('start drag');
@@ -61,6 +61,8 @@ angular.module("ScrumBoardApp")
         link: function (scope, eDroppable, attrs) {
             eDroppable.droppable({
                 drop: function (event, ui) {
+                    console.log("DROP DETECTED!!!!");
+
                     var fnDropListener = scope.$eval(attrs.uiDropListener);
                     if (fnDropListener && angular.isFunction(fnDropListener)) {
                         var eDraggable = angular.element(ui.draggable);
