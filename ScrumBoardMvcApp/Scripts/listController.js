@@ -223,6 +223,8 @@
                 //            sourceList.removeCard(sourceCard);
                 //            $('dragClone').remove();
 
+                console.log("from " + sourceCardId + " to " + targetCardId);
+
                 $http.put("api/ScrumBoardRestApi/MoveCard?boardId=" + myBoard.id + "&sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
             });
 

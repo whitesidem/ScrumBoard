@@ -180,41 +180,45 @@ namespace ScrumBoardRepository
 
         public void UpdateCardPosition(int boardid, int sourceCardId, int targetCardId, int targetListId)
         {
-            //bool addNewCardPosition = targetCardId == -1;
-            //var dbSourceCard = _scrumCardCollection.FirstOrDefault(c => c.Id == sourceCardId);
-            //if (dbSourceCard == null) return;
-            //var targetList = RetrieveScrumListById(targetListId);
-            //if (targetList == null) return;
-            //DbScrumCard dbTargetCard = null;
+            if (targetCardId == sourceCardId) return;
 
-            //if (addNewCardPosition == false)
-            //{
-            //    dbTargetCard = _scrumCardCollection.FirstOrDefault(c => c.Id == targetCardId);
-            //    var targetListcards = _scrumCardCollection.Where(c => (c.ListId == targetListId && c.Position >= dbTargetCard.Position));
-            //    foreach (var dbScrumCard in targetListcards)
-            //    {
-            //        dbScrumCard.Position++;
-            //    }
-            //}
+            bool addNewCardPosition = targetCardId == -1;
 
-            //var sourceListcards = _scrumCardCollection.Where(c => (c.ListId == dbSourceCard.ListId && c.Position >  ));
-            //foreach (var dbScrumCard in sourceListcards)
-            //{
-            //    dbScrumCard.Position--;
-            //}
+            var dbSourceCard = _scrumCardCollection.FirstOrDefault(c => c.Id == sourceCardId);
+            if (dbSourceCard == null) return;
 
-            //int newPosition; 
-            //if (addNewCardPosition==false)
-            //{
-            //    newPosition = dbTargetCard.Position - 1;
-            //}
-            //else
-            //{
-            //    var allCardsForList = _scrumCardCollection.Where(c => c.ListId == targetListId).ToList();
-            //    newPosition = allCardsForList.Any() ? allCardsForList.Max(l => l.Position) + 1 : 1;
-            //}
-            //dbSourceCard.Position = newPosition;
-            //dbSourceCard.ListId = targetListId;
+            var targetList = RetrieveScrumListById(targetListId);
+            if (targetList == null) return;
+
+            DbScrumCard dbTargetCard = null;
+            if (addNewCardPosition == false)
+            {
+                dbTargetCard = _scrumCardCollection.FirstOrDefault(c => c.Id == targetCardId && c.ListId == targetListId);
+                if (dbTargetCard == null) return;
+            }
+
+            var sourceListcards = _scrumCardCollection.Where(c => (c.ListId == dbSourceCard.ListId && c.Position > dbSourceCard.Position ));
+            foreach (var dbScrumCard in sourceListcards)
+            {
+                dbScrumCard.Position--;
+            }
+
+            if (addNewCardPosition)
+            {
+                var nextPos = _scrumCardCollection.Any(c => c.ListId == targetListId) ? _scrumCardCollection.Where(c => c.ListId == targetListId).Max(m => m.Position) + 1 : 1;
+                dbSourceCard.Position = nextPos;
+                dbSourceCard.ListId = targetListId;
+                return;
+            }
+
+            var newPosition = dbTargetCard.Position;
+            var targetListcards = _scrumCardCollection.Where(c => (c.ListId == targetListId && c.Position >= dbTargetCard.Position));
+            foreach (var dbScrumCard in targetListcards)
+            {
+                dbScrumCard.Position++;
+            }
+            dbSourceCard.Position = newPosition;
+            dbSourceCard.ListId = targetListId;
         }
 
 
