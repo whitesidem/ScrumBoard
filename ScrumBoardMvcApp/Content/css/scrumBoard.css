@@ -77,6 +77,14 @@
 	white-space: normal;
 }
 
+.cardTrailerContent {
+	background-color: transparent;
+	height: 70px;
+	width: 100%;
+	clear:both; 
+}
+
+
 .ui-draggable-dragging {
 	position: fixed;
 	width: 220px;
@@ -101,12 +109,7 @@
 
 
 #outerScrumBoard {
-	height: 450px;
-    /*height: 470px;*/
-	/*width: 1000px;*/
-
-	/*width: 600px;
-*/	
+	height: 550px;
 	width: 96%;
 	display: inline-block;
     overflow-x:auto;
@@ -116,11 +119,3 @@
 	background-color: pink;
 	position: relative;					/*   Makes it possible to drag card into outer scrollable contained region   */
 }
-
-#scrumBoard .mCSB_scrollTools .mCSB_draggerRail {
-	/*width: 5px!important;*/
-	/*height: 15px!important;*/
-}
-
-
-

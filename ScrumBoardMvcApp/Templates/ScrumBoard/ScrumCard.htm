@@ -1,4 +1,10 @@
-﻿<div class="scrumCard"  data-ui-drop-listener='dropListener' data-draggable data-cardid="{{card.id}}"  data-ng-click="setCurrentCard(card)">
+﻿<div class="scrumCard"  
+     data-ui-drop-listener='dropListener' 
+     data-draggable 
+     data-cardid="{{card.id}}" 
+     data-listid="{{list.id}}" 
+     data-ng-click="setCurrentCard(card)"
+    >
     <div class="cardInsertRegion"></div>
     <div class="cardContent">
         {{card.title}}

@@ -48,20 +48,13 @@
 
             var $itemInScrollRegion = $currTarget.closest('.listItemScroll');
             if ($itemInScrollRegion.length == 0) {
-                console.log('NON DRAG REGION');
+//                console.log('NON DRAG REGION');
                 return;
             }
 
-
-            //            if (($currTarget.hasClass("scrumCard") === false) && ($currTarget.hasClass("listItem") === false)) {
-            //                console.log('DRAG BOARDMOUSE');
-            //                return;
-            //            }
-
-            console.log('DRAG list or card');
+            //console.log('DRAG list or card');
 
             var $this = $itemInScrollRegion;
-//            var $this = $currTarget.closest('.listItemScroll');
             if ($this.length === 0) return;
 
             //        $('.listItemScroll', $currTarget);
@@ -110,7 +103,6 @@
             if ($.urlParams('isTest')) {
                 $http.post("api/ScrumBoardRestApi/resetBoardDataById?id=" + testBoardId);
             };
-
 
             $http.get("api/ScrumBoardRestApi/GetAllBoardDataById?id=" + testBoardId).success(function (data) {
                 if (_(data).isUndefined()) return;
@@ -165,104 +157,18 @@
         };
 
 
-
         $scope.setCurrentCard = function (card) {
             $scope.currentCard = card;
         };
 
         $scope.addListEvent = _addListEvent;
 
-
-
         $scope.dropListener = function (eDraggable, eDroppable) {
-
-
-            /*
-            var isDropForbidden = function (aTarget, item) {
-            //            if (aTarget.some(function (i) {
-            //                return i.name == item.name;
-            //            })) {
-            //                return { reason: 'target already contains "' + item.name + '"' };
-            //            } else {
-            //                return false;
-            //            }
-            return false;
-            };
-
-            var onDropRejected = function (error) {
-            alert('Operation not permitted: ' + error.reason);
-            };
-
-            var onDropComplete = function (eSrc, item, index) {
-            //            alert('moved "' + item.name + ' from ' + eSrc.data('model') + '[' + index + ']' + ' to ' + eDroppable.data('model'));
-            //            console.log('moved "' + item.name + ' from ' + eSrc.data('model') + '[' + index + ']' + ' to ' + eDroppable.data('model'));
-            };
-            */
-
             var sourceCardId = eDraggable.data('cardid');
             var targetCardId = eDroppable.data('cardid');
-
-
-            //            console.log("source card id = " + sourceCardId);
-            //            console.log("target card id = " + targetCardId);
-
-            //       alert(sourceCardId);
-            //       alert(targetCardId);
-
-            $scope.$apply(function () {
-
-                var targetListId = -1;
-                if (targetCardId != -1) {
-                    var targetCard = myBoard.getCardById(targetCardId);
-                    targetListId = targetCard.listId;
-
-                    //                    console.log('dropped on add to card');
-
-                } else {
-                    targetListId = eDroppable.data('listid');
-                }
-
-                //              console.log("from " + sourceCardId + " to " + targetCardId);
-
-                $http.put("api/ScrumBoardRestApi/MoveCard?boardId=" + myBoard.id + "&sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
-            });
-
-
-            //var sSrc = eSrc.data('model');
-            //        var sTarget = eDroppable.data('model');
-
-            //        var targetListIndex = eDroppable.data('listindex');
-
-            /*
-
-            var targetList = myBoard.ScrumLists[targetListIndex];
-
-            if (sSrc != sTarget) {
-            $scope.$apply(function () {
-            var 
-
-
-            //var index = eDraggable.data('index');
-            var sourceCardIndex = eDraggable.data('cardindex');
-            var sourceCard = 
-
-            //                var aSrc = $scope.$eval(sSrc);
-            var aSrc = sSrc;
-            //                var aTarget = $scope.$eval(sTarget);
-            var aTarget = sTarget;
-            //                var item = aSrc[index];
-            var item = aSrc.cards[index];
-
-            var error = isDropForbidden(aTarget, item);
-            if (error) {
-            onDropRejected(error);
-            } else {
-            }
-                
-
-            });
-            }
-            */
+            var targetListId = eDroppable.data('listid');
+            //              console.log("from " + sourceCardId + " to " + targetCardId);
+            $http.put("api/ScrumBoardRestApi/MoveCard?boardId=" + myBoard.id + "&sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
 
         };
 

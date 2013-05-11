@@ -29,6 +29,17 @@ angular.module("ScrumBoardApp")
 
 
 angular.module("ScrumBoardApp")
+.directive('scrumcarditemtrailer', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        transclude: true,
+        scope: false,
+        templateUrl: '/Templates/ScrumBoard/ScrumCardTrailer.htm'
+    };
+});
+
+angular.module("ScrumBoardApp")
 .directive('draggable', function () {
     return {
         restrict: 'A',
