@@ -58,16 +58,6 @@
                     Another Div!
                 </div>
                 <div id="outerScrumBoard" class="span1" style="position: relative;">
-                    @*                <div class="listItemScroll"><div class="listItem">rkejnrkgjnerkgjne</div></div>
-                    <div class="listItemScroll"><div class="listItem">rkejnrkgjnerkgjne</div></div>
-                    <div class="listItemScroll"><div class="listItem">rkejnrkgjnerkgjne</div></div>
-                    <div class="listItemScroll"><div class="listItem">rkejnrkgjnerkgjne</div></div>
-                    <div class="listItemScroll"><div class="listItem">rkejnrkgjnerkgjne</div></div>
-                    <div class="listItemScroll"><div class="listItem">rkejnrkgjnerkgjne</div></div>
-                    <div class="listItemScroll"><div class="listItem">rkejnrkgjnerkgjne</div></div>
-                    <div class="listItemScroll"><div class="listItem">rkejnrkgjnerkgjne</div></div>
-                    <div class="listItemScroll"><div class="listItem">rkejnrkgjnerkgjne</div></div>
-    *@                
 
                     <ul class="unstyled">
                         <li data-ng-repeat="list in board.lists" class="listIterator">
@@ -81,11 +71,10 @@
                                             </scrumcarditem>
                                         </li>
                                     </ul>
-                                    <div data-ui-drop-listener='dropListener' data-cardid="-1" data-listid="{{list.id}}">
-                                        <div data-ng-controller="SkilzJs.controller.CreateCardDialogController" class="addCard"
-                                             data-ng-click="openDialog(list.id)">
+                                    <div >
+                                        <addscrumcarditem>
                                             Add a card...
-                                        </div>
+                                        </addscrumcarditem>
                                     </div>
                                 </div>
                             </div>

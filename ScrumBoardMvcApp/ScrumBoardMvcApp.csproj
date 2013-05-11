@@ -429,6 +429,7 @@
     <Content Include="Scripts\scrumBoardApp.js" />
     <Content Include="Scripts\scrumBoardFactories.js" />
     <Content Include="Scripts\Sockets\socketController.js" />
+    <Content Include="Templates\ScrumBoard\AddScrumCard.htm" />
     <Content Include="Templates\ScrumBoard\EditCard.htm" />
     <Content Include="Templates\ScrumBoard\AddItemDialog.html" />
     <Content Include="Templates\ScrumBoard\ScrumCard.htm" />

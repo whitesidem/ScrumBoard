@@ -1,5 +1,8 @@
 ﻿<div class="scrumCard"  data-ui-drop-listener='dropListener' data-draggable data-cardid="{{card.id}}"  data-ng-click="setCurrentCard(card)">
-    {{card.title}}
-    <p ng-transclude>
-    </p>
+    <div class="cardInsertRegion"></div>
+    <div class="cardContent">
+        {{card.title}}
+        <p ng-transclude>
+        </p>
+    </div>
 </div>

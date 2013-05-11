@@ -17,6 +17,18 @@ angular.module("ScrumBoardApp")
 });
 
 angular.module("ScrumBoardApp")
+.directive('addscrumcarditem', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        transclude: true,
+        scope: false,
+        templateUrl: '/Templates/ScrumBoard/AddScrumCard.htm'
+    };
+});
+
+
+angular.module("ScrumBoardApp")
 .directive('draggable', function () {
     return {
         restrict: 'A',
@@ -59,7 +71,6 @@ angular.module("ScrumBoardApp")
             eDroppable.droppable({
                 drop: function (event, ui) {
 //                    console.log("DROP DETECTED!!!!");
-
                     var fnDropListener = scope.$eval(attrs.uiDropListener);
                     if (fnDropListener && angular.isFunction(fnDropListener)) {
                         var eDraggable = angular.element(ui.draggable);
@@ -68,7 +79,6 @@ angular.module("ScrumBoardApp")
                 },
                 hoverClass: "cardHover",
                 tolerance: "pointer"
-//                ,greedy: true
             });
         }
     };

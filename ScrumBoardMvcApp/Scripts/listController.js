@@ -29,7 +29,7 @@
 
         $scope.setDragging = function (isDragging) {
             $('.listItemScroll').stop();
-            console.log('SET DRAGGING' + isDragging);
+            //            console.log('SET DRAGGING' + isDragging);
             $scope.isCurrentlyDragging = isDragging;
         };
 
@@ -46,14 +46,22 @@
                 $currTarget = $(currDragtarget);
             }
 
-            if (($currTarget.hasClass("scrumCard") === false) && ($currTarget.hasClass("listItem") === false)) {
-                //                console.log('DRAG BOARDMOUSE');
+            var $itemInScrollRegion = $currTarget.closest('.listItemScroll');
+            if ($itemInScrollRegion.length == 0) {
+                console.log('NON DRAG REGION');
                 return;
             }
 
-            //            console.log('DRAG list or card');
 
-            var $this = $currTarget.closest('.listItemScroll');
+            //            if (($currTarget.hasClass("scrumCard") === false) && ($currTarget.hasClass("listItem") === false)) {
+            //                console.log('DRAG BOARDMOUSE');
+            //                return;
+            //            }
+
+            console.log('DRAG list or card');
+
+            var $this = $itemInScrollRegion;
+//            var $this = $currTarget.closest('.listItemScroll');
             if ($this.length === 0) return;
 
             //        $('.listItemScroll', $currTarget);
@@ -195,8 +203,8 @@
             var targetCardId = eDroppable.data('cardid');
 
 
-            console.log("source card id = " + sourceCardId);
-            console.log("target card id = " + targetCardId);
+            //            console.log("source card id = " + sourceCardId);
+            //            console.log("target card id = " + targetCardId);
 
             //       alert(sourceCardId);
             //       alert(targetCardId);
@@ -208,13 +216,13 @@
                     var targetCard = myBoard.getCardById(targetCardId);
                     targetListId = targetCard.listId;
 
-                    console.log('dropped on add to card');
+                    //                    console.log('dropped on add to card');
 
                 } else {
                     targetListId = eDroppable.data('listid');
                 }
 
-                console.log("from " + sourceCardId + " to " + targetCardId);
+                //              console.log("from " + sourceCardId + " to " + targetCardId);
 
                 $http.put("api/ScrumBoardRestApi/MoveCard?boardId=" + myBoard.id + "&sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
             });
@@ -266,7 +274,7 @@
     } ]);
 
 
-//app.controller("ListController").run(function() {} );
+    //app.controller("ListController").run(function() {} );
 
 })();
 
