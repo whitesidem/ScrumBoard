@@ -77,6 +77,10 @@
 	/*float: left;*/
 }
 
+.listItemScroll .cardHover {
+	background: red!important;
+}
+
 .listIterator 
 {
 	display: inline-block;

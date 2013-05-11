@@ -5,7 +5,6 @@
 /// <reference path="/Scripts/models.js" />
 
 angular.module("ScrumBoardApp")
-//.directive('scrumCardListItem', function () {
 .directive('scrumcarditem', function () {
     return {
         restrict: 'E',
@@ -27,19 +26,16 @@ angular.module("ScrumBoardApp")
             element.draggable({
                 revert: false,
                 helper: 'clone',
-                //helper: scope.cloneForDrag,
                 zindex: 99999990,
                 appendTo: '#outerScrumBoard',
-                //                                appendTo: '.listItemScroll:first',
-                //                containment: [10, $('#outerScrumBoard').offset().top, $('#outerScrumBoard').offset().right, $('#outerScrumBoard').offset().bottom], 
                 containment: '#outerScrumBoard',
-                //                containment: '.listItemScroll',
                 scroll: true,
                 scrollSensitivity: 10,
                 scrollSpeed: 50,
                 cursor: "crosshair",
                 cursorAt: { left: -2, top: 5 },
                 delay: 300,
+                opacity: 0.75,
                 start: function () {
 //                    console.log('start drag');
                     scope.setDragging(true);
@@ -47,7 +43,8 @@ angular.module("ScrumBoardApp")
                 stop: function () {
 //                    console.log('stop drag');
                     scope.setDragging(false);
-                }
+                },
+                refreshPositions: true
             });
         }
     };
@@ -61,14 +58,17 @@ angular.module("ScrumBoardApp")
         link: function (scope, eDroppable, attrs) {
             eDroppable.droppable({
                 drop: function (event, ui) {
-                    console.log("DROP DETECTED!!!!");
+//                    console.log("DROP DETECTED!!!!");
 
                     var fnDropListener = scope.$eval(attrs.uiDropListener);
                     if (fnDropListener && angular.isFunction(fnDropListener)) {
                         var eDraggable = angular.element(ui.draggable);
                         fnDropListener(eDraggable, eDroppable, event, ui);
                     }
-                }
+                },
+                hoverClass: "cardHover",
+                tolerance: "pointer"
+//                ,greedy: true
             });
         }
     };

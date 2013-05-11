@@ -11,7 +11,6 @@
 
     app.controller("ListController", ["$scope", "$http", "myBoard", "mySockets", function ($scope, $http, myBoard, mySockets) {
 
-        var cardTempCount = 1;
         var currDragtarget = null;
         var $currTarget;
 
@@ -163,7 +162,6 @@
             $scope.currentCard = card;
         };
 
-
         $scope.addListEvent = _addListEvent;
 
 
@@ -205,8 +203,6 @@
 
             $scope.$apply(function () {
 
-                var sourceCard = myBoard.getCardById(sourceCardId);
-
                 var targetListId = -1;
                 if (targetCardId != -1) {
                     var targetCard = myBoard.getCardById(targetCardId);
@@ -217,11 +213,6 @@
                 } else {
                     targetListId = eDroppable.data('listid');
                 }
-
-                //            var sourceListId = sourceCard.listId;
-                //            var sourceList = myBoard.getListById(sourceListId);
-                //            sourceList.removeCard(sourceCard);
-                //            $('dragClone').remove();
 
                 console.log("from " + sourceCardId + " to " + targetCardId);
 
@@ -258,11 +249,6 @@
             if (error) {
             onDropRejected(error);
             } else {
-            //aTarget.push(item);
-            aTarget.cards.push(item);
-            //                    aSrc.splice(index, 1);
-            aSrc.cards.splice(index, 1);
-            onDropComplete(eSrc, item, index);
             }
                 
 
@@ -278,6 +264,9 @@
 
 
     } ]);
+
+
+//app.controller("ListController").run(function() {} );
 
 })();
 
