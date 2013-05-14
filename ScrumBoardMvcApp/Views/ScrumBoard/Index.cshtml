@@ -23,7 +23,7 @@
     <body data-ng-app="ScrumBoardApp">
     
         <div  data-ng-controller="ListController"
-              class="container-fluid" data-ng-mousemove="boardMouseMove($event)">
+              class="container-fluid" data-ng-mousemove="boardMouseMoveEvent($event)">
             <button class="btn" data-ng-click="isDebugCollapsed = !isDebugCollapsed">
                 SHOW DEBUG</button>
             <div collapse="isDebugCollapsed">
@@ -55,7 +55,6 @@
             <hr />
             <div class="row">
                 <div class="span2">
-                    Another Div!
                 </div>
                 <div id="outerScrumBoard" class="span1" style="position: relative;">
 

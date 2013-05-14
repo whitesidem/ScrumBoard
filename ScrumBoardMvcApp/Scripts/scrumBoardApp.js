@@ -3,41 +3,19 @@
 /// <reference path="models.js" />
 /// <reference path="External/mCustomScrollbar/jquery.mCustomScrollbar.js" />
 
-angular.module("ScrumBoardApp", ['ui.bootstrap']);
+(function() {
+    var app = angular.module("ScrumBoardApp", ['ui.bootstrap']);
+    console.dir(app);
+} ());
 
-angular.module("ScrumBoardApp").run(
-    function () {
-        console.log("ScrumBoardApp run");
-        //        $('#scrumBoard').mCustomScrollbar({
-        //            autoHideScrollbar: false,
-        //            horizontalScroll: false,
-        //            scrollButtons: {
-        //                enable: true
-        //            },
-        //            advanced: {
-        //                autoExpandHorizontalScroll: true
-        //            }
-        //        });
 
-        //        $('#outerScrumBoard').mCustomScrollbar({
-        //            autoHideScrollbar: false,
-        //            horizontalScroll: true,
-        //            scrollButtons: {
-        //                enable: true
-        //            },
-        //            advanced: {
-        //                autoExpandHorizontalScroll: true
-        //            }
-        //        });
+//angular.module("ScrumBoardApp", ['ui.bootstrap', 'ListController']);
 
-        //        $('.listItem').mCustomScrollbar();
 
-        //        $('.listItem').slimScroll({
-        //            position: 'left',
-        //            height: 'auto',
-        //            railVisible: true,
-        //            alwaysVisible: true
-        //        });
 
-    } ()
-);
+
+//angular.module("ScrumBoardApp").run(
+//    function () {
+//        console.log("ScrumBoardApp run");
+//    } ()
+//);

@@ -16,36 +16,50 @@ describe("list controller", function () {
     //    };
     var socketStubSpy;
 
-    beforeEach(inject(function ($rootScope, $controller) {
-        _scope = $rootScope.$new();
-        _testBoard = SkilzJs.model.board.FactoryCreate("TestBoard");
-        socketStubSpy = jasmine.createSpyObj('socketStub', ['setupSocket']);
+    //reference the module so all inner tests can get at controller
+    beforeEach(
+        function () {
+            var a = angular.module('ScrumBoardApp');
+            var b = 1;
+        }
+    );
 
-        _listController = $controller(SkilzJs.controller.ListController, { $scope: _scope, $http: _$httpBackend, myBoard: _testBoard, mySockets: socketStubSpy });
-    }));
+    describe("list controller", function () {
 
-    it("can be constructed", function () {
-        expect(_listController).not.toBeNull();
-        expect(socketStubSpy.setupSocket).toHaveBeenCalledWith(_scope);
-    });
+        beforeEach(inject(function ($rootScope, $controller) {
 
-    it("can access board via scope", function () {
-        expect(_scope.board).toBe(_testBoard);
-    });
+            _scope = $rootScope.$new();
+            _testBoard = SkilzJs.model.board.FactoryCreate("TestBoard");
+            socketStubSpy = jasmine.createSpyObj('socketStub', ['setupSocket']);
 
-    it("board is populated", function () {
-        expect(_scope.board.lists.length).toBe(0);
-    });
+            //_listController = $controller("ListController", { $scope: _scope, $http: _$httpBackend, myBoard: _testBoard, mySockets: socketStubSpy });
+            _listController = $controller("ListController", { $scope: _scope, myBoard: _testBoard, mySockets: socketStubSpy });
+        }));
 
-    describe("when invokes add new list event", function () {
+        it("can be constructed", function () {
+            expect(_listController).not.toBeNull();
+            expect(socketStubSpy.setupSocket).toHaveBeenCalledWith(_scope);
+        });
 
-        it("new list is added", function () {
-            var list = SkilzJs.model.list.FactoryCreate("NewList1");
-            _scope.addListEvent(list);
-            expect(_testBoard.getListByTitle("NewList1").title).toBe("NewList1");
+        it("can access board via scope", function () {
+            expect(_scope.board).toBe(_testBoard);
+        });
+
+        it("board is populated", function () {
+            expect(_scope.board.lists.length).toBe(0);
+        });
+
+        describe("when invokes add new list event", function () {
+
+            it("new list is added", function () {
+                var list = SkilzJs.model.list.FactoryCreate("NewList1");
+                _scope.addListEvent(list);
+                expect(_testBoard.getListByTitle("NewList1").title).toBe("NewList1");
+            });
+
         });
 
     });
 
-
 })
+

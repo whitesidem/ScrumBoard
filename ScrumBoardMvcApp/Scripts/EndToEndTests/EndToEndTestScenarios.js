@@ -59,6 +59,11 @@ describe("End-to-End Tests", function () {
         element("#okBtn").click();
 
         element('.addCard:eq(0)').click();
+        input("listTitle").enter("This is an awefully long task to explain in mere words and I'm not quite sure I can can pinpoint the puspose of this story, in fact its probably multiple stories really. Oh Well.");
+        element("#okBtn").click();
+
+
+        element('.addCard:eq(0)').click();
         input("listTitle").enter("New Site");
         element("#okBtn").click();
 
@@ -87,6 +92,9 @@ describe("End-to-End Tests", function () {
         input("listTitle").enter("Performance");
         element("#okBtn").click();
 
+        element('.addCard:eq(1)').click();
+        input("listTitle").enter("Another long winded explanation of probably quite a simple theory that is suposed to only take an hour but needs lots of detail. Again, oh well.");
+        element("#okBtn").click();
 
         element('.addCard:eq(1)').click();
         input("listTitle").enter("Web Trends5");

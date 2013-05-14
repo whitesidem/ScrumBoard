@@ -1,14 +1,15 @@
 ﻿<div class="modal-header">
     <h1>{{dialogModel.title}}</h1>
 </div>
-<div class="modal-body">
+<div class="modal-body" >
     <p>
+        READy?
         {{dialogModel.text}}
-        <input id="listTitle" data-ng-model="listTitle" />
+        <input id="listTitle" data-ng-model="listTitle" ngbkFocus />
     </p>
 
 </div>
 <div class="modal-footer">
-    <button id="okBtn" data-ng-click="close()" class="btn btn-primary">OK</button>
+    <button id="okBtn"  data-ng-click="close()" class="btn btn-primary">OK</button>
     <button data-ng-click="cancel()" class="btn ">Cancel</button>
 </div>

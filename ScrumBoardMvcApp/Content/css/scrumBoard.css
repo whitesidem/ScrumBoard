@@ -78,7 +78,7 @@
 	display: run-in;
 	-webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; 
 	clear:both; 
-	-webkit-box-shadow:inset 0 0 25px rgba(0,0,0,0.95); -moz-box-shadow:inset 0 0 25px rgba(0,0,0,0.95); box-shadow:inset 0 0 25px rgba(0,0,0,0.95);
+	/*-webkit-box-shadow:inset 0 0 25px rgba(0,0,0,0.95); -moz-box-shadow:inset 0 0 25px rgba(0,0,0,0.95); box-shadow:inset 0 0 25px rgba(0,0,0,0.95);*/
 	white-space: normal;
 }
 

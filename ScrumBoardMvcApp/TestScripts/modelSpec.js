@@ -27,12 +27,6 @@ describe("model objects", function () {
         expect(card.draft).toBe(false);
     });
 
-    it("can create card in draft state", function () {
-        var card = SkilzJs.model.card.FactoryCreate("testCard", true);
-        expect(card.title).toBe("testCard");
-        expect(card.draft).toBe(true);
-    });
-
 
     it("can create instances of cards with distinct values", function () {
         var card1 = SkilzJs.model.card.FactoryCreate("testCard1");

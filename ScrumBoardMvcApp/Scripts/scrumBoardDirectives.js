@@ -94,3 +94,12 @@ angular.module("ScrumBoardApp")
         }
     };
 });
+
+angular.module("ScrumBoardApp")
+.directive('ngbkFocus', function() {
+    return {
+        link: function(scope, element, attrs, controller) {
+            element[0].focus();
+        }
+    };
+});

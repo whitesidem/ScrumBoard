@@ -8,8 +8,7 @@
 
     var app = angular.module("ScrumBoardApp");
 
-
-    app.controller("ListController", ["$scope", "$http", "myBoard", "mySockets", function ($scope, $http, myBoard, mySockets) {
+    var blah = app.controller("ListController", ["$scope", "$http", "myBoard", "mySockets", function ($scope, $http, myBoard, mySockets) {
 
         var currDragtarget = null;
         var $currTarget;
@@ -33,7 +32,7 @@
             $scope.isCurrentlyDragging = isDragging;
         };
 
-        $scope.boardMouseMove = function (e) {
+        $scope.boardMouseMoveEvent = function (e) {
 
             if ($scope.isCurrentlyDragging === false) {
                 //                console.log('BOARDMOUSE');
@@ -48,7 +47,7 @@
 
             var $itemInScrollRegion = $currTarget.closest('.listItemScroll');
             if ($itemInScrollRegion.length == 0) {
-//                console.log('NON DRAG REGION');
+                //                console.log('NON DRAG REGION');
                 return;
             }
 
@@ -120,23 +119,18 @@
             }); ;
         };
 
-        var _addListEvent = function (list) {
-            myBoard.addList(list);
-        };
-
-
-        $scope.addListWithName = function (title, id) {
+        $scope.addListWithNameEvent = function (title, id) {
             var list = SkilzJs.model.list.FactoryCreate(title, id);
             myBoard.addList(list);
         };
 
-        $scope.addCardWithName = function (listId, title, id) {
+        $scope.addCardWithNameEvent = function (listId, title, id) {
             var list = myBoard.getListById(listId);
             var card = SkilzJs.model.card.FactoryCreate(title, id);
             list.addCard(card);
         };
 
-        $scope.moveCard = function (sourceCardId, targetListId, targetCardId) {
+        $scope.uiUpdateCardLocationEvent = function (sourceCardId, targetListId, targetCardId) {
             var sourceCard = myBoard.getCardById(sourceCardId);
 
             var sourceListId = sourceCard.listId;
@@ -161,16 +155,19 @@
             $scope.currentCard = card;
         };
 
-        $scope.addListEvent = _addListEvent;
 
-        $scope.dropListener = function (eDraggable, eDroppable) {
+        $scope.dropListenerEvent = function (eDraggable, eDroppable) {
             var sourceCardId = eDraggable.data('cardid');
             var targetCardId = eDroppable.data('cardid');
             var targetListId = eDroppable.data('listid');
+            _triggerChangeCardLocation(sourceCardId, targetCardId, targetListId);
+        };
+
+        var _triggerChangeCardLocation = function (sourceCardId, targetCardId, targetListId) {
             //              console.log("from " + sourceCardId + " to " + targetCardId);
             $http.put("api/ScrumBoardRestApi/MoveCard?boardId=" + myBoard.id + "&sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
-
         };
+
 
         populateBoard();
 
@@ -179,9 +176,9 @@
 
     } ]);
 
+    console.dir(app);
+    console.dir(blah);
 
     //app.controller("ListController").run(function() {} );
 
 })();
-
-

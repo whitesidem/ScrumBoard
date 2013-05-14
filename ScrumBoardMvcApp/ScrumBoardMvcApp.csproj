@@ -437,6 +437,7 @@
     <Content Include="TestScripts\jasmine-1.3.1\jasmine-html.js" />
     <Content Include="TestScripts\jasmine-1.3.1\jasmine.css" />
     <Content Include="TestScripts\jasmine-1.3.1\jasmine.js" />
+    <Content Include="karma.conf.js" />
     <Content Include="TestScripts\listControllerSpec.js" />
     <Content Include="TestScripts\modelSpec.js" />
     <Content Include="TestScripts\SpecRunner.html" />
