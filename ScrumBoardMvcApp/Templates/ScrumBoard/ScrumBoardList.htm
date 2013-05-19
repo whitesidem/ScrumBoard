@@ -1,0 +1,67 @@
+﻿        <div  
+              class="container-fluid" data-ng-mousemove="boardMouseMoveEvent($event)">
+            <button class="btn" data-ng-click="isDebugCollapsed = !isDebugCollapsed">
+                SHOW DEBUG</button>
+            <div collapse="isDebugCollapsed">
+                <div class="well well-large">
+                    <pre>
+                        $scope.isCreateListCollapsed = {{isCreateListCollapsed}}    
+                        $scope.isDebugCollapsed = {{isDebugCollapsed}}    
+                    </pre>
+                
+                    <input type="button" id="scrollButt"/>
+
+                </div>
+            </div>
+            <button class="btn" ng-click="isCreateListModalCollapsed = !isCreateListModalCollapsed">
+                Show Toolbar</button>
+            <div id="listCreateDiv" collapse="isCreateListModalCollapsed">
+                <div class="well well-large ">
+                    <div data-ng-controller="SkilzJs.controller.CreateListDialogController">
+                        <div class="row-fluid">
+                            <button id="addNewListBtn" class="btn btn-primary" data-ng-click="openDialog()">
+                                Add New List
+                            </button>
+                            <button id="addNewCard" class="btn btn-primary" data-ng-click="addCard()">
+                                Add New Card
+                            </button>
+                            <label for="boardIdInput">Board Id:</label>
+                            <input id="boardIdInput" type="text" data-ng-model="boardcreate.selectableBoardId"/>
+                            <button id="loadBoard" class="btn btn-primary" data-ng-click="loadBoard()">
+                                > {{boardcreate.selectableBoardId}}
+                            </button>
+                        </div>
+                     </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="span2">
+                </div>
+                <div id="outerScrumBoard" class="span1" style="position: relative;">
+
+                    <ul class="unstyled">
+                        <li data-ng-repeat="list in board.lists" class="listIterator">
+                            <span class="wrapword listTitle">{{list.title}} </span>
+                            <div class="listItemScroll" >
+                                <div class="listItem" >
+                                    <ul class="unstyled">
+                                        <li data-ng-repeat="card in list.cards">
+                                            <scrumcarditem>
+                                                Card #{{card.id}}
+                                            </scrumcarditem>
+                                        </li>
+                                    </ul>
+                                    <scrumcarditemtrailer/>
+                                </div>
+                            </div>
+                            <div >
+                                <addscrumcarditem>
+                                    Add a card...
+                                </addscrumcarditem>
+                            </div>
+                        </li>
+                    </ul>
+                </div>                
+            </div>                
+        </div>

@@ -21,78 +21,18 @@
     @*    <link href="/Scripts/External/mCustomScrollbar/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />*@
     </head>
     <body data-ng-app="ScrumBoardApp">
-    
-        <div  data-ng-controller="ListController"
-              class="container-fluid" data-ng-mousemove="boardMouseMoveEvent($event)">
-            <button class="btn" data-ng-click="isDebugCollapsed = !isDebugCollapsed">
-                SHOW DEBUG</button>
-            <div collapse="isDebugCollapsed">
-                <div class="well well-large">
-                    <pre>
-                        $scope.isCreateListCollapsed = {{isCreateListCollapsed}}    
-                        $scope.isDebugCollapsed = {{isDebugCollapsed}}    
-                    </pre>
-                
-                    <input type="button" id="scrollButt"/>
-
-                </div>
-            </div>
-            <button class="btn" ng-click="isCreateListModalCollapsed = !isCreateListModalCollapsed">
-                Show Toolbar</button>
-            <div id="listCreateDiv" collapse="isCreateListModalCollapsed">
-                <div class="well well-large ">
-                    <div data-ng-controller="SkilzJs.controller.CreateListDialogController">
-                        <p>{{dialogDone}}</p>
-                        <div class="row-fluid">
-                            <button id="addNewListBtn" class="btn btn-primary" data-ng-click="openDialog()">
-                                Add New List</button>
-                        </div>
-                    </div>
-                            <button id="addNewCard" class="btn btn-primary" data-ng-click="addCard()">
-                                Add New Card</button>
-                </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="span2">
-                </div>
-                <div id="outerScrumBoard" class="span1" style="position: relative;">
-
-                    <ul class="unstyled">
-                        <li data-ng-repeat="list in board.lists" class="listIterator">
-                            <span class="wrapword listTitle">{{list.title}} </span>
-                            <div class="listItemScroll" >
-                                <div class="listItem" >
-                                    <ul class="unstyled">
-                                        <li data-ng-repeat="card in list.cards">
-                                            <scrumcarditem>
-                                                Card #{{card.id}}
-                                            </scrumcarditem>
-                                        </li>
-                                    </ul>
-                                    <scrumcarditemtrailer/>
-                                </div>
-                            </div>
-                            <div >
-                                <addscrumcarditem>
-                                    Add a card...
-                                </addscrumcarditem>
-                            </div>
-                        </li>
-                    </ul>
-                </div>                
-            </div>                
-        </div>                
-    
+        <a href="/ScrumBoard#/List?boardId=1">LOAD BOARD 1</a>
+        <div data-ng-view></div>
         <script src="/Scripts/External/jquery-1.9.1.js" type="text/javascript"></script>
         <script src="/Scripts/External/jquery-ui-1.10.2.js" type="text/javascript"></script>
         @*        <script src="/Scripts/External/mCustomScrollbar/jquery.mCustomScrollbar.js" type="text/javascript"></script>
             <script src="/Scripts/External/mCustomScrollbar/jquery.mousewheel.js" type="text/javascript"></script>*@
-@*        <script src="/Scripts/External/Bootstrap/3rdParty/jquery.slimscroll.js" type="text/javascript"></script>
+        @*        <script src="/Scripts/External/Bootstrap/3rdParty/jquery.slimscroll.js" type="text/javascript"></script>
 *@        @*    <script src="/Scripts/External/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"
         type="text/javascript"></script>*@
         <script src="/Scripts/External/underscore.js" type="text/javascript"></script>
         <script src="/Scripts/External/Angular/angular.js" type="text/javascript"></script>
+        <script src="/Scripts/External/Angular/angular-resource.js" type="text/javascript"></script>
         <script src="/Scripts/External/Bootstrap/bootstrap.js" type="text/javascript"></script>
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
@@ -107,6 +47,7 @@
         <script src="/Scripts/scrumBoardApp.js" type="text/javascript"></script>
         <script src="/Scripts/scrumBoardFactories.js" type="text/javascript"></script>
         <script src="/Scripts/scrumBoardDirectives.js" type="text/javascript"></script>
+        <script src="/Scripts/scrumBoardServices.js" type="text/javascript"></script>
         <script src="/Scripts/shared/dialogs/SimpleEnterStringDialogController.js" type="text/javascript"></script>
         <script src="/Scripts/Sockets/socketController.js" type="text/javascript"></script>
         <script src="/Scripts/listController.js" type="text/javascript"></script>

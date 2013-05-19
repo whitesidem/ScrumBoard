@@ -211,6 +211,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Docs\ToDo.txt" />
+    <Content Include="Scripts\scrumBoardServices.js" />
     <Content Include="Scripts\CreateCardDialogController.js" />
     <Content Include="Scripts\External\Bootstrap\3rdParty\jquery.slimscroll.js" />
     <Content Include="Scripts\External\mCustomScrollbar\css\jquery.mCustomScrollbar.css" />
@@ -430,6 +431,7 @@
     <Content Include="Scripts\scrumBoardFactories.js" />
     <Content Include="Scripts\Sockets\socketController.js" />
     <Content Include="Templates\ScrumBoard\AddScrumCard.htm" />
+    <Content Include="Templates\ScrumBoard\ScrumBoardList.htm" />
     <Content Include="Templates\ScrumBoard\ScrumCardTrailer.htm" />
     <Content Include="Templates\ScrumBoard\EditCard.htm" />
     <Content Include="Templates\ScrumBoard\AddItemDialog.html" />

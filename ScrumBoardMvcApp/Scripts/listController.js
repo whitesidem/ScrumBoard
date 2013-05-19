@@ -8,7 +8,7 @@
 
     var app = angular.module("ScrumBoardApp");
 
-    var blah = app.controller("ListController", ["$scope", "$http", "myBoard", "mySockets", function ($scope, $http, myBoard, mySockets) {
+    var blah = app.controller("ListController", ["$scope", "$http", "myBoard", "mySockets", "boardData", "$location", function ($scope, $http, myBoard, mySockets, boardData, $location) {
 
         var currDragtarget = null;
         var $currTarget;
@@ -18,12 +18,18 @@
             $('.addCard').click();
         };
 
+        $scope.loadBoard = function () {
+            console.log('selected: ' + $scope.boardcreate.selectableBoardId);
+            $location.path('/List').search({ "boardId": $scope.boardcreate.selectableBoardId });
+        };
+
         $scope.isCurrentlyDragging = false;
         $scope.board = myBoard;
 
         $scope.isCreateListCollapsed = false;
-        $scope.isCreateListModalCollapsed = false;
+        //        $scope.isCreateListModalCollapsed= false;
         $scope.isDebugCollapsed = true;
+        $scope.boardcreate = { selectableBoardId: 1 };
 
 
         $scope.setDragging = function (isDragging) {
@@ -95,29 +101,48 @@
         //    };
 
 
-        var populateBoard = function () {
-
-            var testBoardId = 1;
-
-            if ($.urlParams('isTest')) {
-                $http.post("api/ScrumBoardRestApi/resetBoardDataById?id=" + testBoardId);
-            };
-
-            $http.get("api/ScrumBoardRestApi/GetAllBoardDataById?id=" + testBoardId).success(function (data) {
-                if (_(data).isUndefined()) return;
-                if (_(data.lists).isUndefined()) return;
-                _(data.lists).each(function (e) {
-                    var list = SkilzJs.model.list.FactoryCreate(e.Title, e.Id);
-                    var cards = _(data.cardLists).filter(function (c) { return c.ListId === list.id; });
-                    _(cards).each(function (e) {
-                        var card = SkilzJs.model.card.FactoryCreate(e.Title, e.Id);
-                        list.addCard(card);
-                    });
-                    myBoard.addList(list);
+        var bindBoarddata = function (data) {
+            if (_(data).isUndefined()) return;
+            if (_(data.lists).isUndefined()) return;
+            _(data.lists).each(function (e) {
+                var list = SkilzJs.model.list.FactoryCreate(e.Title, e.Id);
+                var cards = _(data.cardLists).filter(function (c) { return c.ListId === list.id; });
+                _(cards).each(function (e) {
+                    var card = SkilzJs.model.card.FactoryCreate(e.Title, e.Id);
+                    list.addCard(card);
                 });
+                myBoard.addList(list);
+            });
 
-            }); ;
         };
+
+        //resolved data from BoardRestService, resolved from routing
+        bindBoarddata(boardData);
+
+
+        //        var populateBoard = function () {
+
+        //            var testBoardId = 1;
+
+        //            if ($.urlParams('isTest')) {
+        //                $http.post("api/ScrumBoardRestApi/resetBoardDataById?id=" + testBoardId);
+        //            };
+
+        //            $http.get("api/ScrumBoardRestApi/GetAllBoardDataById?id=" + testBoardId).success(function (data) {
+        //                if (_(data).isUndefined()) return;
+        //                if (_(data.lists).isUndefined()) return;
+        //                _(data.lists).each(function (e) {
+        //                    var list = SkilzJs.model.list.FactoryCreate(e.Title, e.Id);
+        //                    var cards = _(data.cardLists).filter(function (c) { return c.ListId === list.id; });
+        //                    _(cards).each(function (e) {
+        //                        var card = SkilzJs.model.card.FactoryCreate(e.Title, e.Id);
+        //                        list.addCard(card);
+        //                    });
+        //                    myBoard.addList(list);
+        //                });
+
+        //            }); ;
+        //        };
 
         $scope.addListWithNameEvent = function (title, id) {
             var list = SkilzJs.model.list.FactoryCreate(title, id);
@@ -169,15 +194,14 @@
         };
 
 
-        populateBoard();
-
         mySockets.setupSocket($scope);
+
 
 
     } ]);
 
-    console.dir(app);
-    console.dir(blah);
+    //    console.dir(app);
+    //    console.dir(blah);
 
     //app.controller("ListController").run(function() {} );
 

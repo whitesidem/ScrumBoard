@@ -3,10 +3,46 @@
 /// <reference path="models.js" />
 /// <reference path="External/mCustomScrollbar/jquery.mCustomScrollbar.js" />
 
-(function() {
-    var app = angular.module("ScrumBoardApp", ['ui.bootstrap']);
-    console.dir(app);
+(function () {
+    var app = angular.module("ScrumBoardApp", ['ui.bootstrap', 'ngResource']);
+
+    app.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.
+            when('/List', {
+                controller: 'ListController',
+                templateUrl: '/Templates/ScrumBoard/ScrumBoardList.htm',
+                resolve: {
+                    boardData: function (BoardLoader) {
+                        return BoardLoader();
+                    }
+                }
+            })
+            .otherwise({ redirectTo: '/List' });
+    } ]);
+
+
+
+
+    /*
+    app.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.
+    when('/', {
+    controller: 'ListController'
+    }),
+    when('/list', {
+    controller: 'ListController'
+    //                ,
+    //               resolve: {
+    //                   
+    //               }
+    })
+    .otherwise({redirectTo:'/'});
+    } ]);
+    */
+
 } ());
+
+
 
 
 //angular.module("ScrumBoardApp", ['ui.bootstrap', 'ListController']);
