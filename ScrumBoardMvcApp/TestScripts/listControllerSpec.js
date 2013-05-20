@@ -1,44 +1,44 @@
 ﻿/// <reference path="jasmine-1.3.1/jasmine.js" />
 /// <reference path="../Scripts/External/Angular/angular.js" />
 /// <reference path="../Scripts/External/Angular/angular-mocks.js" />
+/// <reference path="../Scripts/External/Angular/angular-resource.js" />
 /// <reference path="../Scripts/Shared/global.js" />
 /// <reference path="../Scripts/listController.js" />
 
 // ReSharper disable InconsistentNaming
-describe("list controller", function () {
+describe("list controller environment", function () {
 
     var _listController;
     var _scope;
     var _testBoard;
-    var _$httpBackend;
-    //    var socketStub = {
-    //        setupSocket: function () { }
-    //    };
-    var socketStubSpy;
+//    var _$httpBackend;
+    var _socketStubSpy = {};
+    var _boardDataStub;
 
     //reference the module so all inner tests can get at controller
     beforeEach(
         function () {
-            var a = angular.module('ScrumBoardApp');
-            var b = 1;
+            angular.mock.module('ScrumBoardApp');
         }
     );
 
     describe("list controller", function () {
 
-        beforeEach(inject(function ($rootScope, $controller) {
-
+        beforeEach(angular.mock.inject(function ($rootScope, $controller) {
             _scope = $rootScope.$new();
             _testBoard = SkilzJs.model.board.FactoryCreate("TestBoard");
-            socketStubSpy = jasmine.createSpyObj('socketStub', ['setupSocket']);
+            _socketStubSpy.setupSocket = function () { };
+            spyOn(_socketStubSpy, 'setupSocket');
 
-            //_listController = $controller("ListController", { $scope: _scope, $http: _$httpBackend, myBoard: _testBoard, mySockets: socketStubSpy });
-            _listController = $controller("ListController", { $scope: _scope, myBoard: _testBoard, mySockets: socketStubSpy });
+            _boardDataStub = {};
+
+            _listController = $controller("ListController", { $scope: _scope, myBoard: _testBoard, mySockets: _socketStubSpy, boardData: _boardDataStub });
         }));
 
         it("can be constructed", function () {
             expect(_listController).not.toBeNull();
-            expect(socketStubSpy.setupSocket).toHaveBeenCalledWith(_scope);
+            expect(_socketStubSpy.setupSocket).toHaveBeenCalledWith(_scope);
+
         });
 
         it("can access board via scope", function () {

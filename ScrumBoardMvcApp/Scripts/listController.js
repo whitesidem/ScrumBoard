@@ -8,7 +8,7 @@
 
     var app = angular.module("ScrumBoardApp");
 
-    var blah = app.controller("ListController", ["$scope", "$http", "myBoard", "mySockets", "boardData", "$location", function ($scope, $http, myBoard, mySockets, boardData, $location) {
+    var blah = app.controller("ListController", ["$scope", "$http", "myBoard", "mySockets", "boardData", "$location",  function ($scope, $http, myBoard, mySockets, boardData, $location) {
 
         var currDragtarget = null;
         var $currTarget;
@@ -16,6 +16,12 @@
 
         $scope.addCard = function () {
             $('.addCard').click();
+        };
+
+
+        $scope.testId = 777;
+        $scope.loadBoard2 = function () {
+            alert($scope.testId);
         };
 
         $scope.loadBoard = function () {
@@ -30,7 +36,6 @@
         //        $scope.isCreateListModalCollapsed= false;
         $scope.isDebugCollapsed = true;
         $scope.boardcreate = { selectableBoardId: 1 };
-
 
         $scope.setDragging = function (isDragging) {
             $('.listItemScroll').stop();
