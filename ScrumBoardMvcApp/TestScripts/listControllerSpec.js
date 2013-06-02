@@ -12,8 +12,8 @@ describe("list controller environment", function () {
     var _scope;
     var _testBoard;
 //    var _$httpBackend;
-    var _socketStubSpy = {};
     var _boardDataStub;
+    var _socketStub = {};
 
     //reference the module so all inner tests can get at controller
     beforeEach(
@@ -27,18 +27,18 @@ describe("list controller environment", function () {
         beforeEach(angular.mock.inject(function ($rootScope, $controller) {
             _scope = $rootScope.$new();
             _testBoard = SkilzJs.model.board.FactoryCreate("TestBoard");
-            _socketStubSpy.setupSocket = function () { };
-            spyOn(_socketStubSpy, 'setupSocket');
+//            _socketStub.init = function () { };
+//            spyOn(_socketStub, 'init');
 
             _boardDataStub = {};
 
-            _listController = $controller("ListController", { $scope: _scope, myBoard: _testBoard, mySockets: _socketStubSpy, boardData: _boardDataStub });
+            _listController = $controller("ListController", { $scope: _scope, CurrentBoard: _testBoard, BoardSockets: _socketStub, boardData: _boardDataStub });
+            
         }));
 
         it("can be constructed", function () {
             expect(_listController).not.toBeNull();
-            expect(_socketStubSpy.setupSocket).toHaveBeenCalledWith(_scope);
-
+ //           expect(_socketStubSpy.init).toHaveBeenCalledWith(_scope);
         });
 
         it("can access board via scope", function () {
@@ -47,16 +47,6 @@ describe("list controller environment", function () {
 
         it("board is populated", function () {
             expect(_scope.board.lists.length).toBe(0);
-        });
-
-        describe("when invokes add new list event", function () {
-
-            it("new list is added", function () {
-                var list = SkilzJs.model.list.FactoryCreate("NewList1");
-                _scope.addListEvent(list);
-                expect(_testBoard.getListByTitle("NewList1").title).toBe("NewList1");
-            });
-
         });
 
     });

@@ -6,36 +6,34 @@
 
 (function () {
 
-    var app = angular.module("ScrumBoardApp");
 
-    var blah = app.controller("ListController", ["$scope", "$http", "myBoard", "mySockets", "boardData", "$location",  function ($scope, $http, myBoard, mySockets, boardData, $location) {
+    angular.module("ScrumBoardApp").controller("ListController", ["$scope", "$http", "CurrentBoard", "BoardSockets", "boardData", "$location", function ($scope, $http, currentBoard, boardSockets, boardData, $location) {
 
         var currDragtarget = null;
         var $currTarget;
-
 
         $scope.addCard = function () {
             $('.addCard').click();
         };
 
 
-        $scope.testId = 777;
-        $scope.loadBoard2 = function () {
-            alert($scope.testId);
-        };
+//        $scope.testId = 777;
+//        $scope.loadBoard2 = function () {
+//            alert($scope.testId);
+//        };
 
-        $scope.loadBoard = function () {
-            console.log('selected: ' + $scope.boardcreate.selectableBoardId);
-            $location.path('/List').search({ "boardId": $scope.boardcreate.selectableBoardId });
-        };
+//        $scope.loadBoard = function () {
+//            console.log('selected: ' + $scope.boardcreate.selectableBoardId);
+//            $location.path('/List').search({ "boardId": $scope.boardcreate.selectableBoardId });
+//        };
 
         $scope.isCurrentlyDragging = false;
-        $scope.board = myBoard;
+        $scope.board = currentBoard;
 
         $scope.isCreateListCollapsed = false;
-        //        $scope.isCreateListModalCollapsed= false;
+        $scope.isCreateListModalCollapsed= false;
         $scope.isDebugCollapsed = true;
-        $scope.boardcreate = { selectableBoardId: 1 };
+//        $scope.boardcreate = { selectableBoardId: 1 };
 
         $scope.setDragging = function (isDragging) {
             $('.listItemScroll').stop();
@@ -116,69 +114,13 @@
                     var card = SkilzJs.model.card.FactoryCreate(e.Title, e.Id);
                     list.addCard(card);
                 });
-                myBoard.addList(list);
+                currentBoard.addList(list);
             });
 
         };
 
         //resolved data from BoardRestService, resolved from routing
         bindBoarddata(boardData);
-
-
-        //        var populateBoard = function () {
-
-        //            var testBoardId = 1;
-
-        //            if ($.urlParams('isTest')) {
-        //                $http.post("api/ScrumBoardRestApi/resetBoardDataById?id=" + testBoardId);
-        //            };
-
-        //            $http.get("api/ScrumBoardRestApi/GetAllBoardDataById?id=" + testBoardId).success(function (data) {
-        //                if (_(data).isUndefined()) return;
-        //                if (_(data.lists).isUndefined()) return;
-        //                _(data.lists).each(function (e) {
-        //                    var list = SkilzJs.model.list.FactoryCreate(e.Title, e.Id);
-        //                    var cards = _(data.cardLists).filter(function (c) { return c.ListId === list.id; });
-        //                    _(cards).each(function (e) {
-        //                        var card = SkilzJs.model.card.FactoryCreate(e.Title, e.Id);
-        //                        list.addCard(card);
-        //                    });
-        //                    myBoard.addList(list);
-        //                });
-
-        //            }); ;
-        //        };
-
-        $scope.addListWithNameEvent = function (title, id) {
-            var list = SkilzJs.model.list.FactoryCreate(title, id);
-            myBoard.addList(list);
-        };
-
-        $scope.addCardWithNameEvent = function (listId, title, id) {
-            var list = myBoard.getListById(listId);
-            var card = SkilzJs.model.card.FactoryCreate(title, id);
-            list.addCard(card);
-        };
-
-        $scope.uiUpdateCardLocationEvent = function (sourceCardId, targetListId, targetCardId) {
-            var sourceCard = myBoard.getCardById(sourceCardId);
-
-            var sourceListId = sourceCard.listId;
-            var sourceList = myBoard.getListById(sourceListId);
-            sourceList.removeCard(sourceCard);
-
-            var targetList = null;
-            if (targetCardId != -1) {
-                var targetCard = myBoard.getCardById(targetCardId);
-                targetListId = targetCard.listId;
-                targetList = myBoard.getListById(targetListId);
-                var targetIndex = _(targetList.cards).indexOf(targetCard);
-                targetList.addCard(sourceCard, targetIndex);
-            } else {
-                targetList = myBoard.getListById(targetListId);
-                targetList.addCard(sourceCard);
-            }
-        };
 
 
         $scope.setCurrentCard = function (card) {
@@ -195,18 +137,11 @@
 
         var _triggerChangeCardLocation = function (sourceCardId, targetCardId, targetListId) {
             //              console.log("from " + sourceCardId + " to " + targetCardId);
-            $http.put("api/ScrumBoardRestApi/MoveCard?boardId=" + myBoard.id + "&sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
+            $http.put("api/ScrumBoardRestApi/MoveCard?boardId=" + currentBoard.id + "&sourceCardId=" + sourceCardId + "&targetListId=" + targetListId + "&targetCardId=" + targetCardId);
         };
-
-
-        mySockets.setupSocket($scope);
-
-
 
     } ]);
 
-    //    console.dir(app);
-    //    console.dir(blah);
 
     //app.controller("ListController").run(function() {} );
 

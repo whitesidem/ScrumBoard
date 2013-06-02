@@ -2,10 +2,9 @@
 
 SkilzJs.namespace('sockets.socketController');
 
-SkilzJs.sockets.socketController.setupSocket = function ($scope) {
+SkilzJs.sockets.socketController.init = function (boardEventsService) {
 
     console.log('set up sockets');
-
 
     // Declare a proxy to reference the hub. 
     var scrumBoard = $.connection.scrumBoardHub;
@@ -13,29 +12,25 @@ SkilzJs.sockets.socketController.setupSocket = function ($scope) {
     // Create a function that the hub can call to broadcast messages.
     scrumBoard.client.broadcastAddedListMessage = function (title, id) {
         console.log('addListMsg');
-        $scope.$apply(function () {
-            $scope.addListWithNameEvent(title, id);
-        });
+        boardEventsService.addListWithNameEvent(title, id);
     };
 
     scrumBoard.client.broadcastAddedCardMessage = function (listId, title, id) {
         console.log('addCardMsg');
-        $scope.$apply(function () {
-            $scope.addCardWithNameEvent(listId, title, id);
-        });
+        boardEventsService.addCardWithNameEvent(listId, title, id);
     };
 
     scrumBoard.client.moveCard = function (sourceCardId, targetListId, targetCardId) {
         console.log('moveCardMsg');
-        $scope.$apply(function () {
-            $scope.uiUpdateCardLocationEvent(sourceCardId, targetListId, targetCardId);
-        });
+        boardEventsService.uiUpdateCardLocationEvent(sourceCardId, targetListId, targetCardId);
     };
 
 
     //Start connection to socket
     $.connection.hub.start().done(function () {
+        console.log('socket started');
         //                scrumBoard.server.test();
     });
 
 };
+

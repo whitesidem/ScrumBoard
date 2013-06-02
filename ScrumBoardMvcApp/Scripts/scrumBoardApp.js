@@ -8,7 +8,7 @@
 
     app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
-            when('/List', {
+            when('/Board/:boardId', {
                 controller: 'ListController',
                 templateUrl: '/Templates/ScrumBoard/ScrumBoardList.htm',
                 resolve: {
@@ -17,8 +17,9 @@
                     }
                 }
             })
-            .otherwise({ redirectTo: '/List' });
+            .otherwise({ redirectTo: '/Board/1' });
     } ]);
+
 
 
 
