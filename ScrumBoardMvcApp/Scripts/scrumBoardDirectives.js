@@ -15,7 +15,7 @@
                 transclude: true,
                 scope: false,
                 //        scope: { innerTitle: '@cardTitle'},
-                templateUrl: '/Templates/ScrumBoard/ScrumCard.htm'
+                templateUrl: 'Templates/ScrumBoard/ScrumCard.htm'
             };
         });
 
@@ -25,7 +25,7 @@
                 replace: true,
                 transclude: true,
                 scope: false,
-                templateUrl: '/Templates/ScrumBoard/AddScrumCard.htm'
+                templateUrl: 'Templates/ScrumBoard/AddScrumCard.htm'
             };
         });
 
@@ -36,7 +36,7 @@
                 replace: true,
                 transclude: true,
                 scope: false,
-                templateUrl: '/Templates/ScrumBoard/ScrumCardTrailer.htm'
+                templateUrl: 'Templates/ScrumBoard/ScrumCardTrailer.htm'
             };
         });
 

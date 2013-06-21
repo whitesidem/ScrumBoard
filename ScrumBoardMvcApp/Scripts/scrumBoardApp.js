@@ -10,7 +10,7 @@
         $routeProvider.
             when('/Board/:boardId', {
                 controller: 'ListController',
-                templateUrl: '/Templates/ScrumBoard/ScrumBoardList.htm',
+                templateUrl: 'Templates/ScrumBoard/ScrumBoardList.htm',
                 resolve: {
                     boardData: function (BoardLoader) {
                         return BoardLoader();

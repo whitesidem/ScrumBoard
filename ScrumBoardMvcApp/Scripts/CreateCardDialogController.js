@@ -10,7 +10,7 @@ SkilzJs.controller.CreateCardDialogController = (function ($scope, $dialog, $htt
         backdrop: true,
         keyboard: true,
         backdropClick: true,
-        templateUrl: '/Templates/ScrumBoard/CreateListItemDialog.htm',
+        templateUrl: 'Templates/ScrumBoard/CreateListItemDialog.htm',
         controller: SkilzJs.controller.shared.dialogs.SimpleEnterStringDialogController,
         resolve: { dialogModel: function () { return { title: "Create New Card", text: "Enter title for new card" }; } }
     };

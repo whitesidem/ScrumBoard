@@ -12,7 +12,7 @@ SkilzJs.controller.CreateListDialogController = (function ($scope, $dialog, $htt
         modalFade: false,
         keyboard: true,
         backdropClick: true,
-        templateUrl: '/Templates/ScrumBoard/CreateListItemDialog.htm',
+        templateUrl: 'Templates/ScrumBoard/CreateListItemDialog.htm',
         controller: SkilzJs.controller.shared.dialogs.SimpleEnterStringDialogController,
         resolve: { dialogModel: function () { return { title: "Create New List", text: "Enter title for new list" }; } }
     };

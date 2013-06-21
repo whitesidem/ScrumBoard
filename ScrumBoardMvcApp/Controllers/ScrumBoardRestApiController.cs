@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Web.Http;
+using System.Web.Mvc;
 using ApplicationService_Interactors.Interfaces;
 using ApplicationService_Interactors.RequestResponseDTo;
 using ScrumBoardDomainIoC;
@@ -9,8 +10,20 @@ using ScrumBoardMvcApp.Mappers;
 using ScrumBoardMvcApp.Models;
 using ScrumBoardMvcApp.signalr;
 
+
 namespace ScrumBoardMvcApp.Controllers
 {
+    public class AllowCrossSiteJsonAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "*");
+            base.OnActionExecuting(filterContext);
+        }
+    }
+
+
+    [AllowCrossSiteJson]
     public class ScrumBoardRestApiController : ApiController
     {
 
@@ -27,13 +40,13 @@ namespace ScrumBoardMvcApp.Controllers
         }
 
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public void ResetBoardDataById(int id)
         {
             _scrumBoardService.ClearBoardById(id);
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public dynamic GetAllBoardDataById(int id)
         {
             dynamic boardData = new ExpandoObject();
@@ -52,14 +65,14 @@ namespace ScrumBoardMvcApp.Controllers
 //            return ScrumBoardMapper.DomainToViewModel(board);
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public ScrumBoardViewModel GetBoardById(int id)
         {
             var board = _scrumBoardService.RetrieveScrumBoardById(id);
             return ScrumBoardMapper.ToScrumBoardViewModel(board);
         }
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
        public void CreateCard(CreateCard card)
         {
             var newCard = _scrumBoardService.CreateAndAddScrumCardForListId(card.ListId, card.Title);
@@ -67,7 +80,7 @@ namespace ScrumBoardMvcApp.Controllers
             hub.SendAddedCardMessage(card.ListId, newCard.Title, newCard.Id);
         }
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public void CreateList(CreateList list)
         {
             var newList = _scrumBoardService.CreateAndAddScrumListForBoardId(1, list.Title);
@@ -75,14 +88,13 @@ namespace ScrumBoardMvcApp.Controllers
             hub.SendAddedListMessage(newList.Title, newList.Id);
         }
 
-        [HttpPut]
+        [System.Web.Http.HttpPut]
         public void MoveCard(int boardId, int sourceCardId, int targetListId, int targetCardId)
         {
             _scrumBoardService.MoveCard(boardId, sourceCardId, targetListId, targetCardId);
             var hub = new ScrumBoardHub();
             hub.MoveCard(sourceCardId, targetListId, targetCardId);
         }
-        
 
 
         // DELETE api/scrumboardrestapi/5
